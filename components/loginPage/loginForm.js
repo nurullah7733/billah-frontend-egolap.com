@@ -4,7 +4,7 @@ import Link from "next/link";
 const LoginForm = () => {
   return (
     <div className="container py-14 mx-auto !max-w-sm px-3">
-      <div className="bg-white shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] w-full px-3">
+      <div className="bg-white shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] w-full px-3 dark:bg-gray-700">
         <h1 className="pt-3 mb-6 text-3xl font-semibold text-center md:text-xl">
           Login
         </h1>
@@ -25,21 +25,23 @@ const LoginForm = () => {
 
         <button
           type="submit"
-          className="w-full py-2 my-1 text-sm text-center text-white uppercase rounded bg-green bg-primary hover:bg-green-dark focus:outline-none"
+          className="w-full py-2 my-1 text-sm text-center text-white uppercase rounded bg-green bg-primary hover:bg-green-dark focus:outline-none dark:bg-gray-800"
         >
           log in
         </button>
 
         <div className="py-1 text-center ">
           <Link href="/forget-password/verify-email" legacyBehavior>
-            <a className=" text-blue text-primary">Forget password</a>
+            <a className=" text-blue text-primary dark:text-white">
+              Forget password
+            </a>
           </Link>
         </div>
 
-        <div className="py-1 pb-3 text-center ">
+        <div className="py-1 pb-3 text-center dark:text-gray-800">
           Create a new account?{" "}
           <Link href="/signup" legacyBehavior>
-            <a className=" text-blue text-primary">Sign up</a>
+            <a className=" text-blue text-primary dark:text-white">Sign up</a>
           </Link>
         </div>
       </div>

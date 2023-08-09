@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons";
 
-const Accordion = ({ title, content }) => {
-  const [expanded, setExpanded] = useState(true);
+const Accordion = ({ title, content, isOpen = true }) => {
+  const [expanded, setExpanded] = useState(isOpen);
   const toggleExpanded = () => setExpanded((current) => !current);
 
   return (

@@ -91,14 +91,14 @@ const Footer = () => {
             <div className="max-w-[25%] lg:max-w-none">
               <h2 className="pb-1 text-3xl text-white">Customer Service</h2>
               <p>
-                <Link href="/contact-us" legacyBehavior>
+                <Link href="/help/contact-us" legacyBehavior>
                   <a className="text-white transition-all hover:tracking-wider">
                     Contact Us
                   </a>
                 </Link>
               </p>
               <p>
-                <Link href="/faq" legacyBehavior>
+                <Link href="/help/faq" legacyBehavior>
                   <a className="text-white transition-all hover:tracking-wider">
                     FAQ
                   </a>
@@ -111,14 +111,14 @@ const Footer = () => {
             <div className="max-w-[25%] lg:max-w-none">
               <h2 className="pb-1 text-3xl text-white">About E-golap</h2>
               <p>
-                <Link href="/privacy" legacyBehavior>
+                <Link href="/help/privacy-policy" legacyBehavior>
                   <a className="text-white transition-all hover:tracking-wider">
                     Privacy Policy
                   </a>
                 </Link>
               </p>
               <p>
-                <Link href="/terms" legacyBehavior>
+                <Link href="/help/terms-of-use" legacyBehavior>
                   <a className="text-white transition-all hover:tracking-wider">
                     Terms of Use
                   </a>

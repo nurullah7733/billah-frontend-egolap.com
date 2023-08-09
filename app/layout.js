@@ -1,6 +1,7 @@
 "use client";
 import "./globals.css";
 import "react-modern-drawer/dist/index.css";
+import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Header from "../components/header/header";
@@ -26,6 +27,12 @@ export default function RootLayout({ children }) {
             <Header />
             <CategoriesSlider />
             {children}
+            <ProgressBar
+              height="4px"
+              color="#fff"
+              options={{ showSpinner: false }}
+              shallowRouting
+            />
             <TopItemAndPrice />
             <Footer />
           </ThemeProvider>
