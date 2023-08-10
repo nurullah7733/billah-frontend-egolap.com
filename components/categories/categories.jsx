@@ -60,7 +60,7 @@ const CategoriesSlider = () => {
   };
   return (
     <div className="block border border-gray-200 rounded-lg shadow dark:border-gray-700 pt-[5px]">
-      <div className="py-2 pt-20 text-black dark:text-white md:pt-32">
+      <div className="py-2 pt-16 text-black dark:text-white md:pt-32">
         <div className="lg:max-w-[750px] md:max-w-[700px] sm:max-w-[500px]  w-[1120px] @screen(max-width: 500px) xs:max-w-[400px] xxs:max-w-[320px] mx-auto ">
           <Slider {...settings}>
             <div className="!flex flex-col items-center ">
@@ -97,10 +97,12 @@ const CategoriesSlider = () => {
                 </div>
               </div>
             </div>
+
             <div className="!flex flex-col items-center">
               <img src="/Beauty-Toys&More.webp" alt="" width="50" height="50" />
               <h3>Beauty, Toys</h3>
             </div>
+
             <div className="!flex flex-col items-center">
               <img src="/electronics.webp" alt="" width="50" height="50" />
               <h3>Electronics</h3>
