@@ -1,46 +1,112 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
+const signupSchema = Yup.object().shape({
+  fullName: Yup.string().required("Name is required"),
+  email: Yup.string().required("Email is required").email(),
+  password: Yup.string().required("Password is required").min(6),
+  confirmPassword: Yup.string().oneOf(
+    [Yup.ref("password"), null],
+    "Passwords must match!"
+  ),
+});
 
 const SignupForm = () => {
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: signupSchema,
+    onSubmit: async ({ fullName, email, password }) => {
+      // Make a request to your backend to store the data
+
+      console.log(fullName, email, password);
+    },
+  });
+  const { errors, touched, values, handleBlur, handleChange, handleSubmit } =
+    formik;
+
   return (
     <div className="container py-14 mx-auto !max-w-sm px-3">
       <div className="bg-white dark:bg-gray-700 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] w-full px-3">
         <h1 className="pt-3 mb-6 text-3xl font-semibold text-center md:text-xl">
           Sign up
         </h1>
-        <input
-          type="text"
-          className="block w-full p-2 mb-4 border rounded outline-none "
-          name="fullname"
-          placeholder="Full Name"
-        />
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <input
+              type="name"
+              className="block w-full p-2 border rounded outline-none "
+              name="fullName"
+              placeholder="Full Name"
+              value={values.fullName}
+              onChange={handleChange}
+              onBlur={handleBlur("fullName")}
+            />
+            {errors.fullName && touched.fullName && (
+              <span className="text-sm text-red-600">{errors.fullName}</span>
+            )}
+          </div>
 
-        <input
-          type="text"
-          className="block w-full p-2 mb-4 border rounded outline-none"
-          name="email"
-          placeholder="Email"
-        />
+          <div className="mb-4">
+            <input
+              type="email"
+              className="block w-full p-2 border rounded outline-none"
+              name="email"
+              placeholder="Email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur("email")}
+            />
+            {errors.email && touched.email && (
+              <span className="text-sm text-red-600">{errors.email}</span>
+            )}
+          </div>
 
-        <input
-          type="password"
-          className="block w-full p-2 mb-4 border rounded outline-none"
-          name="password"
-          placeholder="Password"
-        />
-        <input
-          type="password"
-          className="block w-full p-2 mb-4 border rounded outline-none"
-          name="confirm_password"
-          placeholder="Confirm Password"
-        />
+          <div className="mb-4">
+            <input
+              type="password"
+              className="block w-full p-2 border rounded outline-none"
+              name="password"
+              placeholder="Password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur("password")}
+            />
+            {errors.password && touched.password && (
+              <span className="text-sm text-red-600">{errors.password}</span>
+            )}
+          </div>
 
-        <button
-          type="submit"
-          className="w-full py-2 my-1 text-sm text-center text-white uppercase rounded dark:bg-gray-800 bg-green bg-primary hover:bg-green-dark focus:outline-none"
-        >
-          Create Account
-        </button>
+          <div className="mb-4">
+            <input
+              type="password"
+              className="block w-full p-2 border rounded outline-none"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={values.confirmPassword}
+              onChange={handleChange}
+              onBlur={handleBlur("confirmPassword")}
+            />
+            {errors.confirmPassword && touched.confirmPassword && (
+              <span className="text-sm text-red-600">
+                {errors.confirmPassword}
+              </span>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-2 my-1 text-sm text-center text-white uppercase rounded dark:bg-gray-800 bg-green bg-primary hover:bg-green-dark focus:outline-none"
+          >
+            Create Account
+          </button>
+        </form>
 
         <div className="py-3 text-center dark:text-gray-800">
           Already have an account?{" "}

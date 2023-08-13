@@ -97,7 +97,7 @@ const Header = () => {
                     {/* login */}
                     <div>
                       <button className="h-10 font-semibold text-white rounded-md bg-primary-100 hover:bg-primary-200 w-28 md:w-16 dark:bg-gray-600 dark:hover:bg-gray-800">
-                        Login
+                        <Link href={"/login"}>Login</Link>
                       </button>
                     </div>
                   </div>
