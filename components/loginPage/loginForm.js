@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-const signupSchema = Yup.object().shape({
+const loginSchema = Yup.object().shape({
   email: Yup.string().required("Email is required").email(),
   password: Yup.string().required("Password is required").min(6),
 });
@@ -14,7 +14,7 @@ const LoginForm = () => {
       email: "",
       password: "",
     },
-    validationSchema: signupSchema,
+    validationSchema: loginSchema,
     onSubmit: async ({ email, password }) => {
       console.log(email, password);
     },
