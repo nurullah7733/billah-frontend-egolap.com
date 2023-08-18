@@ -1,34 +1,51 @@
 class SessionHelper {
   setUserData(value) {
-    localStorage.setItem("userData", JSON.stringify(value));
+    typeof window !== "undefined"
+      ? window.localStorage.setItem("userData", JSON.stringify(value))
+      : false;
   }
   getUserData() {
-    return JSON.parse(localStorage.getItem("userData"));
+    if (typeof window !== "undefined") {
+      return JSON.parse(window.localStorage.getItem("userData"));
+    }
   }
   setToken(value) {
-    localStorage.setItem("token", JSON.stringify(value));
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("token", JSON.stringify(value));
+    }
   }
   getToken() {
-    return JSON.parse(localStorage.getItem("token"));
+    if (typeof window !== "undefined") {
+      return JSON.parse(window.localStorage.getItem("token"));
+    }
   }
   setEmail(value) {
-    localStorage.setItem("email", value);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("email", value);
+    }
   }
   getEmail() {
-    return localStorage.getItem("email");
+    if (typeof window !== "undefined") {
+      return window.localStorage.getItem("email");
+    }
   }
   setOtp(value) {
-    localStorage.setItem("otp", value);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("otp", value);
+    }
   }
   getOtp() {
-    return localStorage.getItem("otp");
+    if (typeof window !== "undefined") {
+      return window.localStorage.getItem("otp");
+    }
   }
   sessionDestroy() {
-    localStorage.clear();
-    window.location.href = "/login";
+    if (typeof window !== "undefined") {
+      window.localStorage.clear();
+      window.location.href = "/login";
+    }
   }
 }
-
 export const {
   getUserData,
   setUserData,

@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { loginRequest } from "../../APIRequest/user/userApi";
-import { useRouter } from "next/navigation";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().required("Email is required").email(),
@@ -11,7 +10,6 @@ const loginSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
-  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -23,7 +21,7 @@ const LoginForm = () => {
       let result = await loginRequest(data);
 
       if (result) {
-        router.push("/");
+        window.location.href = "/";
       }
     },
   });

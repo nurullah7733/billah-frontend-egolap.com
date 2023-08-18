@@ -2,10 +2,13 @@
 import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { registrationRequest } from "../../APIRequest/user/userApi";
+import { useRouter } from "next/navigation";
 
 const signupSchema = Yup.object().shape({
   fullName: Yup.string().required("Name is required"),
   email: Yup.string().required("Email is required").email(),
+  mobile: Yup.string().required("Mobile is required").min(11).max(11),
   password: Yup.string().required("Password is required").min(6),
   confirmPassword: Yup.string().oneOf(
     [Yup.ref("password"), null],
@@ -14,18 +17,25 @@ const signupSchema = Yup.object().shape({
 });
 
 const SignupForm = () => {
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       fullName: "",
       email: "",
+      mobile: "",
       password: "",
       confirmPassword: "",
     },
     validationSchema: signupSchema,
-    onSubmit: async ({ fullName, email, password }) => {
-      // Make a request to your backend to store the data
-
-      console.log(fullName, email, password);
+    onSubmit: async ({ fullName, email, mobile, password }) => {
+      var fullNames = fullName.split(" "),
+        firstName = fullNames[0],
+        lastName = fullNames[fullNames.length - 1];
+      let data = { firstName, lastName, email, mobile, password };
+      let result = await registrationRequest(data);
+      if (result) {
+        router.push("/login");
+      }
     },
   });
   const { errors, touched, values, handleBlur, handleChange, handleSubmit } =
@@ -65,6 +75,21 @@ const SignupForm = () => {
             />
             {errors.email && touched.email && (
               <span className="text-sm text-red-600">{errors.email}</span>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <input
+              type="mobile"
+              className="block w-full p-2 border rounded outline-none"
+              name="mobile"
+              placeholder="Mobile"
+              value={values.mobile}
+              onChange={handleChange}
+              onBlur={handleBlur("mobile")}
+            />
+            {errors.email && touched.email && (
+              <span className="text-sm text-red-600">{errors.mobile}</span>
             )}
           </div>
 

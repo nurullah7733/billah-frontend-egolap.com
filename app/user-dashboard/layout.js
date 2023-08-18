@@ -9,6 +9,7 @@ import { MdCancelScheduleSend } from "react-icons/md";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import Link from "next/link";
 import useWindowSize from "../../utils/windowResize/useWindowResize";
+import { getUserData } from "../../utils/sessionHelper/sessionHelper";
 
 const Layout = ({ children }) => {
   const [open, setOpen] = useState(true);
@@ -32,11 +33,9 @@ const Layout = ({ children }) => {
         />
         <div className="flex items-center gap-x-2">
           <img
-            width={50}
-            height={50}
-            src="/profile.jpg"
-            className={`cursor-pointer duration-500 rounded-full ${
-              open && "rotate-[-360deg]"
+            src={typeof window !== "undefined" ? getUserData()?.photo : ""}
+            className={`cursor-pointer duration-500  rounded-[50%] w-10 h-10 ${
+              open && "rotate-[-360deg] w-14 h-14 rounded-full"
             }`}
           />
           <h1

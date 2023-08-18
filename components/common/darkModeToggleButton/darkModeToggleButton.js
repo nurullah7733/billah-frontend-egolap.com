@@ -15,12 +15,10 @@ const DarkOrLightModeButton = () => {
       setDarkMode(true);
       store.dispatch(setMode("light"));
     } else {
-      console.log("goggle");
       setDarkMode(false);
       store.dispatch(setMode("dark"));
     }
   };
-  console.log(theme);
   useEffect(() => {
     store.dispatch(setMode(localStorage.getItem("theme")));
   }, []);
