@@ -41,7 +41,7 @@ const ProfileDropdown = ({ dropdownMenus }) => {
           <img
             src={getUserData()?.photo}
             alt={getUserData()?.firstName}
-            className="w-12 h-10 rounded-full"
+            className="w-12 h-10 rounded-full cursor-pointer"
           />
         </div>
       </div>

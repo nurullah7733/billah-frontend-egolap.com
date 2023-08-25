@@ -1,17 +1,50 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getUserData } from "../../../utils/sessionHelper/sessionHelper";
 import useWindowSize from "../../../utils/windowResize/useWindowResize";
-import { getBase64 } from "../../../utils/formValidation/formValidation";
+import {
+  IsEmpty,
+  IsMobileNumber,
+  getBase64,
+} from "../../../utils/formValidation/formValidation";
+import { ErrorToast } from "../../../utils/notificationAlert/notificationAlert";
 
 const EditProfile = () => {
   const windowSize = useWindowSize();
-  let [img, setImg] = useState(null);
+  let [img, setImg] = useState("");
+  let [name, setName] = useState("");
+  let [mobile, setMobile] = useState("");
+  let [email, setEmail] = useState("");
 
-  const handleImg = (e) => {
-    console.log(e.target.files);
-    // getBase64()
+  const handleImg = async (e) => {
+    if (!e.target.files[0].type.includes("image/")) {
+      ErrorToast("Only images file supported");
+    } else if (e.target.files[0].size > 600000) {
+      ErrorToast("Image size up to 600kb ");
+    } else {
+      let base64files = await getBase64(e.target.files[0]);
+      setImg(base64files);
+    }
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(mobile);
+    if (!IsEmpty(name)) {
+      ErrorToast("Name is required");
+    } else if (!IsEmpty(mobile)) {
+      ErrorToast("Mobile number is required");
+    } else if (!IsMobileNumber(mobile)) {
+      ErrorToast("Invalid mobile number");
+    } else {
+    }
+  };
+
+  useEffect(() => {
+    setImg(getUserData()?.photo);
+    setName(getUserData()?.firstName + " " + getUserData()?.lastName);
+    setMobile(getUserData()?.mobile);
+    setEmail(getUserData()?.email);
+  }, []);
 
   return (
     <div>
@@ -24,13 +57,16 @@ const EditProfile = () => {
         }`}
       >
         <div className="col-span-2 bg-white dark:bg-gray-800">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <input
                 type="name"
                 className="block w-full p-2 border rounded outline-none "
                 name="fullName"
                 placeholder="Full Name"
+                defaultValue={name}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
 
@@ -40,6 +76,8 @@ const EditProfile = () => {
                 className="block w-full p-2 border rounded outline-none"
                 name="email"
                 placeholder="Email"
+                defaultValue={email}
+                disabled
               />
             </div>
 
@@ -49,6 +87,9 @@ const EditProfile = () => {
                 className="block w-full p-2 border rounded outline-none"
                 name="mobile"
                 placeholder="Mobile"
+                defaultValue={mobile}
+                value={mobile}
+                onChange={(e) => setMobile(e.target.value)}
               />
             </div>
 
@@ -62,15 +103,10 @@ const EditProfile = () => {
         </div>
 
         <div
-          className={`col-span-1    ${
-            windowSize.width > 1100 ? " " : "-order-1"
-          }`}
+          className={`col-span-1 ${windowSize.width > 1100 ? " " : "-order-1"}`}
         >
           <div>
-            <img
-              src={typeof window !== "undefined" ? getUserData()?.photo : ""}
-              className="w-40 h-40 rounded-sm"
-            />
+            <img src={img} className="w-40 h-40 rounded-sm" />
           </div>
           <input type="file" className="w-full pt-5" onChange={handleImg} />
         </div>
