@@ -10,6 +10,7 @@ import { BsFillCartCheckFill } from "react-icons/bs";
 import Link from "next/link";
 import useWindowSize from "../../utils/windowResize/useWindowResize";
 import { getUserData } from "../../utils/sessionHelper/sessionHelper";
+import ClientOnly from "@components/clientOnly/clientOnly";
 
 const Layout = ({ children }) => {
   const [open, setOpen] = useState(true);
@@ -20,7 +21,7 @@ const Layout = ({ children }) => {
   return (
     <div className="flex">
       <div
-        className={` ${open ? "w-64" : "w-20 "} ${
+        className={` ${open ? "w-64" : "w-20"} ${
           open ? "pt-[9px]" : "pt-2.5"
         } bg-primary dark:bg-gray-700  p-5 min-h-[500px]  relative duration-300`}
       >
@@ -32,12 +33,23 @@ const Layout = ({ children }) => {
           onClick={() => setOpen(!open)}
         />
         <div className="flex items-center gap-x-2">
-          <img
-            src={typeof window !== "undefined" ? getUserData()?.photo : ""}
-            className={`cursor-pointer duration-500  rounded-[50%] w-10 h-10 ${
-              open && "rotate-[-360deg] w-14 h-14 rounded-full"
-            }`}
-          />
+          {open ? (
+            <ClientOnly>
+              <div>
+                <img
+                  src={getUserData()?.photo}
+                  className={`cursor-pointer duration-500  rounded-[50%] w-14 h-14 ${
+                    !open && "hidden"
+                  }`}
+                />
+              </div>
+            </ClientOnly>
+          ) : (
+            <img
+              src={getUserData()?.photo}
+              className={`cursor-pointer duration-500  rounded-[50%] w-14 h-14 `}
+            />
+          )}
           <h1
             className={`text-white origin-left font-medium text-xl duration-200 ${
               !open && "scale-0"

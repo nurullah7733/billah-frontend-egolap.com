@@ -6,6 +6,7 @@ import {
   getUserData,
   sessionDestroy,
 } from "../../../utils/sessionHelper/sessionHelper";
+
 const ProfileDropdown = ({ dropdownMenus }) => {
   const wrapperRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +28,7 @@ const ProfileDropdown = ({ dropdownMenus }) => {
       document.removeEventListener("click", handleClickOutside, false);
     };
   }, []);
+
   return (
     <div className="relative" ref={wrapperRef}>
       <div

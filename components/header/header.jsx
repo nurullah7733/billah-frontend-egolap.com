@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaShoppingCart } from "react-icons/fa";
@@ -9,9 +9,9 @@ import DarkModeToggleButton from "../common/darkModeToggleButton/darkModeToggleB
 import Filter from "../common/filter/filter";
 import ProfileDropdown from "@components/common/dropdown/dropdownProfile";
 import { getToken } from "../../utils/sessionHelper/sessionHelper";
+import ClientOnly from "@components/clientOnly/clientOnly";
 
 const Header = () => {
-  const [dashboardMenu, setDashboardMenu] = useState(false);
   let [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   let hangleIsOpenMobileMenu = () => {
     setIsOpenMobileMenu(!isOpenMobileMenu);
@@ -57,15 +57,15 @@ const Header = () => {
                       </Link>
                     </div>
                     {/* login */}
-                    <>
+                    <ClientOnly>
                       {getToken()?.length > 0 ? (
                         <ProfileDropdown dropdownMenus={dropdownMenus} />
                       ) : (
-                        <div className="h-10 font-semibold text-white rounded-md bg-primary-100 hover:bg-primary-200 w-28 md:w-16 dark:bg-gray-600 dark:hover:bg-gray-800">
+                        <div className="flex items-center justify-center w-20 h-10 font-semibold text-white rounded-md bg-primary-100 hover:bg-primary-200 md:w-16 dark:bg-gray-600 dark:hover:bg-gray-800">
                           <Link href={"/login"}>Login</Link>
                         </div>
                       )}
-                    </>
+                    </ClientOnly>
                   </div>
                 </div>
                 {/* search */}
@@ -130,16 +130,15 @@ const Header = () => {
                 {/* DarkMode Toggle Button */}
                 <DarkModeToggleButton />
                 {/* login */}
-
-                <>
+                <ClientOnly>
                   {getToken()?.length > 0 ? (
                     <ProfileDropdown dropdownMenus={dropdownMenus} />
                   ) : (
-                    <div className="h-10 font-semibold text-white rounded-md bg-primary-100 hover:bg-primary-200 w-28 md:w-16 dark:bg-gray-600 dark:hover:bg-gray-800">
+                    <div className="flex items-center justify-center w-20 h-10 font-semibold text-white rounded-md bg-primary-100 hover:bg-primary-200 md:w-16 dark:bg-gray-600 dark:hover:bg-gray-800">
                       <Link href={"/login"}>Login</Link>
                     </div>
                   )}
-                </>
+                </ClientOnly>
               </div>
             </div>
           </div>
