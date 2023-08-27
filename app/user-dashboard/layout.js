@@ -50,13 +50,15 @@ const Layout = ({ children }) => {
               className={`cursor-pointer duration-500  rounded-[50%] w-14 h-14 `}
             />
           )}
-          <h1
-            className={`text-white origin-left font-medium text-xl duration-200 ${
-              !open && "scale-0"
-            }`}
-          >
-            {"Md Nurullah"}
-          </h1>
+          <ClientOnly>
+            <h1
+              className={`text-white origin-left font-medium text-xl duration-200 ${
+                !open && "scale-0"
+              }`}
+            >
+              {getUserData()?.firstName + " " + " " + getUserData()?.lastName}
+            </h1>
+          </ClientOnly>
         </div>
         <ul className="pt-6">
           <li
@@ -91,26 +93,26 @@ const Layout = ({ children }) => {
           <li
             className={`flex rounded-md p-2 cursor-pointer  hover:bg-primary-100 dark:hover:bg-gray-800 text-white text-md items-center gap-x-4`}
           >
-            <Link href="/user-dashboard/order">
+            <Link href="/user-dashboard/orders">
               <BsFillCartCheckFill size={20} />
             </Link>
             <NavLink
-              href="/user-dashboard/order"
+              href="/user-dashboard/orders"
               exact
               className={`${!open && "hidden"} origin-left duration-200`}
             >
-              Order
+              Orders
             </NavLink>
           </li>
 
           <li
             className={`flex rounded-md p-2 cursor-pointer hover:bg-primary-100 dark:hover:bg-gray-800 text-white text-md items-center gap-x-4`}
           >
-            <Link href="/user-dashboard/return-orders">
+            <Link href="/user-dashboard/orders/return-orders">
               <GiReturnArrow size={20} />
             </Link>
             <NavLink
-              href="/user-dashboard/return-orders"
+              href="/user-dashboard/orders/return-orders"
               exact
               className={`${!open && "hidden"} origin-left duration-200`}
             >
@@ -120,11 +122,11 @@ const Layout = ({ children }) => {
           <li
             className={`flex rounded-md p-2 cursor-pointer hover:bg-primary-100 dark:hover:bg-gray-800 text-white text-md items-center gap-x-4`}
           >
-            <Link href="/user-dashboard/cancelled-orders">
+            <Link href="/user-dashboard/orders/cancel-orders">
               <MdCancelScheduleSend size={20} />
             </Link>
             <NavLink
-              href="/user-dashboard/cancelled-orders"
+              href="/user-dashboard/orders/cancel-orders"
               exact
               className={`${!open && "hidden"} origin-left duration-200`}
             >

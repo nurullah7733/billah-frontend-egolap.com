@@ -49,8 +49,10 @@ const ProfileDropdown = ({ dropdownMenus }) => {
         <div className="absolute z-50 bg-white dark:bg-gray-800 dark:text-white text-black py-2 min-w-[200px] shadow-lg rounded-md right-0 top-10">
           <div className="">
             <div className="px-6">
-              <p className="text-base">Md Nurullah</p>
-              <p className="pb-3 text-base">nurullah789654@xxx.com</p>
+              <p className="text-base">
+                {getUserData()?.firstName + " " + getUserData()?.lastName}
+              </p>
+              <p className="pb-3 text-base"> {getUserData()?.email}</p>
             </div>
             <hr />
           </div>

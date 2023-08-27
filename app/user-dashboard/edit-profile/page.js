@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getUserData } from "../../../utils/sessionHelper/sessionHelper";
+import {
+  getUserData,
+  setUserData,
+} from "../../../utils/sessionHelper/sessionHelper";
 import useWindowSize from "../../../utils/windowResize/useWindowResize";
 import {
   IsEmpty,
@@ -8,6 +11,7 @@ import {
   getBase64,
 } from "../../../utils/formValidation/formValidation";
 import { ErrorToast } from "../../../utils/notificationAlert/notificationAlert";
+import { userUpdateRequest } from "../../../APIRequest/user/userApi";
 
 const EditProfile = () => {
   const windowSize = useWindowSize();
@@ -28,7 +32,6 @@ const EditProfile = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(mobile);
     if (!IsEmpty(name)) {
       ErrorToast("Name is required");
     } else if (!IsEmpty(mobile)) {
@@ -36,6 +39,29 @@ const EditProfile = () => {
     } else if (!IsMobileNumber(mobile)) {
       ErrorToast("Invalid mobile number");
     } else {
+      var fullName = name.split(" ");
+      let firstName = fullName[0];
+      let lastName = fullName[fullName.length - 1];
+      console.log(firstName);
+      console.log(lastName);
+      let data = {
+        firstName: firstName,
+        lastName: lastName,
+        mobile: mobile,
+        photo: img,
+      };
+      let result = await userUpdateRequest(data, getUserData()?.id);
+      if (result) {
+        setUserData({
+          firstName,
+          lastName,
+          email,
+          mobile,
+          photo: img,
+          id: getUserData()?.id,
+        });
+        window.location.href = "/user-dashboard/edit-profile";
+      }
     }
   };
 
