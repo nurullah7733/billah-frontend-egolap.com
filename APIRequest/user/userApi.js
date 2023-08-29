@@ -1,4 +1,5 @@
 import baseUrl from "../../utils/config/baseUrl";
+import { NextResponse } from "next/server";
 import {
   ErrorToast,
   SuccessToast,
@@ -9,11 +10,14 @@ import {
   setToken,
   setUserData,
 } from "../../utils/sessionHelper/sessionHelper";
+import getCookie from "../../utils/getACookie/getACookie";
 
 export const loginRequest = async (data) => {
   let url = `${baseUrl}/login`;
   const config = {
     method: "POST",
+    mode: "cors",
+    credentials: "include",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -24,10 +28,14 @@ export const loginRequest = async (data) => {
     const res = await fetch(url, config);
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
+      // document.cookie = `token = ${data.token}`;
+      // const response = NextResponse.next();
+      // response.cookies.set("token", "log lg login");
+      window.location = "/";
       setUserData(data.data);
       setToken(data.token);
       SuccessToast("Login success!");
-      return true;
+      return data;
     } else if (res.status === 200 && data.status === "Invalid Credentials") {
       ErrorToast(data.status);
       return false;
@@ -92,7 +100,7 @@ export const userUpdateRequest = async (data, id) => {
     } else if (data.status === "fail" && data.data.keyPattern.mobile === 1) {
       ErrorToast("Mobile number already exits.");
     } else if (res.status === 401 && data.status == "unauthorized") {
-      sessionDestroy();
+      // sessionDestroy();
     } else {
       ErrorToast("Request fail. Please try again.");
       return false;

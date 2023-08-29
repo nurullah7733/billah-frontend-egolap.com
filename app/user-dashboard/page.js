@@ -3,7 +3,6 @@ import ClientOnly from "@components/clientOnly/clientOnly";
 import { getUserData } from "../../utils/sessionHelper/sessionHelper";
 
 const Page = () => {
-  console.log(getUserData());
   return (
     <div>
       <h1 className="w-full md:text-xl dark:bg-gray-700 px-5 py-3.5 text-3xl border-l text-white bg-primary">

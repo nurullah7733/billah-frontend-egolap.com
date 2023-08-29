@@ -20,9 +20,9 @@ const LoginForm = () => {
       let data = { email, password };
       let result = await loginRequest(data);
 
-      if (result) {
-        window.location.href = "/";
-      }
+      // console.log(result.token);
+      // document.cookie = `token = ${result.token}`;
+      window.location.href = "/";
     },
   });
   const { errors, touched, values, handleBlur, handleChange, handleSubmit } =

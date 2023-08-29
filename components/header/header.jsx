@@ -19,7 +19,7 @@ const Header = () => {
   const dropdownMenus = [
     { menuName: "Dashboard", link: "/user-dashboard" },
     { menuName: "Edit profile", link: "/user-dashboard/edit-profile" },
-    { menuName: "Orders", link: "#" },
+    { menuName: "Orders", link: "/user-dashboard/orders" },
   ];
 
   return (

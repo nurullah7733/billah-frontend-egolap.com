@@ -6,6 +6,7 @@ import {
   getUserData,
   sessionDestroy,
 } from "../../../utils/sessionHelper/sessionHelper";
+import { logOutRequest } from "../../../APIRequest/orders/ordersApi";
 
 const ProfileDropdown = ({ dropdownMenus }) => {
   const wrapperRef = useRef(null);
@@ -73,7 +74,8 @@ const ProfileDropdown = ({ dropdownMenus }) => {
             <div className="px-4 py-2">
               <a
                 className="block w-full px-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-500"
-                onClick={sessionDestroy}
+                // onClick={sessionDestroy}
+                onClick={() => logOutRequest()}
               >
                 Log out
               </a>
