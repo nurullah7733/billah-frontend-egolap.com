@@ -1,16 +1,13 @@
 import baseUrl from "../../utils/config/baseUrl";
-import { NextResponse } from "next/server";
 import {
   ErrorToast,
   SuccessToast,
 } from "../../utils/notificationAlert/notificationAlert";
 import {
-  getToken,
   sessionDestroy,
   setToken,
   setUserData,
 } from "../../utils/sessionHelper/sessionHelper";
-import getCookie from "../../utils/getACookie/getACookie";
 
 export const loginRequest = async (data) => {
   let url = `${baseUrl}/login`;
@@ -31,7 +28,7 @@ export const loginRequest = async (data) => {
       // document.cookie = `token = ${data.token}`;
       // const response = NextResponse.next();
       // response.cookies.set("token", "log lg login");
-      window.location = "/";
+      // window.location = "/";
       setUserData(data.data);
       setToken(data.token);
       SuccessToast("Login success!");
@@ -85,6 +82,7 @@ export const userUpdateRequest = async (data, id) => {
   let url = `${baseUrl}/user-udpate-by-user/${id}`;
   const config = {
     method: "POST",
+    credentials: "include",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -100,7 +98,38 @@ export const userUpdateRequest = async (data, id) => {
     } else if (data.status === "fail" && data.data.keyPattern.mobile === 1) {
       ErrorToast("Mobile number already exits.");
     } else if (res.status === 401 && data.status == "unauthorized") {
-      // sessionDestroy();
+      sessionDestroy();
+    } else {
+      ErrorToast("Request fail. Please try again.");
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
+};
+
+export const logOutRequest = async () => {
+  let url = `${baseUrl}/logout`;
+  const config = {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await fetch(url, config);
+    const data = await res.json();
+    console.log(res, "from logout");
+    if (res.status === 200 && data.status === "success") {
+      sessionDestroy();
+      SuccessToast("logout success!");
+      return data;
+    } else if (res.status === 200 && data.status === "Invalid Credentials") {
+      ErrorToast(data.status);
+      return false;
     } else {
       ErrorToast("Request fail. Please try again.");
       return false;

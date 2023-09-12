@@ -1,17 +1,15 @@
-"use client";
 import "./globals.css";
 import "react-modern-drawer/dist/index.css";
-import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ReduxProvider from "../redux/Provider";
+import NextThemeProvider from "../utils/provider/themeProvider";
+import AppProgressbarProvider from "../utils/provider/appProgressbarProvider";
+
 import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
 import CategoriesSlider from "../components/categories/categories";
 import TopItemAndPrice from "../components/common/topItemAndPrice/topItemAndPrice";
-
-import store from "../redux/store";
-import { Provider } from "react-redux";
-import { ThemeProvider } from "next-themes";
 
 // export const metadata = {
 //   title: "Create Next App",
@@ -22,21 +20,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Provider store={store}>
-          <ThemeProvider attribute="class">
+        <ReduxProvider>
+          <NextThemeProvider attribute="class">
             <Header />
             <CategoriesSlider />
             {children}
-            <ProgressBar
-              height="4px"
-              color="#fff"
-              options={{ showSpinner: false }}
-              shallowRouting
-            />
+            <AppProgressbarProvider />
             <TopItemAndPrice />
             <Footer />
-          </ThemeProvider>
-        </Provider>
+          </NextThemeProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

@@ -2,13 +2,13 @@
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import {
-  getUserData,
-  sessionDestroy,
-} from "../../../utils/sessionHelper/sessionHelper";
-import { logOutRequest } from "../../../APIRequest/orders/ordersApi";
+import { getUserData } from "../../../utils/sessionHelper/sessionHelper";
+import { logOutRequest } from "../../../APIRequest/user/userApi";
 
 const ProfileDropdown = ({ dropdownMenus }) => {
+  let handleClick = async () => {
+    await logOutRequest();
+  };
   const wrapperRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   //   const [selectedOption, setSelectedOption] = useState("");
@@ -53,6 +53,7 @@ const ProfileDropdown = ({ dropdownMenus }) => {
               <p className="text-base">
                 {getUserData()?.firstName + " " + getUserData()?.lastName}
               </p>
+
               <p className="pb-3 text-base"> {getUserData()?.email}</p>
             </div>
             <hr />
@@ -74,8 +75,7 @@ const ProfileDropdown = ({ dropdownMenus }) => {
             <div className="px-4 py-2">
               <a
                 className="block w-full px-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-500"
-                // onClick={sessionDestroy}
-                onClick={() => logOutRequest()}
+                onClick={handleClick}
               >
                 Log out
               </a>
