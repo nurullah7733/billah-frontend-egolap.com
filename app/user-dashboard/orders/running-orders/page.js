@@ -1,15 +1,26 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { cancelOrdersRequest } from "../../../../APIRequest/orders/ordersApi";
+import {
+  changeOrderStatusRequest,
+  runningOrdersRequest,
+} from "../../../../APIRequest/orders/ordersApi";
 import OrderStatusBar from "../_components/orderStatusBar";
 
-export default function DeliveryOrders() {
+export default function RunningOrders() {
+  const router = useRouter();
   const [data, setData] = useState([]);
 
+  const handleClick = async (id) => {
+    let result = await changeOrderStatusRequest(id);
+    if (result) {
+      router.push("/user-dashboard/orders/cancel-orders");
+    }
+  };
   useEffect(() => {
     (async () => {
-      var allData = await cancelOrdersRequest(1, 100, "0");
+      var allData = await runningOrdersRequest(1, 100, "0");
       setData(allData);
     })();
   }, []);
@@ -17,7 +28,7 @@ export default function DeliveryOrders() {
   let finalData;
 
   if (data?.total?.length < 1) {
-    finalData = <h1 className="px-5 text-2xl">No cancel order</h1>;
+    finalData = <h1 className="px-5 text-2xl">No running order</h1>;
   } else {
     finalData = (
       <div className="px-5 py-3.5 w-full">
@@ -31,7 +42,13 @@ export default function DeliveryOrders() {
               Order status:{" "}
               <span className="text-green-500">
                 {indivitualOrder?.orderStatus}
-              </span>
+              </span>{" "}
+              <button
+                className="px-2 text-white dark:bg-gray-700 bg-primary"
+                onClick={() => handleClick(indivitualOrder?._id)}
+              >
+                Cancel order
+              </button>
             </p>
             <div className="max-w-sm py-1">
               <p>
@@ -107,7 +124,7 @@ export default function DeliveryOrders() {
   return (
     <div className="container">
       <h1 className="w-full md:text-xl dark:bg-gray-700 px-5 py-3.5 text-3xl border-l text-white bg-primary">
-        Cancel orders
+        Running orders
       </h1>
       <div className="bg-white dark:bg-gray-800">{finalData}</div>
     </div>

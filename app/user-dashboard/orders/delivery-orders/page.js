@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { cancelOrdersRequest } from "../../../../APIRequest/orders/ordersApi";
+import { deliveryOrdersRequest } from "../../../../APIRequest/orders/ordersApi";
 import OrderStatusBar from "../_components/orderStatusBar";
 
 export default function DeliveryOrders() {
@@ -9,7 +9,7 @@ export default function DeliveryOrders() {
 
   useEffect(() => {
     (async () => {
-      var allData = await cancelOrdersRequest(1, 100, "0");
+      var allData = await deliveryOrdersRequest(1, 100, "0");
       setData(allData);
     })();
   }, []);
@@ -17,7 +17,7 @@ export default function DeliveryOrders() {
   let finalData;
 
   if (data?.total?.length < 1) {
-    finalData = <h1 className="px-5 text-2xl">No cancel order</h1>;
+    finalData = <h1 className="px-5 text-2xl">No delivery order</h1>;
   } else {
     finalData = (
       <div className="px-5 py-3.5 w-full">
@@ -107,7 +107,7 @@ export default function DeliveryOrders() {
   return (
     <div className="container">
       <h1 className="w-full md:text-xl dark:bg-gray-700 px-5 py-3.5 text-3xl border-l text-white bg-primary">
-        Cancel orders
+        Delivery orders
       </h1>
       <div className="bg-white dark:bg-gray-800">{finalData}</div>
     </div>

@@ -93,15 +93,30 @@ const Layout = ({ children }) => {
           <li
             className={`flex rounded-md p-2 cursor-pointer  hover:bg-primary-100 dark:hover:bg-gray-800 text-white text-md items-center gap-x-4`}
           >
-            <Link href="/user-dashboard/orders">
+            <Link href="/user-dashboard/orders/running-orders">
               <BsFillCartCheckFill size={20} />
             </Link>
             <NavLink
-              href="/user-dashboard/orders"
+              href="/user-dashboard/orders/running-orders"
               exact
               className={`${!open && "hidden"} origin-left duration-200`}
             >
-              Orders
+              Running orders
+            </NavLink>
+          </li>
+
+          <li
+            className={`flex rounded-md p-2 cursor-pointer  hover:bg-primary-100 dark:hover:bg-gray-800 text-white text-md items-center gap-x-4`}
+          >
+            <Link href="/user-dashboard/orders/delivery-orders">
+              <BsFillCartCheckFill size={20} />
+            </Link>
+            <NavLink
+              href="/user-dashboard/orders/delivery-orders"
+              exact
+              className={`${!open && "hidden"} origin-left duration-200`}
+            >
+              Delivery orders
             </NavLink>
           </li>
 
