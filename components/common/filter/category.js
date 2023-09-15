@@ -18,15 +18,11 @@ const Category = () => {
     <>
       {arr.map((item, index) => (
         <div className="flex items-center gap-x-2" key={index + 20}>
-          <input
-            type="checkbox"
-            id={index + 20}
-            className="w-4 sm:w-3 h-4 accent-[#ff007f]"
-          />
-          <label
-            className="dark:text-white sm:text-[14px]"
-            htmlFor={index + 20}
-          >
+          <label className="dark:text-white sm:text-[14px]  flex items-center">
+            <input
+              type="checkbox"
+              className="w-4 sm:w-3 h-4 mr-2  accent-[#ff007f]"
+            />
             {item}
           </label>
         </div>

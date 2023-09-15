@@ -10,12 +10,26 @@ import Filter from "../common/filter/filter";
 import ProfileDropdown from "@components/common/dropdown/dropdownProfile";
 import { getToken } from "../../utils/sessionHelper/sessionHelper";
 import ClientOnly from "@components/clientOnly/clientOnly";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
+  let [searchValue, setSearchValue] = useState("0");
   let [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   let hangleIsOpenMobileMenu = () => {
     setIsOpenMobileMenu(!isOpenMobileMenu);
   };
+
+  const handleChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    router.push(`/store/?search=${searchValue}`);
+    console.log(searchValue);
+  };
+
   const dropdownMenus = [
     { menuName: "Dashboard", link: "/user-dashboard" },
     { menuName: "Edit profile", link: "/user-dashboard/edit-profile" },
@@ -98,16 +112,21 @@ const Header = () => {
                 {/* search */}
                 <div>
                   <div className="relative w-96 md:w-60 ">
-                    <input
-                      type="text"
-                      className="w-full h-10 py-2 pl-4 pr-10 leading-tight text-black border border-gray-300 rounded-md shadow-sm focus:outline-none dark:text-white"
-                      placeholder="Search for products, brands and more..."
-                    />
-                    <div className="absolute inset-y-0 right-0 flex items-center px-2">
-                      <div>
-                        <AiOutlineSearch className="text-lg text-primary dark:text-white" />
+                    <form onSubmit={handleSearch}>
+                      <input
+                        type="text"
+                        onChange={handleChange}
+                        className="w-full h-10 py-2 pl-4 pr-10 leading-tight text-black border border-gray-300 rounded-md shadow-sm focus:outline-none dark:text-white"
+                        placeholder="Search for products, brands and more..."
+                      />
+                      <div className="absolute right-0 flex items-center px-2 top-3">
+                        <div>
+                          <button type="submit">
+                            <AiOutlineSearch className="text-lg text-primary dark:text-white" />
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    </form>
                   </div>
                 </div>
 

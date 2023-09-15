@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React from "react";
 import PriceRange from "./priceRange";
 import Brand from "./brand";
 import Category from "./category";
