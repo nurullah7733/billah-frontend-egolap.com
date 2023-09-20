@@ -4,9 +4,16 @@ import DrawerComponents from "./_components/drawer";
 import Filter from "@components/common/filter/filter";
 
 const Store = async ({ searchParams }) => {
-  const search = searchParams.search || "0";
+  let searchKeyword = searchParams.search || "0";
+  const min = searchParams.min;
+  const max = searchParams.max;
+  const brand = searchParams.brand;
 
-  const data = await getAllProductsRequest(1, 100, search);
+  let data = await getAllProductsRequest(
+    1,
+    100,
+    `${searchKeyword}&min=${min}&max=${max}&brand${brand}`
+  );
 
   if (data?.total?.length < 1) {
     return (

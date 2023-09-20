@@ -1,22 +1,30 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Accordion from "../accordion/accordion";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { getBrandsRequest } from "../../../APIRequest/brand/brandApi";
 import capitalizeFLetter from "../../../utils/capitalizedFirstWord/capitalizedFirstWord";
 
 const Brand = () => {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [allBrand, setAllBrand] = useState([]);
   const [checkboxIndex, setCheckboxIndex] = useState("");
 
+  // const createQueryString = useCallback(
+  //   (name, value) => {
+  //     const params = new URLSearchParams(searchParams);
+  //     params.set(name, value);
+
+  //     return params.toString();
+  //   },
+  //   [searchParams]
+  // );
+
   const handleChange = (e, index) => {
-    setCheckboxIndex(index);
-    if (e.target.checked === false) {
-      e.target.value = "0";
-      setCheckboxIndex(0);
-    }
-    router.push(`/store/?search=${e.target.value}`);
+    console.log(pathname, "pathname");
+    console.log(searchParams.getAll("brand"), "searchParams");
   };
 
   useEffect(() => {

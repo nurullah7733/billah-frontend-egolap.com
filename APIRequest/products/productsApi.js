@@ -11,6 +11,9 @@ import {
 
 export const getAllProductsRequest = async (pageNo, perPage, searchKeyword) => {
   let url = `${baseUrl}/list-product-global/${pageNo}/${perPage}/${searchKeyword}`;
+  console.log(pageNo, "pageno", perPage, "perpage", searchKeyword, "searchkey");
+  console.log(url, "url");
+
   const config = {
     method: "GET",
     credentials: "include",
