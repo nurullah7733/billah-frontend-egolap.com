@@ -26,7 +26,7 @@ const Header = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    router.push(`/store/?search=${searchValue}`);
+    router.push(`/store/?searchKeyword=${searchValue}`);
     console.log(searchValue);
   };
 

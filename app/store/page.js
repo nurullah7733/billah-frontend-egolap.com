@@ -1,19 +1,13 @@
 import { getAllProductsRequest } from "../../APIRequest/products/productsApi";
 import Product from "../../components/common/product/product";
+import createParams from "../../utils/createParams/createParams";
 import DrawerComponents from "./_components/drawer";
 import Filter from "@components/common/filter/filter";
 
 const Store = async ({ searchParams }) => {
-  let searchKeyword = searchParams.search || "0";
-  const min = searchParams.min;
-  const max = searchParams.max;
-  const brand = searchParams.brand;
-
-  let data = await getAllProductsRequest(
-    1,
-    100,
-    `${searchKeyword}&min=${min}&max=${max}&brand${brand}`
-  );
+  let allQueryParams = createParams(searchParams);
+  console.log(allQueryParams, "allparams");
+  let data = await getAllProductsRequest(allQueryParams);
 
   if (data?.total?.length < 1) {
     return (

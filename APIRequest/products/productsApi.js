@@ -9,9 +9,9 @@ import {
   setUserData,
 } from "../../utils/sessionHelper/sessionHelper";
 
-export const getAllProductsRequest = async (pageNo, perPage, searchKeyword) => {
-  let url = `${baseUrl}/list-product-global/${pageNo}/${perPage}/${searchKeyword}`;
-  console.log(pageNo, "pageno", perPage, "perpage", searchKeyword, "searchkey");
+export const getAllProductsRequest = async (allQueryParams) => {
+  let url = `${baseUrl}/list-product-global/?${allQueryParams}`;
+
   console.log(url, "url");
 
   const config = {
@@ -23,7 +23,7 @@ export const getAllProductsRequest = async (pageNo, perPage, searchKeyword) => {
     },
   };
   try {
-    const res = await fetch(url, config);
+    const res = await fetch(url, config, { cache: "no-store" });
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
       return data?.data[0];
@@ -37,6 +37,6 @@ export const getAllProductsRequest = async (pageNo, perPage, searchKeyword) => {
     }
   } catch (error) {
     console.log(error);
-    throw new Error("Something went wrong");
+    // throw new Error("Something went wrong");
   }
 };

@@ -1,30 +1,35 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import Accordion from "../accordion/accordion";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useQueryParams } from "../../../utils/updateQueryParams/queryParams";
+import {
+  useRouter,
+  usePathname,
+  useSearchParams,
+  useParams,
+} from "next/navigation";
 import { getBrandsRequest } from "../../../APIRequest/brand/brandApi";
 import capitalizeFLetter from "../../../utils/capitalizedFirstWord/capitalizedFirstWord";
 
 const Brand = () => {
   const router = useRouter();
-  const pathname = usePathname();
+  const [queryParams, setQueryParams] = useQueryParams();
   const searchParams = useSearchParams();
   const [allBrand, setAllBrand] = useState([]);
-  const [checkboxIndex, setCheckboxIndex] = useState("");
-
-  // const createQueryString = useCallback(
-  //   (name, value) => {
-  //     const params = new URLSearchParams(searchParams);
-  //     params.set(name, value);
-
-  //     return params.toString();
-  //   },
-  //   [searchParams]
-  // );
+  const newSearchParams = new URLSearchParams(searchParams);
 
   const handleChange = (e, index) => {
-    console.log(pathname, "pathname");
-    console.log(searchParams.getAll("brand"), "searchParams");
+    newSearchParams.set("tab", "cami");
+
+    setQueryParams(
+      {
+        ...queryParams,
+        ...{
+          page: 3,
+        },
+      },
+      { replace: true }
+    );
   };
 
   useEffect(() => {
@@ -43,7 +48,6 @@ const Brand = () => {
               className="w-4 sm:w-3 h-4 mr-2 accent-[#ff007f]"
               name={item?.name}
               onChange={(e) => handleChange(e, index + 1)}
-              checked={index + 1 === checkboxIndex}
               type="checkbox"
               value={item?.name}
             />
