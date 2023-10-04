@@ -1,35 +1,33 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import Accordion from "../accordion/accordion";
-import { useQueryParams } from "../../../utils/updateQueryParams/queryParams";
-import {
-  useRouter,
-  usePathname,
-  useSearchParams,
-  useParams,
-} from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { getBrandsRequest } from "../../../APIRequest/brand/brandApi";
 import capitalizeFLetter from "../../../utils/capitalizedFirstWord/capitalizedFirstWord";
 
 const Brand = () => {
   const router = useRouter();
-  const [queryParams, setQueryParams] = useQueryParams();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [allBrand, setAllBrand] = useState([]);
-  const newSearchParams = new URLSearchParams(searchParams);
+  const [checkboxIndex, setCheckboxIndex] = useState("");
 
   const handleChange = (e, index) => {
-    newSearchParams.set("tab", "cami");
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+    // const value = e.target.value.trim();
 
-    setQueryParams(
-      {
-        ...queryParams,
-        ...{
-          page: 3,
-        },
-      },
-      { replace: true }
-    );
+    setCheckboxIndex(index);
+
+    if (!e.target.checked) {
+      setCheckboxIndex("");
+      current.delete("brand");
+    } else {
+      current.set("brand", e.target.value);
+    }
+
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+    router.push(`${pathname}${query}`);
   };
 
   useEffect(() => {
@@ -50,6 +48,7 @@ const Brand = () => {
               onChange={(e) => handleChange(e, index + 1)}
               type="checkbox"
               value={item?.name}
+              checked={checkboxIndex == index + 1}
             />
             {capitalizeFLetter(item?.name)}
           </label>

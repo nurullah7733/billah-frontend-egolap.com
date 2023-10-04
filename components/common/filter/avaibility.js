@@ -1,26 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import Accordion from "../accordion/accordion";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Avaibility = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [checkboxIndex, setCheckboxIndex] = useState("");
+
+  const handleChange = (e, index) => {
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+    // const value = e.target.value.trim();
+
+    setCheckboxIndex(index);
+
+    if (!e.target.checked) {
+      setCheckboxIndex("");
+      current.delete("inStock");
+    } else {
+      current.set("inStock", e.target.value);
+    }
+
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+    router.push(`${pathname}${query}`);
+  };
+
   let content = (
     <>
       <div className="flex items-center gap-x-2 ">
-        <input
-          type="checkbox"
-          id={"1"}
-          className="w-4 sm:w-3 h-4 accent-[#ff007f]"
-        />
-        <label className="dark:text-white sm:text-[14px]" htmlFor={"1"}>
+        <label className="dark:text-white sm:text-[14px] flex items-center">
+          <input
+            type="checkbox"
+            className="w-4 sm:w-3 h-4  mr-2 accent-[#ff007f]"
+            onChange={(e) => handleChange(e, 1)}
+            value={"true"}
+            checked={checkboxIndex == 1}
+          />
           In Stock
         </label>
       </div>
       <div className="flex items-center gap-x-2">
-        <input
-          type="checkbox"
-          id={"2"}
-          className="w-4 sm:w-3 h-4 accent-[#ff007f]"
-        />
-        <label className="dark:text-white sm:text-[14px]" htmlFor={"2"}>
+        <label className="dark:text-white sm:text-[14px] flex items-center">
+          <input
+            type="checkbox"
+            className="w-4 sm:w-3 h-4  mr-2 accent-[#ff007f]"
+            onChange={(e) => handleChange(e, 2)}
+            value={"false"}
+            checked={checkboxIndex == 2}
+          />
           Out of Stock
         </label>
       </div>

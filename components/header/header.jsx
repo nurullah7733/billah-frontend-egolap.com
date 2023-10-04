@@ -10,24 +10,46 @@ import Filter from "../common/filter/filter";
 import ProfileDropdown from "@components/common/dropdown/dropdownProfile";
 import { getToken } from "../../utils/sessionHelper/sessionHelper";
 import ClientOnly from "@components/clientOnly/clientOnly";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Header = () => {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   let [searchValue, setSearchValue] = useState("0");
   let [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   let hangleIsOpenMobileMenu = () => {
     setIsOpenMobileMenu(!isOpenMobileMenu);
   };
 
+  let current = new URLSearchParams(Array.from(searchParams.entries()));
   const handleChange = (e) => {
     setSearchValue(e.target.value);
+    if (!e.target.value) {
+      current.set("searchKeyword", "0");
+      const search = current.toString();
+      const query = search ? `?${search}` : "";
+      router.push(`${pathname}${query}`);
+    }
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    router.push(`/store/?searchKeyword=${searchValue}`);
-    console.log(searchValue);
+    // const value = e.target.value.trim();
+    if (!searchValue) {
+      current.set("searchKeyword", "0");
+    } else {
+      current.set("searchKeyword", searchValue);
+    }
+
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+    console.log(pathname === "/store", "path condition");
+    if (pathname === "/store") {
+      router.push(`${pathname}${query}`);
+    } else {
+      router.push(`/store?pageNo=1&perPage=100&searchKeyword=${searchValue}`);
+    }
   };
 
   const dropdownMenus = [
@@ -56,7 +78,7 @@ const Header = () => {
                   <div className="flex items-center gap-6">
                     {/* our store */}
                     <div className="cursor-pointer">
-                      <Link href="/store">
+                      <Link href="/store?pageNo=1&perPage=100&searchKeyword=0">
                         <p className="font-semibold ">Store</p>
                       </Link>
                     </div>
@@ -131,8 +153,11 @@ const Header = () => {
                 </div>
 
                 <div className="cursor-pointer ">
-                  <Link href="/store" legacyBehavior>
-                    <a className="ml-2 font-semibold text-md">Our Store</a>
+                  <Link
+                    href="/store?pageNo=1&perPage=100&searchKeyword=0"
+                    legacyBehavior
+                  >
+                    <a className="ml-2 font-semibold text-md">Store</a>
                   </Link>
                 </div>
                 {/* cart */}
