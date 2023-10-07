@@ -5,7 +5,6 @@ import Brand from "./brand";
 import Category from "./category";
 import Avaibility from "./avaibility";
 import SubCategory from "./subCategory";
-import Size from "./size";
 
 const Filter = () => {
   return (
@@ -19,8 +18,6 @@ const Filter = () => {
       <Category />
       <div className="py-1"></div>
       <SubCategory />
-      <div className="py-1"></div>
-      <Size />
     </div>
   );
 };

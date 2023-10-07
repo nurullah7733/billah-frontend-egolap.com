@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
 const Accordion = ({ title, content, isOpen = true }) => {
   const [expanded, setExpanded] = useState(isOpen);
@@ -16,7 +16,7 @@ const Accordion = ({ title, content, isOpen = true }) => {
           <h3 className="dark:text-white">{title}</h3>
         </div>
         <div className="flex-none pl-2">
-          {/* {expanded ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />} */}
+          {expanded ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
         </div>
       </div>
       <div

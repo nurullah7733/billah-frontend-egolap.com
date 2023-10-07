@@ -4,8 +4,8 @@ import {
   SuccessToast,
 } from "../../utils/notificationAlert/notificationAlert";
 
-export const getBrandsRequest = async () => {
-  let url = `${baseUrl}/dropdown-brand`;
+export const getCategoriesRequest = async () => {
+  let url = `${baseUrl}/dropdown-category`;
   const config = {
     method: "GET",
     credentials: "include",

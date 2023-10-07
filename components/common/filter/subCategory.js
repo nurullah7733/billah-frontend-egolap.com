@@ -1,33 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Accordion from "../accordion/accordion";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import capitalizeFLetter from "../../../utils/capitalizedFirstWord/capitalizedFirstWord";
+import { getSubCategoriesRequest } from "../../../APIRequest/subCategory/subCategoriesApi";
 
 const SubCategory = () => {
-  let arr = [
-    "Pent",
-    "Shart",
-    "T-shart",
-    "Bottom wear",
-    "Top wear",
-    "Apparel and Accessories",
-    "Games & Toys",
-    "Tupperware",
-    "Furniture",
-    "Sports Products",
-  ];
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [allSubCategories, setAllSubCategories] = useState([]);
+  const [checkboxIndex, setCheckboxIndex] = useState("");
+
+  const current = new URLSearchParams(Array.from(searchParams.entries()));
+  // const value = e.target.value.trim();
+
+  const handleChange = (e, index) => {
+    setCheckboxIndex(index);
+
+    if (!e.target.checked) {
+      setCheckboxIndex("");
+      current.delete("subcategory");
+    } else {
+      current.set("subcategory", e.target.value);
+    }
+
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+    router.push(`${pathname}${query}`);
+  };
+
+  useEffect(() => {
+    (async () => {
+      let data = await getSubCategoriesRequest();
+      setAllSubCategories(data);
+    })();
+  }, []);
   let content = (
     <>
-      {arr.map((item, index) => (
-        <div className="flex items-center gap-x-2" key={index + 40}>
-          <input
-            type="checkbox"
-            id={index + 40}
-            className="w-4 sm:w-3 h-4 accent-[#ff007f]"
-          />
-          <label
-            className="dark:text-white sm:text-[14px]"
-            htmlFor={index + 40}
-          >
-            {item}
+      {allSubCategories.map((item, index) => (
+        <div className="flex items-center gap-x-2" key={index}>
+          <label className="dark:text-white sm:text-[14px]">
+            <input
+              className="w-4 sm:w-3 h-4 mr-2 accent-[#ff007f]"
+              name={item?.name}
+              onChange={(e) => handleChange(e, index + 1)}
+              type="checkbox"
+              value={item?.name}
+              checked={checkboxIndex == index + 1}
+            />
+            {capitalizeFLetter(item?.name)}
           </label>
         </div>
       ))}

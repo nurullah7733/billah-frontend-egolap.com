@@ -11,6 +11,7 @@ import ProfileDropdown from "@components/common/dropdown/dropdownProfile";
 import { getToken } from "../../utils/sessionHelper/sessionHelper";
 import ClientOnly from "@components/clientOnly/clientOnly";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 const Header = () => {
   const router = useRouter();
@@ -61,7 +62,7 @@ const Header = () => {
   return (
     <header className="fixed z-10 w-full px-3 bg-primary dark:bg-gray-700 h-[57px] md:h-[130px]">
       <div className="container mx-auto">
-        <div className="pt-2 text-white  md:h-[120px]">
+        <div className="pt-[5px] text-white  md:h-[120px]">
           <div>
             {/* mobile header */}
             <div className="hidden md:block">
@@ -71,7 +72,12 @@ const Header = () => {
                     {/* logo */}
                     <div className="cursor-pointer">
                       <Link href="/">
-                        <img src="/logo.png" alt="" width="80" height="50" />
+                        <Image
+                          src="/assets/icons/e-golap.png"
+                          alt=""
+                          width="60"
+                          height="50"
+                        />
                       </Link>
                     </div>
                   </div>
@@ -128,7 +134,12 @@ const Header = () => {
               <div className="flex items-center justify-between ">
                 <div className="cursor-pointer ">
                   <Link href="/">
-                    <img src="/logo.png" alt="" width="80" height="50" />
+                    <Image
+                      src="/assets/icons/e-golap.png"
+                      alt=""
+                      width="60"
+                      height="50"
+                    />
                   </Link>
                 </div>
                 {/* search */}

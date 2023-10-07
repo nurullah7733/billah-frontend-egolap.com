@@ -1,11 +1,7 @@
 import baseUrl from "../../utils/config/baseUrl";
-import {
-  ErrorToast,
-  SuccessToast,
-} from "../../utils/notificationAlert/notificationAlert";
 
-export const getBrandsRequest = async () => {
-  let url = `${baseUrl}/dropdown-brand`;
+export const getSubCategoriesRequest = async () => {
+  let url = `${baseUrl}/dropdown-subcategory`;
   const config = {
     method: "GET",
     credentials: "include",

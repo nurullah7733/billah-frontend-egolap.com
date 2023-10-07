@@ -3,10 +3,10 @@ import Product from "../../components/common/product/product";
 import createParams from "../../utils/createParams/createParams";
 import DrawerComponents from "./_components/drawer";
 import Filter from "@components/common/filter/filter";
+import SortByPrice from "./_components/sortBy/sortBy";
 
 const Store = async ({ searchParams }) => {
   let allQueryParams = createParams(searchParams);
-  console.log(allQueryParams, "allparams");
   let data = await getAllProductsRequest(allQueryParams);
 
   if (data?.total?.length < 1) {
@@ -16,6 +16,17 @@ const Store = async ({ searchParams }) => {
       </div>
     );
   }
+
+  // console.log(data?.rows);
+  const sortByHighToLow = () => {
+    data = data.sort(
+      (a, b) => parseFloat(a.finalPrice) - parseFloat(b.finalPrice)
+    );
+  };
+  const sortByLowToHigh = () => {
+    data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+  };
+
   return (
     <div className="px-3 py-8 mx-auto ">
       <div className="w-full py-1.5 mb-2 bg-white border dark:border-none border-gray-200 rounded-lg shadow px-3 flex justify-between dark:bg-gray-700">
@@ -23,14 +34,7 @@ const Store = async ({ searchParams }) => {
         <div className="flex items-center gap-x-2">
           <p className="font-semibold text-[14px]">Sort By:</p>
 
-          <select
-            id="countries"
-            className="outline-none  flex justify-center items-center gap-x-1 w-[120px] text-[16px] rounded-lg text-black bg-[#f1f3f5] dark:bg-gray-800 dark:text-white p-1 h-8  "
-          >
-            <option selected>Default</option>
-            <option value="US">Price {`(High > low)`}</option>
-            <option value="US">Price {`(Low < high)`}</option>
-          </select>
+          <SortByPrice />
         </div>
       </div>
 
