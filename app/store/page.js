@@ -46,18 +46,7 @@ const Store = async ({ searchParams }) => {
         <div>
           <div className="grid grid-cols-5 gap-4 xs:gap-2 xl:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5">
             {data?.rows?.map((product, index) => {
-              return (
-                <Product
-                  key={index}
-                  name={product?.name}
-                  price={product?.price}
-                  finalPrice={product?.finalPrice}
-                  weight={product?.weight}
-                  img={product?.img[0]?.secure_url}
-                  discount={product?.discount}
-                  totalRatting={product?.totalRating}
-                />
-              );
+              return <Product key={index} product={product} />;
             })}
           </div>
         </div>

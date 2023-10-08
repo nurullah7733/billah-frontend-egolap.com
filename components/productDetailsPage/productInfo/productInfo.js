@@ -2,7 +2,7 @@
 import React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import StarRatingComponent from "react-star-rating-component";
-import AddToCardBtn from "@components/common/btnAddToCard/btnAddToCard";
+import CartButton from "../../common/CartButton/cartButton";
 import NumberOrderCardBtn from "@components/common/btnNumberOrderCard/btnNumberOrderCard";
 import BtnPlaceOrder from "@components/common/btnPlaceOrder/btnPlaceOrder";
 
@@ -70,7 +70,7 @@ const ProductInfo = () => {
             </p>
             <div className="flex w-full gap-4">
               <div className=" md:w-[150px]  w-[200px]">
-                <AddToCardBtn />
+                <CartButton />
               </div>
             </div>
           </div>
