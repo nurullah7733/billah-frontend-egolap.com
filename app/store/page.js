@@ -17,16 +17,6 @@ const Store = async ({ searchParams }) => {
     );
   }
 
-  // console.log(data?.rows);
-  const sortByHighToLow = () => {
-    data = data.sort(
-      (a, b) => parseFloat(a.finalPrice) - parseFloat(b.finalPrice)
-    );
-  };
-  const sortByLowToHigh = () => {
-    data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-  };
-
   return (
     <div className="px-3 py-8 mx-auto ">
       <div className="w-full py-1.5 mb-2 bg-white border dark:border-none border-gray-200 rounded-lg shadow px-3 flex justify-between dark:bg-gray-700">

@@ -5,14 +5,22 @@ import { MdOutlineAddShoppingCart } from "react-icons/md";
 import {
   setAddToCartProduct,
   IncreaseProductQuantity,
+  DecreaseProductQuantity,
+  setTotalProductsPrice,
 } from "../../../redux/features/addToCart/addToCartSlice";
 import { useSelector } from "react-redux";
+import { deleteItem } from "../../../utils/deleteAlert";
 
 const AddToCardBtn = ({ product }) => {
-  const handleClickAddToCart = () => {
-    let deepClone = JSON.parse(JSON.stringify(product));
-    deepClone.productWithQuantity = 1;
-    store.dispatch(setAddToCartProduct(deepClone));
+  // if (product?.size?.length > 0) {
+  // }
+
+  const handleClickAddToCart = async () => {
+    let result = await deleteItem();
+    console.log(result);
+    // product.customerChoiceProductQuantity = 1;
+    // store.dispatch(setAddToCartProduct(product));
+    // store.dispatch(setTotalProductsPrice());
   };
   return (
     <button
@@ -25,31 +33,45 @@ const AddToCardBtn = ({ product }) => {
   );
 };
 
-const NumberOrderCardBtn = ({ productId, btnHeight = "10" }) => {
-  const addToCartProducts = useSelector(
-    (state) => state.addToCartProducts.products
+const NumberOrderCardBtn = ({
+  productId,
+  addToCartProductsFromUseSelector,
+  btnHeight = "10",
+}) => {
+  let addToCartOneItem = addToCartProductsFromUseSelector?.find(
+    (item) => item._id === productId
   );
 
-  const handleClickProductQunatityIncrease = (productId) => {
-    let product = addToCartProducts?.find((prod) =>
-      Object.assign({}, prod, { productWithQuantity: +1 })
-    );
+  const IncreateAddToCartProduct = () => {
+    store.dispatch(IncreaseProductQuantity({ id: productId, count: 1 }));
+    store.dispatch(setTotalProductsPrice());
   };
-  const handleClickProductQunatityDecrease = (productId) => {};
+  const DecreaseAddToCartProduct = () => {
+    store.dispatch(DecreaseProductQuantity({ id: productId, count: 1 }));
+    store.dispatch(setTotalProductsPrice());
+  };
 
   return (
     <div
       className={`flex items-center justify-between h-${btnHeight} text-white rounded-lg bg-primary-100 dark:bg-gray-500`}
     >
       <button
-        className={`px-2 py-2   border-e-[1px] h-${btnHeight}  flex items-center rounded-l-lg hover:bg-primary hover:dark:bg-gray-700`}
+        disabled={1 === addToCartOneItem?.customerChoiceProductQuantity}
+        onClick={DecreaseAddToCartProduct}
+        className={` disabled:bg-primary-100 px-2 py-2   border-e-[1px] h-${btnHeight}  flex items-center rounded-l-lg  bg-primary hover:dark:bg-gray-700`}
       >
         -
       </button>
-      <p className="min-w-[72px] text-center">{10} in bag</p>
+      <p className="min-w-[72px] text-center">
+        {addToCartOneItem?.customerChoiceProductQuantity} in bag
+      </p>
       <button
-        onClick={() => store.dispatch(IncreaseProductQuantity(productId))}
-        className={`px-2 py-2   border-s-[1px] h-${btnHeight} flex items-center rounded-r-lg hover:bg-primary hover:dark:bg-gray-700`}
+        disabled={
+          addToCartOneItem?.quantity ===
+          addToCartOneItem?.customerChoiceProductQuantity
+        }
+        onClick={IncreateAddToCartProduct}
+        className={` disabled:bg-primary-100 px-2 py-2   border-s-[1px] h-${btnHeight} flex items-center rounded-r-lg bg-primary hover:dark:bg-gray-700`}
       >
         +
       </button>
@@ -58,19 +80,22 @@ const NumberOrderCardBtn = ({ productId, btnHeight = "10" }) => {
 };
 
 const CartButton = ({ product }) => {
-  const addToCartProducts = useSelector(
+  const addToCartProductsFromUseSelector = useSelector(
     (state) => state.addToCartProducts.products
   );
-  let exitsProducts = addToCartProducts?.find(
+  let exitsProducts = addToCartProductsFromUseSelector?.find(
     (prod) => prod?._id === product?._id
   );
-  console.log(exitsProducts, "exitsProducts");
+
   return (
     <>
       {exitsProducts === undefined ? (
         <AddToCardBtn product={product} />
       ) : (
-        <NumberOrderCardBtn productId={product?._id} />
+        <NumberOrderCardBtn
+          productId={product?._id}
+          addToCartProductsFromUseSelector={addToCartProductsFromUseSelector}
+        />
       )}
     </>
   );

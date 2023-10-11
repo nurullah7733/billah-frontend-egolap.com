@@ -5,7 +5,6 @@ import { RatingReadOnly } from "../../../components/common/rating/rating";
 import CartButton from "../CartButton/cartButton";
 
 const Product = ({ product }) => {
-  console.log(product, "ppp");
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow max-w-[250px]  dark:bg-gray-800 dark:border-gray-700">
       <Link href="/product-details">

@@ -3,7 +3,6 @@ import React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import StarRatingComponent from "react-star-rating-component";
 import CartButton from "../../common/CartButton/cartButton";
-import NumberOrderCardBtn from "@components/common/btnNumberOrderCard/btnNumberOrderCard";
 import BtnPlaceOrder from "@components/common/btnPlaceOrder/btnPlaceOrder";
 
 const ProductInfo = () => {

@@ -12,8 +12,12 @@ import { getToken } from "../../utils/sessionHelper/sessionHelper";
 import ClientOnly from "@components/clientOnly/clientOnly";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  let addToCartProducts = useSelector(
+    (state) => state.addToCartProducts.products
+  );
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -173,8 +177,15 @@ const Header = () => {
                 </div>
                 {/* cart */}
                 <div>
-                  <div className="flex items-center justify-center cursor-pointer ">
+                  <div className="relative flex items-center justify-center cursor-pointer">
                     <Link href="/cart">
+                      {addToCartProducts?.length > 0 ? (
+                        <p className="flex items-center absolute left-2 bottom-3 justify-center w-5 h-5 text-[12px]  rounded-full bg-red-600 font-semibold">
+                          {addToCartProducts?.length}
+                        </p>
+                      ) : (
+                        ""
+                      )}
                       <FaShoppingCart className="text-xl" />
                     </Link>
                     <Link href="/cart">
