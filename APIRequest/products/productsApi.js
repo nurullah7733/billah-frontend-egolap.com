@@ -11,7 +11,8 @@ import {
 
 // get All Products
 export const getAllProductsRequest = async (allQueryParams) => {
-  let url = `${baseUrl}/list-product-global/?${allQueryParams}`;
+  // let url = `${baseUrl}/list-product-global/?${allQueryParams}`;
+  let url = `${baseUrl}/list-product-global/?pageNo=1&perPage=100&searchKeyword=0`;
 
   // console.log(url, "url");
 
