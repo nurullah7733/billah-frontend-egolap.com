@@ -7,7 +7,7 @@ import CartButton from "../CartButton/cartButton";
 const Product = ({ product }) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow max-w-[250px]  dark:bg-gray-800 dark:border-gray-700">
-      <Link href="/product-details">
+      <Link href={`/product-details/${product?._id}`}>
         <Image
           className="rounded-t-lg cursor-pointer"
           width={300}
@@ -17,7 +17,7 @@ const Product = ({ product }) => {
         />
       </Link>
       <div className="p-2">
-        <Link href="/product-details">
+        <Link href={`/product-details/${product?._id}`}>
           <h1 className="mb-2 text-sm font-bold tracking-tight cursor-pointer dark:text-white">
             {product?.name.length > 30
               ? product?.name.substring(0, 30) + " ..."

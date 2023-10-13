@@ -1,13 +1,15 @@
 import Swal from "sweetalert2";
 
-export const deleteItem = async () => {
+export const deleteItem = async (itemsHtml) => {
   return await Swal.fire({
-    title: "Are you sure?",
-    html:
-      '<ul><li><button onclick="style"> S</button></li></ul>' +
-      '<ul><li><button onclick="style"> M</button></li></ul>' +
-      '<ul><li><button onclick="style"> L</button></li></ul>',
-    inputValue: ["s", "m", "l", "xl", "xxl"],
+    title: "Please select product size",
+    html: itemsHtml,
+    width: 300,
+    customClass: {
+      title: "custom-swal-title",
+      confirmButton: "custom-swal-confirm-button",
+      cancelButton: "custom-swal-cancel-button",
+    },
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",

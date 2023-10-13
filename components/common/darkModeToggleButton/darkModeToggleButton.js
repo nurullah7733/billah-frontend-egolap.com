@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useTheme } from "next-themes";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import store from "../../../redux/store";
-import { setMode } from "../../../redux/features/darkOrLightMode/darkOrLightMode";
+import { setMode } from "../../../redux/features/websiteSettings/webSettingSlice";
 
 const DarkOrLightModeButton = () => {
   const { systemTheme, theme, setTheme } = useTheme();

@@ -1,4 +1,4 @@
-import NumberOrderCardBtn from "@components/common/btnNumberOrderCard/btnNumberOrderCard";
+// import NumberOrderCardBtn from "@components/common/btnNumberOrderCard/btnNumberOrderCard";
 import React from "react";
 
 const CartProducts = ({ items }) => {
@@ -51,7 +51,7 @@ const CartProducts = ({ items }) => {
                     <span className="text-sm font-semibold">Size: </span>M
                   </p>
                   <div className="flex gap-3">
-                    <NumberOrderCardBtn btnHeight="8" />
+                    {/* <NumberOrderCardBtn btnHeight="8" /> */}
                     <button type="button">Remove</button>
                   </div>
                 </div>

@@ -58,6 +58,10 @@
   display: none;
 }
 
+select:focus {
+  outline: 1px solid #ff007f;
+}
+
 /* Hide scrollbar for IE, Edge and Firefox */
 .filter_scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
@@ -265,3 +269,19 @@
   height: 9px;
 }
 /* End react responsive carousel */
+
+/* Start custom css of sweetalert2 */
+.custom-swal-title {
+  font-size: 18px;
+}
+.custom-swal-confirm-button {
+  font-size: 16px;
+  padding: 5px 10px;
+  background-color: #ff007f !important;
+}
+.custom-swal-cancel-button {
+  font-size: 16px;
+  padding: 5px 10px;
+  background-color: #ff5f84 !important;
+}
+/* End custom css of sweetalert2 */

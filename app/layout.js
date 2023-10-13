@@ -2,6 +2,7 @@ import "./globals.css";
 import "react-modern-drawer/dist/index.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "sweetalert2/dist/sweetalert2.min.css";
 import ReduxProvider from "../redux/Provider";
 import NextThemeProvider from "../utils/provider/themeProvider";
 import AppProgressbarProvider from "../utils/provider/appProgressbarProvider";

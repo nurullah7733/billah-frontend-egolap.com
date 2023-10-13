@@ -15,12 +15,33 @@ const AddToCardBtn = ({ product }) => {
   // if (product?.size?.length > 0) {
   // }
 
+  // Add to Cart product
   const handleClickAddToCart = async () => {
-    let result = await deleteItem();
-    console.log(result);
-    // product.customerChoiceProductQuantity = 1;
-    // store.dispatch(setAddToCartProduct(product));
-    // store.dispatch(setTotalProductsPrice());
+    // User Choose Product Size
+    let selectedOption; // Initial selected option
+    if (product?.size.length > 0) {
+      const itemsList = document.createElement("select");
+      itemsList.style.border = "1px solid #ff007f";
+      product?.size?.forEach((size) => {
+        const listItem = document.createElement("option");
+
+        listItem.textContent = size;
+        itemsList.appendChild(listItem);
+      });
+      let result = await deleteItem(itemsList);
+      if (result.isConfirmed) {
+        selectedOption = itemsList.value;
+
+        product.customerChoiceProductSize = selectedOption;
+        product.customerChoiceProductQuantity = 1;
+        store.dispatch(setAddToCartProduct(product));
+        store.dispatch(setTotalProductsPrice());
+      }
+    } else {
+      product.customerChoiceProductQuantity = 1;
+      store.dispatch(setAddToCartProduct(product));
+      store.dispatch(setTotalProductsPrice());
+    }
   };
   return (
     <button
