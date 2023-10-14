@@ -2,6 +2,7 @@
 import React from "react";
 import Summary from "@components/cartPage/summary/summary";
 import CartProducts from "@components/cartPage/cartProducts/cartProducts";
+import { useSelector } from "react-redux";
 
 let items = [
   {
@@ -27,14 +28,27 @@ let items = [
 ];
 
 const Cart = () => {
+  const { products, totalProductsPrice } = useSelector(
+    (state) => state.addToCartProducts
+  );
+
   return (
     <div className="container px-4 mx-auto py-7 ">
-      <div className="flex px-4 shadow-md xl:flex-col dark:bg-gray-700 pb-7">
-        {/* products */}
-        <CartProducts items={items} />
+      <div className="flex justify-around px-4 shadow-md xl:flex-col dark:bg-gray-700 pb-7">
+        {products?.length > 0 ? (
+          <>
+            {/* products */}
+            <CartProducts products={products} />
 
-        {/* order summary */}
-        <Summary />
+            {/* order summary */}
+            <Summary
+              products={products}
+              totalProductsPrice={totalProductsPrice}
+            />
+          </>
+        ) : (
+          <h2 className="py-8 text-2xl font-bold text-center">Cart is Empty</h2>
+        )}
       </div>
     </div>
   );

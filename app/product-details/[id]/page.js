@@ -10,11 +10,11 @@ const ProductDetails = async ({ params }) => {
   return (
     <div className="container px-4 mx-auto py-14 md:py-8">
       <div className="flex gap-5 py-4 md:gap-0 md:flex-col">
-        <ImgSliderAndZoom />
+        <ImgSliderAndZoom images={product?.img} />
         <ProductInfo product={product} />
       </div>
       <ProductDescription product={product} />
-      <RelatedProducts />
+      <RelatedProducts subcategory={product?.subCategory[0]?.name} />
     </div>
   );
 };

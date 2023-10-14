@@ -9,13 +9,12 @@ import { useSelector } from "react-redux";
 let item = "25";
 
 const TopItemAndPrice = () => {
-  const { products, productsTotalPrice } = useSelector(
+  const { products, totalProductsPrice } = useSelector(
     (state) => state.addToCartProducts
   );
   const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
-    console.log(isOpen);
   };
 
   return (
@@ -34,7 +33,7 @@ const TopItemAndPrice = () => {
       <div className="text-[12px] text-white mx-1 flex  justify-center">
         <div className="flex items-center">
           <p className="text-[17px]">৳ </p>
-          <CountUp end={productsTotalPrice} duration={1} />
+          <CountUp end={totalProductsPrice} duration={1} />
         </div>
       </div>
 

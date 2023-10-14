@@ -4,6 +4,16 @@ import ReactStartRatingCompoent from "../reactStarRating/reactStarRating";
 import BtnPlaceOrder from "@components/common/btnPlaceOrder/btnPlaceOrder";
 
 const ProductInfo = ({ product }) => {
+  let ratingAvg;
+  console.log(ratingAvg);
+  if (product?.ratings?.length > 0) {
+    const sum = product?.ratings?.reduce(
+      (total, item) => total + item?.star,
+      0
+    );
+    const average = sum / product?.ratings?.length;
+    ratingAvg = average;
+  }
   return (
     <div>
       <div>
@@ -11,8 +21,8 @@ const ProductInfo = ({ product }) => {
         <h1 className="text-3xl font-semibold md:text-xl ">{product?.name}</h1>
         {/* rattings */}
         <div className="flex items-center gap-x-1 text-[15px] pt-2 relative -z-10">
-          <ReactStartRatingCompoent totalRating={product?.totalRating} />(
-          {product?.totalRating}) &nbsp; | &nbsp; Rattings
+          <ReactStartRatingCompoent totalRating={ratingAvg} />(
+          {product?.totalRating}) &nbsp; | &nbsp; Ratings
         </div>
         {/* price */}
         <div className="py-5 mt-2 bg-gray-200 md:py-2 px-7">
@@ -95,7 +105,7 @@ const ProductInfo = ({ product }) => {
             </p>
             <div className="flex w-full gap-4">
               <div className=" md:w-[150px]  w-[200px]">
-                <CartButton />
+                <CartButton product={product} />
               </div>
             </div>
           </div>

@@ -1,25 +1,15 @@
 "use client";
 import { useState, useRef } from "react";
+import Images from "next/image";
 import ReactImageMagnify from "react-image-magnify";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 
-const images = [
-  "/assets/img/products/1.webp",
-  "/assets/img/products/2.webp",
-  "/assets/img/products/3.webp",
-  "/assets/img/products/4.webp",
-  "/assets/img/products/5.webp",
-];
-const images2 = [
-  "/assets/img/products/111.jpeg",
-  "/assets/img/products/222.jpg",
-  "/assets/img/products/333.jpg",
-  "/assets/img/products/444.jpg",
-];
+const ImgSliderAndZoom = ({ images }) => {
+  console.log(images, "iamges");
+  const [img, setImg] = useState(images[0].secure_url);
+  console.log(img, "state");
 
-const ImgSliderAndZoom = () => {
-  const [img, setImg] = useState(images[0]);
   const refs = useRef([]);
 
   const hoverHandler = (image, i) => {
@@ -52,10 +42,10 @@ const ImgSliderAndZoom = () => {
           // onClickItem={onClickItem}
           // onClickThumb={onClickThumb}
         >
-          {images2.map((img, index) => (
+          {images.map((img, index) => (
             <div className="mx-auto " key={index}>
               <div className="">
-                <img src={img} />
+                <img src={img?.secure_url} />
               </div>
             </div>
           ))}
@@ -68,10 +58,10 @@ const ImgSliderAndZoom = () => {
             <div
               className={i == 0 ? `img_wrap product_zoom_active` : `img_wrap`}
               key={i}
-              onMouseOver={() => hoverHandler(image, i)}
+              onMouseOver={() => hoverHandler(image?.secure_url, i)}
               ref={addRefs}
             >
-              <img src={image} alt="" />
+              <Images src={image?.secure_url} alt="" width={300} height={400} />
             </div>
           ))}
         </div>

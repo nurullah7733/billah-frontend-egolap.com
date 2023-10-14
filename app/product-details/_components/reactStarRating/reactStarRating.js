@@ -10,6 +10,7 @@ const ReactStartRatingCompoent = ({ totalRating }) => {
         className={"text-[20px]"}
         starCount={5}
         value={totalRating}
+        editing={false}
         // onStarClick={this.onStarClick.bind(this)}
       />
     </>

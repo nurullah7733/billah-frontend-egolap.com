@@ -14,13 +14,16 @@ const AddToCartSlice = createSlice({
     },
 
     deleteAddToCartProduct(state, actions) {
-      state.products.filter((item) => item._id !== actions.payload);
+      state.products = state.products.filter(
+        (item) => item._id !== actions.payload
+      );
     },
 
     IncreaseProductQuantity(state, actions) {
       const index = state.products.findIndex(
         (item) => item._id === actions.payload.id
       );
+
       if (index >= 0) {
         if (
           state.products[index].customerChoiceProductQuantity <
