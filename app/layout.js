@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import "./globals.css";
 import "react-modern-drawer/dist/index.css";
 import "slick-carousel/slick/slick.css";
@@ -7,7 +8,9 @@ import ReduxProvider from "../redux/Provider";
 import NextThemeProvider from "../utils/provider/themeProvider";
 import AppProgressbarProvider from "../utils/provider/appProgressbarProvider";
 
-import Header from "../components/header/header";
+const Header = dynamic(() => import("../components/header/header"), {
+  ssr: false,
+});
 import Footer from "../components/footer/footer";
 import CategoriesSlider from "../components/categories/categories";
 import TopItemAndPrice from "../components/common/topItemAndPrice/topItemAndPrice";

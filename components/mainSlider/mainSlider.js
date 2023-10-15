@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -13,6 +14,7 @@ const MainSlider = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
   return (
     <div
       className="relative pt-16 mt-3 text-black dark:bg-gray-700 dark:text-white md:pt-32"

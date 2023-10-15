@@ -5,7 +5,7 @@ const Loading = () => {
   let subcategory = Array.from(Array(15).keys());
   return (
     <div className="px-5 py-[33px]">
-      <div class="animate-pulse ">
+      <div className="animate-pulse ">
         {/* sortby */}
         <div className="w-full h-[45px] flex items-center justify-between mb-[10px] bg-gray-300 rounded-md px-5">
           <div className="">
@@ -99,7 +99,7 @@ const Loading = () => {
           </div>
 
           {/* start products*/}
-          <div class="grid w-full grid-cols-5 gap-4 xs:gap-2 xl:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5 h-[700px] lg:h-[1000px] md:min-h-[1800px]">
+          <div className="grid w-full grid-cols-5 gap-4 xs:gap-2 xl:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5 h-[700px] lg:h-[1000px] md:min-h-[1800px]">
             {products.map((item, index) => (
               <div key={index} className="max-h-[340px]">
                 <div className="border-2 rounded-md ">

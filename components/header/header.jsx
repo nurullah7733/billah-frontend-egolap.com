@@ -1,12 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaShoppingCart } from "react-icons/fa";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import Dropdown from "../common/dropdown/dropdown";
+
 import DarkModeToggleButton from "../common/darkModeToggleButton/darkModeToggleButton";
-import Filter from "../common/filter/filter";
+
 import ProfileDropdown from "@components/common/dropdown/dropdownProfile";
 import { getToken } from "../../utils/sessionHelper/sessionHelper";
 import ClientOnly from "@components/clientOnly/clientOnly";
@@ -18,6 +17,7 @@ const Header = () => {
   let addToCartProducts = useSelector(
     (state) => state.addToCartProducts.products
   );
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();

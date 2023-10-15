@@ -284,4 +284,7 @@ select:focus {
   padding: 5px 10px;
   background-color: #ff5f84 !important;
 }
+.custom-swal-icon {
+  font-size: 9px;
+}
 /* End custom css of sweetalert2 */

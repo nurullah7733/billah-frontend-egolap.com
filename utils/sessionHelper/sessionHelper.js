@@ -1,4 +1,26 @@
 class SessionHelper {
+  setUserAddToCart(value) {
+    typeof window !== "undefined"
+      ? window.localStorage.setItem("AddToCartItems", JSON.stringify(value))
+      : false;
+  }
+  setUserTotalProductsPrice(value) {
+    typeof window !== "undefined"
+      ? window.localStorage.setItem("totalProductsPrice", JSON.stringify(value))
+      : false;
+  }
+
+  getUserAddToCart() {
+    if (typeof window !== "undefined") {
+      return JSON.parse(window.localStorage.getItem("AddToCartItems"));
+    }
+  }
+  getTotalProductsPrice() {
+    if (typeof window !== "undefined") {
+      return JSON.parse(window.localStorage.getItem("totalProductsPrice"));
+    }
+  }
+
   setUserData(value) {
     typeof window !== "undefined"
       ? window.localStorage.setItem("userData", JSON.stringify(value))
@@ -41,7 +63,10 @@ class SessionHelper {
   }
   sessionDestroy() {
     if (typeof window !== "undefined") {
-      window.localStorage.clear();
+      window.localStorage.removeItem("userData");
+      window.localStorage.removeItem("token");
+      window.localStorage.removeItem("email");
+      window.localStorage.removeItem("otp");
       document.cookie =
         "token" + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
       window.location.href = "/";
@@ -58,4 +83,8 @@ export const {
   getOtp,
   setOtp,
   sessionDestroy,
+  getUserAddToCart,
+  setUserAddToCart,
+  getTotalProductsPrice,
+  setUserTotalProductsPrice,
 } = new SessionHelper();

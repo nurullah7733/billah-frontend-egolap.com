@@ -19,10 +19,9 @@ const LoginForm = () => {
     onSubmit: async ({ email, password }) => {
       let data = { email, password };
       let result = await loginRequest(data);
-
-      // console.log(result.token);
-      // document.cookie = `token = ${result.token}`;
-      window.location.href = "/";
+      if (result) {
+        window.history.go(-1);
+      }
     },
   });
   const { errors, touched, values, handleBlur, handleChange, handleSubmit } =

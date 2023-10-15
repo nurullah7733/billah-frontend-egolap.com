@@ -9,7 +9,7 @@ import {
   setTotalProductsPrice,
 } from "../../../redux/features/addToCart/addToCartSlice";
 import { useSelector } from "react-redux";
-import { deleteItem } from "../../../utils/deleteAlert";
+import { productSizeModal } from "../../../utils/sweetAlert";
 
 const AddToCardBtn = ({ product }) => {
   // if (product?.size?.length > 0) {
@@ -28,7 +28,7 @@ const AddToCardBtn = ({ product }) => {
         listItem.textContent = size;
         itemsList.appendChild(listItem);
       });
-      let result = await deleteItem(itemsList);
+      let result = await productSizeModal(itemsList);
       if (result.isConfirmed) {
         selectedOption = itemsList.value;
 

@@ -1,9 +1,31 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useEffect } from "react";
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import {
+  getTotalProductsPrice,
+  getUserAddToCart,
+} from "../../utils/sessionHelper/sessionHelper";
+import store from "../../redux/store";
+import { setAddToCartProductFromLocalStorage } from "../../redux/features/addToCart/addToCartSlice";
 
 const Footer = () => {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      let addToCartItemsTolocalStorage = getUserAddToCart();
+      let totalAmoutAddToCartItemsTolocalStorage = getTotalProductsPrice();
+      if (addToCartItemsTolocalStorage?.length > 0) {
+        store.dispatch(
+          setAddToCartProductFromLocalStorage({
+            products: addToCartItemsTolocalStorage,
+            totalProductsPrice: totalAmoutAddToCartItemsTolocalStorage,
+          })
+        );
+      }
+    }
+  }, []);
   return (
     <footer className=" bg-primary dark:bg-gray-700">
       <div className="">

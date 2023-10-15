@@ -33,8 +33,8 @@ const Cart = () => {
   );
 
   return (
-    <div className="container px-4 mx-auto py-7 ">
-      <div className="flex justify-around px-4 shadow-md xl:flex-col dark:bg-gray-700 pb-7">
+    <div className="container px-4 mx-auto py-7 dark:bg-gray-700">
+      <div className="flex justify-between px-4 shadow-md xl:flex-col pb-7">
         {products?.length > 0 ? (
           <>
             {/* products */}

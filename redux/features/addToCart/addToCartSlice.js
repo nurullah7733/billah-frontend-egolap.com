@@ -1,4 +1,8 @@
 import { createSlice, current } from "@reduxjs/toolkit";
+import {
+  setUserAddToCart,
+  setUserTotalProductsPrice,
+} from "../../../utils/sessionHelper/sessionHelper";
 
 const initialState = {
   products: [],
@@ -11,12 +15,14 @@ const AddToCartSlice = createSlice({
   reducers: {
     setAddToCartProduct(state, actions) {
       state.products.push(actions.payload);
+      setUserAddToCart(state.products);
     },
 
     deleteAddToCartProduct(state, actions) {
       state.products = state.products.filter(
         (item) => item._id !== actions.payload
       );
+      // setUserAddToCart(state.products);
     },
 
     IncreaseProductQuantity(state, actions) {
@@ -59,6 +65,12 @@ const AddToCartSlice = createSlice({
         }
         return total;
       }, 0);
+      setUserTotalProductsPrice(state.totalProductsPrice);
+    },
+
+    setAddToCartProductFromLocalStorage(state, actions) {
+      state.products = actions.payload.products;
+      state.totalProductsPrice = actions.payload.totalProductsPrice;
     },
   },
 });
@@ -69,6 +81,7 @@ export const {
   IncreaseProductQuantity,
   DecreaseProductQuantity,
   setTotalProductsPrice,
+  setAddToCartProductFromLocalStorage,
 } = AddToCartSlice.actions;
 
 export default AddToCartSlice.reducer;

@@ -4,25 +4,29 @@ import React, { useState } from "react";
 import Drawer from "react-modern-drawer";
 import Summary from "@components/cartPage/summary/summary";
 import { CgList } from "react-icons/cg";
+import { useSelector } from "react-redux";
 
 const Checkout = () => {
+  const { products, totalProductsPrice } = useSelector(
+    (state) => state.addToCartProducts
+  );
   const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
   return (
     <div className="px-4 py-8">
-      <div className="px-4 py-8 shadow-lg dark:bg-gray-700">
+      <div className="p-8 px-4 shadow-lg dark:bg-gray-700">
         <div>
-          <div className="flex ">
+          <div className="flex justify-between ">
             <div className="w-1/2 md:w-full">
               <div>
-                <h2 className="pb-8 text-2xl font-semibold border-b md:text-xl">
+                <h2 className="text-2xl font-semibold md:text-xl">
                   Shipping Address
                 </h2>
               </div>
               <div className="">
-                <div className="mt-[50px] ">
+                <div className="mt-5 ">
                   <div className="flex gap-3 md:flex-col">
                     {/* name */}
                     <div className="w-full mb-2">
@@ -37,7 +41,7 @@ const Checkout = () => {
                           type="text"
                           name="Name"
                           id="Name"
-                          autocomplete="family-name"
+                          autoComplete="family-name"
                           className="block w-full rounded-md border-0 ring-1 ring-gray-300 outline-none p-1.5   placeholder:text-gray-400 text-black dark:text-white placeholder:text-sm"
                         />
                       </div>
@@ -55,7 +59,7 @@ const Checkout = () => {
                           type="email"
                           name="email"
                           id="email"
-                          autocomplete="email"
+                          autoComplete="email"
                           className="block w-full rounded-md border-0 ring-1 ring-gray-300 outline-none p-1.5   placeholder:text-gray-400 text-black dark:text-white placeholder:text-sm"
                         />
                       </div>
@@ -112,7 +116,7 @@ const Checkout = () => {
                         <select
                           id="country"
                           name="country"
-                          autocomplete="country-name"
+                          autoComplete="country-name"
                           className="block w-full rounded-md border-0 ring-1 ring-gray-300 outline-none p-1.5   placeholder:text-gray-400 text-black dark:text-white placeholder:text-sm"
                         >
                           <option>Bangladesh</option>
@@ -132,7 +136,7 @@ const Checkout = () => {
                           type="text"
                           name="city"
                           id="city"
-                          autocomplete="address-level2"
+                          autoComplete="address-level2"
                           className="block w-full rounded-md border-0 ring-1 ring-gray-300 outline-none p-1.5   placeholder:text-gray-400 text-black dark:text-white placeholder:text-sm"
                         />
                       </div>
@@ -153,7 +157,7 @@ const Checkout = () => {
                           type="text"
                           name="thana"
                           id="thana"
-                          autocomplete="area"
+                          autoComplete="area"
                           className="block w-full rounded-md border-0 ring-1 ring-gray-300 outline-none p-1.5   placeholder:text-gray-400 text-black dark:text-white placeholder:text-sm"
                         />
                       </div>
@@ -171,7 +175,7 @@ const Checkout = () => {
                           type="text"
                           name="postal-code"
                           id="postal-code"
-                          autocomplete="postal-code"
+                          autoComplete="postal-code"
                           className="block w-full rounded-md border-0 ring-1 ring-gray-300 outline-none p-1.5   placeholder:text-gray-400 text-black dark:text-white placeholder:text-sm"
                         />
                       </div>
@@ -285,8 +289,10 @@ const Checkout = () => {
                 </div>
               </div>
             </div>
-            <div className="w-1/2 md:hidden">
+            <div className="w-1/2 -mt-3 md:hidden">
               <Summary
+                products={products}
+                totalProductsPrice={totalProductsPrice}
                 width="full"
                 headerPaddingTop="0"
                 checkoutBtn={false}

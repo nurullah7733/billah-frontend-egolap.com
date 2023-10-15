@@ -1,17 +1,35 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import BtnPromoCode from "@components/common/btnPromoCode/btnPromoCode";
 import numberWithCommas from "../../../utils/numberWithComma/numberWithComma";
+import { MustLoginModal } from "../../../utils/sweetAlert";
+import {
+  getToken,
+  getUserData,
+} from "../../../utils/sessionHelper/sessionHelper";
+import { useRouter } from "next/navigation";
 
 const Summary = ({
-  width = "1/4",
+  width = "1/2",
   checkoutBtn = true,
   confirmOrder = false,
   products,
   totalProductsPrice,
 }) => {
+  let router = useRouter();
+  const hadleChackoutBtn = () => {
+    if (getUserData() == null || Object.values(getUserData())?.length < 1) {
+      return MustLoginModal();
+    } else {
+      router.push("/checkout");
+    }
+  };
   return (
-    <div id="summary" className={`w-${width} xl:w-full px-3 md:px-0  xl:pb-14`}>
+    <div
+      id="summary"
+      className={`w-${width}  xl:w-full px-3 md:px-0  xl:pb-14`}
+    >
       <h1 className="pt-4 pb-8 text-2xl font-semibold text-black dark:text-white md:text-xl ">
         Order Summary
       </h1>
@@ -47,8 +65,11 @@ const Summary = ({
           {/* checkout btn */}
           {checkoutBtn && (
             <div className="mt-8 mb-0">
-              <button className="bg-primary font-semibold dark:bg-gray-700 hover:bg-primary-100 py-3 md:py-2 md:text-[12px] text-sm text-white uppercase w-full">
-                <Link href="/checkout">Checkout</Link>
+              <button
+                onClick={hadleChackoutBtn}
+                className="bg-primary font-semibold dark:bg-gray-700 hover:bg-primary-100 py-3 md:py-2 md:text-[12px] text-sm text-white uppercase w-full"
+              >
+                Checkout
               </button>
             </div>
           )}
