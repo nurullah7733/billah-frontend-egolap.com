@@ -12,6 +12,10 @@ import {
 } from "../../../utils/formValidation/formValidation";
 import { ErrorToast } from "../../../utils/notificationAlert/notificationAlert";
 import { userUpdateRequest } from "../../../APIRequest/user/userApi";
+import {
+  getItemWithExpiry,
+  setItemWithExpiry,
+} from "../../../utils/localStorageWithExpire/localStorageWithExpire";
 
 const EditProfile = () => {
   const windowSize = useWindowSize();
@@ -52,24 +56,29 @@ const EditProfile = () => {
       };
       let result = await userUpdateRequest(data, getUserData()?.id);
       if (result) {
-        setUserData({
+        let pushDataToLocalStorage = {
           firstName,
           lastName,
           email,
           mobile,
           photo: img,
-          id: getUserData()?.id,
-        });
+          id: getItemWithExpiry("userData2")?.id,
+        };
+        setItemWithExpiry("userData2", pushDataToLocalStorage, 2592000);
         window.location.href = "/user-dashboard/edit-profile";
       }
     }
   };
 
   useEffect(() => {
-    setImg(getUserData()?.photo);
-    setName(getUserData()?.firstName + " " + getUserData()?.lastName);
-    setMobile(getUserData()?.mobile);
-    setEmail(getUserData()?.email);
+    setImg(getItemWithExpiry("userData2")?.photo);
+    setName(
+      getItemWithExpiry("userData2")?.firstName +
+        " " +
+        getItemWithExpiry("userData2")?.lastName
+    );
+    setMobile(getItemWithExpiry("userData2")?.mobile);
+    setEmail(getItemWithExpiry("userData2")?.email);
   }, []);
 
   return (

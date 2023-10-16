@@ -1,13 +1,11 @@
 import baseUrl from "../../utils/config/baseUrl";
+
 import {
   ErrorToast,
   SuccessToast,
 } from "../../utils/notificationAlert/notificationAlert";
-import {
-  sessionDestroy,
-  setToken,
-  setUserData,
-} from "../../utils/sessionHelper/sessionHelper";
+import { sessionDestroy } from "../../utils/sessionHelper/sessionHelper";
+import { setItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
 
 export const loginRequest = async (data) => {
   let url = `${baseUrl}/login`;
@@ -25,12 +23,7 @@ export const loginRequest = async (data) => {
     const res = await fetch(url, config);
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
-      // document.cookie = `token = ${data.token}`;
-      // const response = NextResponse.next();
-      // response.cookies.set("token", "log lg login");
-      // window.location = "/";
-      setUserData(data.data);
-      setToken(data.token);
+      setItemWithExpiry("userData2", data.data, 2592000);
       SuccessToast("Login success!");
       return data;
     } else if (res.status === 200 && data.status === "Invalid Credentials") {
@@ -122,14 +115,10 @@ export const logOutRequest = async () => {
   try {
     const res = await fetch(url, config);
     const data = await res.json();
-    console.log(res, "from logout");
     if (res.status === 200 && data.status === "success") {
       sessionDestroy();
       SuccessToast("logout success!");
       return data;
-    } else if (res.status === 200 && data.status === "Invalid Credentials") {
-      ErrorToast(data.status);
-      return false;
     } else {
       ErrorToast("Request fail. Please try again.");
       return false;

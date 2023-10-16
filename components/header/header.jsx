@@ -1,4 +1,5 @@
 "use client";
+import Cookies from "js-cookie";
 import { useState } from "react";
 import Link from "next/link";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -12,6 +13,8 @@ import ClientOnly from "@components/clientOnly/clientOnly";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
 
 const Header = () => {
   let addToCartProducts = useSelector(
@@ -62,7 +65,7 @@ const Header = () => {
     { menuName: "Edit profile", link: "/user-dashboard/edit-profile" },
     { menuName: "Orders", link: "/user-dashboard/orders/running-orders" },
   ];
-
+  console.log(getItemWithExpiry("userData2"), "dd");
   return (
     <header className="fixed z-10 w-full px-3 bg-primary dark:bg-gray-700 h-[57px] md:h-[130px]">
       <div className="container mx-auto">
@@ -197,7 +200,7 @@ const Header = () => {
                 <DarkModeToggleButton />
                 {/* login */}
                 <ClientOnly>
-                  {getToken()?.length > 0 ? (
+                  {getItemWithExpiry("userData2") !== null ? (
                     <ProfileDropdown dropdownMenus={dropdownMenus} />
                   ) : (
                     <div className="flex items-center justify-center w-20 h-10 font-semibold text-white rounded-md bg-primary-100 hover:bg-primary-200 md:w-16 dark:bg-gray-600 dark:hover:bg-gray-800">

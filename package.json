@@ -12,15 +12,15 @@
     "@reduxjs/toolkit": "^1.9.5",
     "autoprefixer": "10.4.14",
     "cogo-toast": "^4.2.3",
-    "cookie-cutter": "^0.2.0",
-    "cookies-next": "^3.0.0",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
     "formik": "^2.4.3",
+    "js-cookie": "^3.0.5",
     "moment": "^2.29.4",
     "next": "13.4.13",
     "next-nprogress-bar": "^2.1.0",
     "next-themes": "^0.2.1",
+    "nookies": "^2.5.2",
     "postcss": "8.4.27",
     "react": "18.2.0",
     "react-code-input": "^3.10.1",
@@ -42,6 +42,7 @@
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.7.23",
     "tailwindcss": "3.3.3",
+    "universal-cookie": "^6.1.1",
     "yup": "^1.2.0"
   }
 }

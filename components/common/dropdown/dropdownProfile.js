@@ -1,8 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import { getUserData } from "../../../utils/sessionHelper/sessionHelper";
+import { getItemWithExpiry } from "../../../utils/localStorageWithExpire/localStorageWithExpire";
 import { logOutRequest } from "../../../APIRequest/user/userApi";
 
 const ProfileDropdown = ({ dropdownMenus }) => {
@@ -40,8 +39,8 @@ const ProfileDropdown = ({ dropdownMenus }) => {
 
         <div className="w-10">
           <img
-            src={getUserData()?.photo}
-            alt={getUserData()?.firstName}
+            src={getItemWithExpiry("userData2")?.photo}
+            alt={getItemWithExpiry("userData2")?.firstName}
             className="w-12 h-10 rounded-full cursor-pointer"
           />
         </div>
@@ -51,10 +50,15 @@ const ProfileDropdown = ({ dropdownMenus }) => {
           <div className="">
             <div className="px-6">
               <p className="text-base">
-                {getUserData()?.firstName + " " + getUserData()?.lastName}
+                {getItemWithExpiry("userData2")?.firstName +
+                  " " +
+                  getItemWithExpiry("userData2")?.lastName}
               </p>
 
-              <p className="pb-3 text-base"> {getUserData()?.email}</p>
+              <p className="pb-3 text-base">
+                {" "}
+                {getItemWithExpiry("userData2")?.email}
+              </p>
             </div>
             <hr />
           </div>

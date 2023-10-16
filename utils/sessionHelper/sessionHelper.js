@@ -63,12 +63,10 @@ class SessionHelper {
   }
   sessionDestroy() {
     if (typeof window !== "undefined") {
-      window.localStorage.removeItem("userData");
+      window.localStorage.removeItem("userData2");
       window.localStorage.removeItem("token");
       window.localStorage.removeItem("email");
       window.localStorage.removeItem("otp");
-      document.cookie =
-        "token" + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
       window.location.href = "/";
     }
   }
