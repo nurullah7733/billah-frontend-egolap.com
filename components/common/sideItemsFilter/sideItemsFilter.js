@@ -1,62 +1,124 @@
 import { useState } from "react";
-// import { AiOutlineClose } from "react-icons/ai";
-// import {
-//   BsArrowDownCircle,
-//   BsArrowUpCircle,
-//   BsFillBagCheckFill,
-// } from "react-icons/bs";
-// import {
-//   MdOutlineKeyboardArrowDown,
-//   MdOutlineKeyboardArrowUp,
-// } from "react-icons";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  BsArrowDownCircle,
+  BsArrowUpCircle,
+  BsFillBagCheckFill,
+} from "react-icons/bs";
+import { AiOutlineClose } from "react-icons/ai";
+import {
+  MdOutlineKeyboardArrowUp,
+  MdOutlineKeyboardArrowDown,
+} from "react-icons/md";
+import numberWithCommas from "../../../utils/numberWithComma/numberWithComma";
+import store from "../../../redux/store";
+import {
+  DecreaseProductQuantity,
+  IncreaseProductQuantity,
+  deleteAddToCartProduct,
+  setTotalProductsPrice,
+} from "../../../redux/features/addToCart/addToCartSlice";
+import { MustLoginModal } from "../../../utils/sweetAlert";
+import { getItemWithExpiry } from "../../../utils/localStorageWithExpire/localStorageWithExpire";
 
-let arr = Array.from(Array(5).keys());
-
-const SideItemsFilter = () => {
+const SideItemsFilter = ({ products, totalProductsPrice }) => {
+  const router = useRouter();
   let [isOpenDiscountInput, setIsOpenDiscountInput] = useState(false);
   let handleOpenDiscountInput = () => {
     setIsOpenDiscountInput((prev) => !prev);
   };
+
+  const handleOrderPlaceOrder = async () => {
+    if (
+      getItemWithExpiry("userData2") == null ||
+      Object.values(getItemWithExpiry("userData2"))?.length < 1
+    ) {
+      let result = await MustLoginModal();
+      if (result.isConfirmed === true) {
+        router.push("/login");
+      }
+    } else {
+      router.push("/checkout");
+    }
+  };
+
   return (
     <div>
       {/* header */}
       <div className="sticky flex items-center justify-center w-full text-white bg-gray-700 dark:bg-gray-800 gap-x-3">
-        {/* <BsFillBagCheckFill /> */}
-        <p>{21} items</p>
+        <BsFillBagCheckFill />
+        <p>
+          {products?.length} {products?.length > 1 ? "Items" : "Item"}
+        </p>
       </div>
 
       {/* content */}
       <div className="bg-white dark:bg-gray-700 pb-14">
-        {arr.map((item, index) => (
+        {products?.map((item, index) => (
           <div key={index}>
-            <div className="flex items-center justify-between px-1 gap-y-1">
+            <div className="flex items-center gap-2 justify-between px-1 gap-y-1">
               <div className="flex flex-col items-center justify-start">
-                <button>{/* <MdOutlineKeyboardArrowUp /> */}</button>
-                <p>{2}</p>
-                <button>{/* <MdOutlineKeyboardArrowDown /> */}</button>
+                <button
+                  className="disabled:opacity-20"
+                  disabled={
+                    item?.quantity == item?.customerChoiceProductQuantity
+                  }
+                  onClick={() => {
+                    store.dispatch(
+                      IncreaseProductQuantity({ id: item?._id, count: 1 })
+                    );
+                    store.dispatch(setTotalProductsPrice());
+                  }}
+                >
+                  <MdOutlineKeyboardArrowUp />
+                </button>
+                <p>{item?.customerChoiceProductQuantity}</p>
+                <button
+                  className="disabled:opacity-20"
+                  disabled={item?.customerChoiceProductQuantity <= 1}
+                  onClick={() => {
+                    store.dispatch(
+                      DecreaseProductQuantity({ id: item?._id, count: 1 })
+                    );
+                    store.dispatch(setTotalProductsPrice());
+                  }}
+                >
+                  <MdOutlineKeyboardArrowDown />
+                </button>
               </div>
               <div>
                 <img
-                  width={"30px"}
-                  height={"30px"}
-                  src="assets/img/products/1.webp"
+                  className="object-contain	"
+                  width={"40px"}
+                  height={"40px"}
+                  src={item?.img[0]?.secure_url}
                   alt="bag"
                 />
               </div>
               <div>
                 <p className="text-[13px] text-black dark:text-white">
-                  Products Names
+                  {item?.name?.length > 36
+                    ? item?.name.substr(0, 35) + "..."
+                    : item?.name}
                 </p>
                 <p className="text-[11px] text-black dark:text-white">
                   pcs: 1kg
                 </p>
               </div>
               <div className="flex flex-col ">
-                <p className="text-[13px] dark:text-white text-white">৳ 256</p>
-                <del className="text-[11px] text-gray-500 ">৳ 256</del>
+                <p className="text-[13px] dark:text-white text-white">
+                  ৳{item?.finalPrice * item?.customerChoiceProductQuantity}
+                </p>
               </div>
               <div>
-                <button>{/* <AiOutlineClose /> */}</button>
+                <button
+                  onClick={() =>
+                    store.dispatch(deleteAddToCartProduct(item?._id))
+                  }
+                >
+                  <AiOutlineClose size={13} />
+                </button>
               </div>
             </div>
             <hr className=" h-[1.5px] my-0.5  border-t-0 bg-gray-100 " />
@@ -71,13 +133,13 @@ const SideItemsFilter = () => {
             className="flex items-center justify-center cursor-pointer text-[15px]  "
             onClick={handleOpenDiscountInput}
           >
-            {/* <span className="pr-1">
+            <span className="pr-1">
               {isOpenDiscountInput === true ? (
                 <BsArrowDownCircle size={13} />
               ) : (
                 <BsArrowUpCircle size={13} />
               )}
-            </span> */}
+            </span>
             Have a spacial code?
           </h5>
           {/* Refferal/Discount code */}
@@ -104,14 +166,17 @@ const SideItemsFilter = () => {
             </div>
           )}
         </div>
-        <div className="flex px-2 pt-2 pb-2 border-t-2 border-gray-300 dark:border-gray-400">
-          <button className="text-white w-full py-1.5 bg-primary dark:bg-gray-700 text-[15px]">
+        <div className="flex px-2 pt-2 pb-2    border-t-2 border-gray-300 dark:border-gray-400">
+          <button
+            onClick={handleOrderPlaceOrder}
+            className="text-white w-full py-1.5 bg-primary dark:bg-gray-700 text-[15px]"
+          >
             Place order
           </button>
-          <button className="text-white w-full py-1.5 dark:bg-gray-500 bg-primary-100 text-[15px]">
-            ৳9,3250
-          </button>
         </div>
+        <button className="text-white w-full  py-1.5 dark:bg-gray-500 bg-primary-100 text-[15px]">
+          ৳{totalProductsPrice.toLocaleString()}
+        </button>
       </div>
     </div>
   );

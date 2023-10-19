@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
 
-const Header = () => {
+const Header = ({ token }) => {
   let addToCartProducts = useSelector(
     (state) => state.addToCartProducts.products
   );
@@ -200,7 +200,7 @@ const Header = () => {
                 <DarkModeToggleButton />
                 {/* login */}
                 <ClientOnly>
-                  {getItemWithExpiry("userData2") !== null ? (
+                  {token?.length > 1 ? (
                     <ProfileDropdown dropdownMenus={dropdownMenus} />
                   ) : (
                     <div className="flex items-center justify-center w-20 h-10 font-semibold text-white rounded-md bg-primary-100 hover:bg-primary-200 md:w-16 dark:bg-gray-600 dark:hover:bg-gray-800">

@@ -4,11 +4,9 @@ import Link from "next/link";
 import BtnPromoCode from "@components/common/btnPromoCode/btnPromoCode";
 import numberWithCommas from "../../../utils/numberWithComma/numberWithComma";
 import { MustLoginModal } from "../../../utils/sweetAlert";
-import {
-  getToken,
-  getUserData,
-} from "../../../utils/sessionHelper/sessionHelper";
+
 import { useRouter } from "next/navigation";
+import { getItemWithExpiry } from "../../../utils/localStorageWithExpire/localStorageWithExpire";
 
 const Summary = ({
   width = "1/2",
@@ -18,9 +16,15 @@ const Summary = ({
   totalProductsPrice,
 }) => {
   let router = useRouter();
-  const hadleChackoutBtn = () => {
-    if (getUserData() == null || Object.values(getUserData())?.length < 1) {
-      return MustLoginModal();
+  const hadleChackoutBtn = async () => {
+    if (
+      getItemWithExpiry("userData2") == null ||
+      Object.values(getItemWithExpiry("userData2"))?.length < 1
+    ) {
+      let result = await MustLoginModal();
+      if (result.isConfirmed === true) {
+        router.push("/login");
+      }
     } else {
       router.push("/checkout");
     }

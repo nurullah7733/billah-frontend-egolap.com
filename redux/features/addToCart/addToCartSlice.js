@@ -3,6 +3,7 @@ import {
   setUserAddToCart,
   setUserTotalProductsPrice,
 } from "../../../utils/sessionHelper/sessionHelper";
+import { getItemWithExpiry } from "../../../utils/localStorageWithExpire/localStorageWithExpire";
 
 const initialState = {
   products: [],
@@ -16,6 +17,10 @@ const AddToCartSlice = createSlice({
     setAddToCartProduct(state, actions) {
       state.products.push(actions.payload);
       setUserAddToCart(state.products);
+
+      if (getItemWithExpiry("userData2") !== null) {
+        console.log("ok");
+      }
     },
 
     deleteAddToCartProduct(state, actions) {

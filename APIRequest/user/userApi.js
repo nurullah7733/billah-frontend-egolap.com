@@ -25,6 +25,7 @@ export const loginRequest = async (data) => {
     if (res.status === 200 && data.status === "success") {
       setItemWithExpiry("userData2", data.data, 2592000);
       SuccessToast("Login success!");
+      window.history.go(-1);
       return data;
     } else if (res.status === 200 && data.status === "Invalid Credentials") {
       ErrorToast(data.status);

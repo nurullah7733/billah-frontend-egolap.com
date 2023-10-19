@@ -10,7 +10,6 @@ import {
 } from "../../../redux/features/addToCart/addToCartSlice";
 
 const CartProducts = ({ items, products }) => {
-  console.log(products);
   const IncreateAddToCartProduct = (productId) => {
     store.dispatch(IncreaseProductQuantity({ id: productId, count: 1 }));
     store.dispatch(setTotalProductsPrice());

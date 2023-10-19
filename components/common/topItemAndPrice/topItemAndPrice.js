@@ -27,7 +27,7 @@ const TopItemAndPrice = () => {
           <BsFillBagCheckFill color="white" />
         </div>
         <div className="text-white text-[12px] mx-1">
-          {item} {item > 1 ? "Items" : "Item"}
+          {products?.length} {products?.length > 1 ? "Items" : "Item"}
         </div>
       </div>
       <div className="text-[12px] text-white mx-1 flex  justify-center">
@@ -50,7 +50,10 @@ const TopItemAndPrice = () => {
         size={"260px"}
       >
         <div>
-          <SideItemsFilter />
+          <SideItemsFilter
+            products={products}
+            totalProductsPrice={totalProductsPrice}
+          />
         </div>
       </Drawer>
     </div>

@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import "./globals.css";
 import "react-modern-drawer/dist/index.css";
 import "slick-carousel/slick/slick.css";
@@ -7,10 +6,9 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import ReduxProvider from "../redux/Provider";
 import NextThemeProvider from "../utils/provider/themeProvider";
 import AppProgressbarProvider from "../utils/provider/appProgressbarProvider";
+import { cookies } from "next/headers";
 
-const Header = dynamic(() => import("../components/header/header"), {
-  ssr: false,
-});
+import Header from "@components/header/header";
 import Footer from "../components/footer/footer";
 import CategoriesSlider from "../components/categories/categories";
 import TopItemAndPrice from "../components/common/topItemAndPrice/topItemAndPrice";
@@ -21,12 +19,14 @@ import TopItemAndPrice from "../components/common/topItemAndPrice/topItemAndPric
 // };
 
 export default function RootLayout({ children }) {
+  let cookie = cookies();
+  let token = cookie.get("token")?.value;
   return (
     <html lang="en">
       <body>
         <ReduxProvider>
           <NextThemeProvider attribute="class">
-            <Header />
+            <Header token={token} />
             <CategoriesSlider />
             {children}
             <AppProgressbarProvider />
