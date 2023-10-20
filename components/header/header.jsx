@@ -15,6 +15,7 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
+import { userAddToCartOrUpdateRequest } from "../../APIRequest/user/userApi";
 
 const Header = ({ token }) => {
   let addToCartProducts = useSelector(
@@ -60,12 +61,23 @@ const Header = ({ token }) => {
     }
   };
 
+  useEffect(() => {
+    let id = getItemWithExpiry("userData2")?.id;
+    (async function instantCall() {
+      if (pathname !== "/" && pathname !== "/store") {
+        let cart = addToCartProducts;
+
+        await userAddToCartOrUpdateRequest(id, cart);
+      }
+    })();
+  }, [pathname]);
+
   const dropdownMenus = [
     { menuName: "Dashboard", link: "/user-dashboard" },
     { menuName: "Edit profile", link: "/user-dashboard/edit-profile" },
     { menuName: "Orders", link: "/user-dashboard/orders/running-orders" },
   ];
-  console.log(getItemWithExpiry("userData2"), "dd");
+
   return (
     <header className="fixed z-10 w-full px-3 bg-primary dark:bg-gray-700 h-[57px] md:h-[130px]">
       <div className="container mx-auto">

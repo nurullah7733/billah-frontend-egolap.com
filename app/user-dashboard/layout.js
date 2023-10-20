@@ -11,6 +11,7 @@ import Link from "next/link";
 import useWindowSize from "../../utils/windowResize/useWindowResize";
 import { getUserData } from "../../utils/sessionHelper/sessionHelper";
 import ClientOnly from "@components/clientOnly/clientOnly";
+import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
 
 const Layout = ({ children }) => {
   const [open, setOpen] = useState(true);
@@ -37,7 +38,7 @@ const Layout = ({ children }) => {
             <ClientOnly>
               <div>
                 <img
-                  src={getUserData()?.photo}
+                  src={getItemWithExpiry("userData2")?.photo}
                   className={`cursor-pointer duration-500  rounded-[50%] w-14 h-14 ${
                     !open && "hidden"
                   }`}
@@ -46,7 +47,7 @@ const Layout = ({ children }) => {
             </ClientOnly>
           ) : (
             <img
-              src={getUserData()?.photo}
+              src={getItemWithExpiry("userData2")?.photo}
               className={`cursor-pointer duration-500  rounded-[50%] w-14 h-14 `}
             />
           )}
@@ -56,7 +57,9 @@ const Layout = ({ children }) => {
                 !open && "scale-0"
               }`}
             >
-              {getUserData()?.firstName + " " + " " + getUserData()?.lastName}
+              {getItemWithExpiry("userData2")?.firstName +
+                " " +
+                getItemWithExpiry("userData2")?.lastName}
             </h1>
           </ClientOnly>
         </div>

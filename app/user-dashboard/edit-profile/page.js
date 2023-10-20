@@ -46,15 +46,17 @@ const EditProfile = () => {
       var fullName = name.split(" ");
       let firstName = fullName[0];
       let lastName = fullName[fullName.length - 1];
-      console.log(firstName);
-      console.log(lastName);
+
       let data = {
         firstName: firstName,
         lastName: lastName,
         mobile: mobile,
         photo: img,
       };
-      let result = await userUpdateRequest(data, getUserData()?.id);
+      let result = await userUpdateRequest(
+        data,
+        getItemWithExpiry("userData2")?.id
+      );
       if (result) {
         let pushDataToLocalStorage = {
           firstName,

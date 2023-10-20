@@ -89,10 +89,8 @@ export const userUpdateRequest = async (data, id) => {
     if (res.status === 200 && data.status === "success") {
       SuccessToast("User update success!");
       return true;
-    } else if (data.status === "fail" && data.data.keyPattern.mobile === 1) {
+    } else if (data.status === "fail" && data?.data?.keyPattern?.mobile === 1) {
       ErrorToast("Mobile number already exits.");
-    } else if (res.status === 401 && data.status == "unauthorized") {
-      sessionDestroy();
     } else {
       ErrorToast("Request fail. Please try again.");
       return false;
@@ -122,6 +120,62 @@ export const logOutRequest = async () => {
       return data;
     } else {
       ErrorToast("Request fail. Please try again.");
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
+};
+
+// addToCart/updateCart
+export const userAddToCartOrUpdateRequest = async (id, data) => {
+  let url = `${baseUrl}/add-to-cart/${id}`;
+  const config = {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ cart: data }),
+  };
+  try {
+    const res = await fetch(url, config);
+    const data = await res.json();
+    if (res.status === 200 && data.status === "success") {
+      return true;
+    } else if (data.status === "fail") {
+      return false;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
+};
+
+// removeCart
+export const userRemoveCartItem = async (id, data) => {
+  let url = `${baseUrl}/add-to-cart/${id}`;
+  const config = {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+  try {
+    const res = await fetch(url, config);
+    const data = await res.json();
+    if (res.status === 200 && data.status === "success") {
+      return true;
+    } else if (data.status === "fail") {
+      return false;
+    } else {
       return false;
     }
   } catch (error) {

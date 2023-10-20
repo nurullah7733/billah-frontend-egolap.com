@@ -16,18 +16,16 @@ const AddToCartSlice = createSlice({
   reducers: {
     setAddToCartProduct(state, actions) {
       state.products.push(actions.payload);
+      // addToCart to localStorage
       setUserAddToCart(state.products);
-
-      if (getItemWithExpiry("userData2") !== null) {
-        console.log("ok");
-      }
     },
 
     deleteAddToCartProduct(state, actions) {
       state.products = state.products.filter(
         (item) => item._id !== actions.payload
       );
-      // setUserAddToCart(state.products);
+      // addToCart to localStorage
+      setUserAddToCart(state.products);
     },
 
     IncreaseProductQuantity(state, actions) {
@@ -43,6 +41,8 @@ const AddToCartSlice = createSlice({
           state.products[index].customerChoiceProductQuantity +=
             actions.payload.count;
       }
+      // addToCart to localStorage
+      setUserAddToCart(state.products);
     },
 
     DecreaseProductQuantity(state, actions) {
@@ -54,6 +54,8 @@ const AddToCartSlice = createSlice({
           state.products[index].customerChoiceProductQuantity -=
             actions.payload.count;
       }
+      // addToCart to localStorage
+      setUserAddToCart(state.products);
     },
 
     setTotalProductsPrice(state) {

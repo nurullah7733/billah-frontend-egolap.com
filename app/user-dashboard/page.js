@@ -1,6 +1,6 @@
 "use client";
 import ClientOnly from "@components/clientOnly/clientOnly";
-import { getUserData } from "../../utils/sessionHelper/sessionHelper";
+import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
 
 const Page = () => {
   return (
@@ -13,20 +13,22 @@ const Page = () => {
           <p className="text-sm">Full Name</p>
           <ClientOnly>
             <p className="text-lg">
-              {getUserData()?.firstName + " " + getUserData()?.lastName}
+              {getItemWithExpiry("userData2")?.firstName +
+                " " +
+                getItemWithExpiry("userData2")?.lastName}
             </p>
           </ClientOnly>
         </div>
         <div>
           <p className="text-sm">Email</p>
           <ClientOnly>
-            <p className="text-lg">{getUserData()?.email}</p>
+            <p className="text-lg">{getItemWithExpiry("userData2")?.email}</p>
           </ClientOnly>
         </div>
         <div>
           <p className="text-sm">Mobile</p>
           <ClientOnly>
-            <p className="text-lg">{getUserData()?.mobile}</p>
+            <p className="text-lg">{getItemWithExpiry("userData2")?.mobile}</p>
           </ClientOnly>
         </div>
 
