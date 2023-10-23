@@ -6,9 +6,6 @@ const nextConfig = {
   images: {
     domains: ["res.cloudinary.com"],
   },
-  headers: {
-    "x-url": ({ req }) => req.url,
-  },
 };
 
 module.exports = nextConfig;

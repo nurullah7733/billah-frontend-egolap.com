@@ -6,6 +6,11 @@ import {
 } from "../../utils/notificationAlert/notificationAlert";
 import { sessionDestroy } from "../../utils/sessionHelper/sessionHelper";
 import { setItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
+import {
+  setAddToCartProductFromUserDatabaseAfterLogin,
+  setTotalProductsPrice,
+} from "../../redux/features/addToCart/addToCartSlice";
+import store from "../../redux/store";
 
 export const loginRequest = async (data) => {
   let url = `${baseUrl}/login`;
@@ -20,11 +25,19 @@ export const loginRequest = async (data) => {
     body: JSON.stringify(data),
   };
   try {
-    const res = await fetch(url, config);
+    const timestamp = new Date().getTime(); // Generate a unique timestamp
+    const urlWithCacheBusting = `${url}?timestamp=${timestamp}`;
+    const res = await fetch(urlWithCacheBusting, config);
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
       setItemWithExpiry("userData2", data.data, 2592000);
+      store.dispatch(
+        setAddToCartProductFromUserDatabaseAfterLogin(data?.data?.cart)
+      );
+      store.dispatch(setTotalProductsPrice());
       SuccessToast("Login success!");
+
+      window.location.reload();
       window.history.go(-1);
       return data;
     } else if (res.status === 200 && data.status === "Invalid Credentials") {

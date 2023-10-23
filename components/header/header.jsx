@@ -1,14 +1,10 @@
 "use client";
-import Cookies from "js-cookie";
 import { useState } from "react";
 import Link from "next/link";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaShoppingCart } from "react-icons/fa";
-
 import DarkModeToggleButton from "../common/darkModeToggleButton/darkModeToggleButton";
-
 import ProfileDropdown from "@components/common/dropdown/dropdownProfile";
-import { getToken } from "../../utils/sessionHelper/sessionHelper";
 import ClientOnly from "@components/clientOnly/clientOnly";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -62,14 +58,16 @@ const Header = ({ token }) => {
   };
 
   useEffect(() => {
-    let id = getItemWithExpiry("userData2")?.id;
-    (async function instantCall() {
-      if (pathname !== "/" && pathname !== "/store") {
-        let cart = addToCartProducts;
+    if (token !== undefined) {
+      let id = getItemWithExpiry("userData2")?.id;
+      (async function instantCall() {
+        if (pathname !== "/" && pathname !== "/store") {
+          let cart = addToCartProducts;
 
-        await userAddToCartOrUpdateRequest(id, cart);
-      }
-    })();
+          await userAddToCartOrUpdateRequest(id, cart);
+        }
+      })();
+    }
   }, [pathname]);
 
   const dropdownMenus = [
@@ -119,8 +117,11 @@ const Header = ({ token }) => {
                     </div>
                     {/* login */}
                     <ClientOnly>
-                      {getToken()?.length > 0 ? (
-                        <ProfileDropdown dropdownMenus={dropdownMenus} />
+                      {token !== undefined ? (
+                        <ProfileDropdown
+                          dropdownMenus={dropdownMenus}
+                          token={token}
+                        />
                       ) : (
                         <div className="flex items-center justify-center w-20 h-10 font-semibold text-white rounded-md bg-primary-100 hover:bg-primary-200 md:w-16 dark:bg-gray-600 dark:hover:bg-gray-800">
                           <Link href={"/login"}>Login</Link>
@@ -212,8 +213,11 @@ const Header = ({ token }) => {
                 <DarkModeToggleButton />
                 {/* login */}
                 <ClientOnly>
-                  {token?.length > 1 ? (
-                    <ProfileDropdown dropdownMenus={dropdownMenus} />
+                  {token !== undefined ? (
+                    <ProfileDropdown
+                      dropdownMenus={dropdownMenus}
+                      token={token}
+                    />
                   ) : (
                     <div className="flex items-center justify-center w-20 h-10 font-semibold text-white rounded-md bg-primary-100 hover:bg-primary-200 md:w-16 dark:bg-gray-600 dark:hover:bg-gray-800">
                       <Link href={"/login"}>Login</Link>

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import {
   getTotalProductsPrice,
-  getUserAddToCart,
+  getUserAddToCartInLocalStorage,
 } from "../../utils/sessionHelper/sessionHelper";
 import store from "../../redux/store";
 import { setAddToCartProductFromLocalStorage } from "../../redux/features/addToCart/addToCartSlice";
@@ -14,7 +14,7 @@ import { setAddToCartProductFromLocalStorage } from "../../redux/features/addToC
 const Footer = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
-      let addToCartItemsTolocalStorage = getUserAddToCart();
+      let addToCartItemsTolocalStorage = getUserAddToCartInLocalStorage();
       let totalAmoutAddToCartItemsTolocalStorage = getTotalProductsPrice();
       if (addToCartItemsTolocalStorage?.length > 0) {
         store.dispatch(

@@ -2,10 +2,21 @@
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
 import { getItemWithExpiry } from "../../../utils/localStorageWithExpire/localStorageWithExpire";
-import { logOutRequest } from "../../../APIRequest/user/userApi";
+import {
+  logOutRequest,
+  userAddToCartOrUpdateRequest,
+} from "../../../APIRequest/user/userApi";
+import { useSelector } from "react-redux";
 
-const ProfileDropdown = ({ dropdownMenus }) => {
+const ProfileDropdown = ({ dropdownMenus, token }) => {
+  let addToCartProducts = useSelector(
+    (state) => state.addToCartProducts.products
+  );
+  let id = getItemWithExpiry("userData2")?.id;
   let handleClick = async () => {
+    if (token !== undefined) {
+      await userAddToCartOrUpdateRequest(id, addToCartProducts);
+    }
     await logOutRequest();
   };
   const wrapperRef = useRef(null);

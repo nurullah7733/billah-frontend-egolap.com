@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import React from "react";
 import BtnPromoCode from "@components/common/btnPromoCode/btnPromoCode";
 import numberWithCommas from "../../../utils/numberWithComma/numberWithComma";
 import { MustLoginModal } from "../../../utils/sweetAlert";
 
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { getItemWithExpiry } from "../../../utils/localStorageWithExpire/localStorageWithExpire";
+import { paymentRequest } from "../../../APIRequest/payment/paymentApi";
 
 const Summary = ({
   width = "1/2",
@@ -29,6 +29,19 @@ const Summary = ({
       router.push("/checkout");
     }
   };
+  let userId = getItemWithExpiry("userData2")?.id;
+  let data = {
+    userId,
+    allProducts: products,
+    total_amount: totalProductsPrice,
+  };
+  const handleOrderConfirmBtn = async () => {
+    let result = await paymentRequest(data);
+    if (result?.status === "success") {
+      router.push(result?.data);
+    }
+  };
+
   return (
     <div
       id="summary"
@@ -90,8 +103,11 @@ const Summary = ({
                   I agree the rules of term & conditions.
                 </label>
               </div>
-              <button className="w-full py-3 text-sm font-semibold text-white uppercase bg-primary dark:bg-gray-700 hover:bg-primary-100">
-                <Link href="#">Confirm Order</Link>
+              <button
+                onClick={handleOrderConfirmBtn}
+                className="w-full py-3 text-sm font-semibold text-white uppercase bg-primary dark:bg-gray-700 hover:bg-primary-100"
+              >
+                Confirm Order
               </button>
             </div>
           )}

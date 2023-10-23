@@ -129,7 +129,9 @@ const CartProducts = ({ items, products }) => {
           ))}
         </>
       ) : (
-        <h2 className="p-5 text-2xl font-bold text-center"> Cart is Empty</h2>
+        <h2 className="p-5 text-2xl !flex font-bold    !text-center">
+          Cart is Empty
+        </h2>
       )}
     </div>
   );

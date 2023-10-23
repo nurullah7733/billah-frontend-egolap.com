@@ -1,7 +1,7 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import {
-  setUserAddToCart,
-  setUserTotalProductsPrice,
+  setUserAddToCartInLocalStorage,
+  setUserTotalProductsPriceInLocalStorage,
 } from "../../../utils/sessionHelper/sessionHelper";
 import { getItemWithExpiry } from "../../../utils/localStorageWithExpire/localStorageWithExpire";
 
@@ -17,7 +17,7 @@ const AddToCartSlice = createSlice({
     setAddToCartProduct(state, actions) {
       state.products.push(actions.payload);
       // addToCart to localStorage
-      setUserAddToCart(state.products);
+      setUserAddToCartInLocalStorage(state.products);
     },
 
     deleteAddToCartProduct(state, actions) {
@@ -25,7 +25,7 @@ const AddToCartSlice = createSlice({
         (item) => item._id !== actions.payload
       );
       // addToCart to localStorage
-      setUserAddToCart(state.products);
+      setUserAddToCartInLocalStorage(state.products);
     },
 
     IncreaseProductQuantity(state, actions) {
@@ -42,7 +42,7 @@ const AddToCartSlice = createSlice({
             actions.payload.count;
       }
       // addToCart to localStorage
-      setUserAddToCart(state.products);
+      setUserAddToCartInLocalStorage(state.products);
     },
 
     DecreaseProductQuantity(state, actions) {
@@ -55,7 +55,7 @@ const AddToCartSlice = createSlice({
             actions.payload.count;
       }
       // addToCart to localStorage
-      setUserAddToCart(state.products);
+      setUserAddToCartInLocalStorage(state.products);
     },
 
     setTotalProductsPrice(state) {
@@ -66,18 +66,22 @@ const AddToCartSlice = createSlice({
           10
         );
         if (!isNaN(productPrice) && !isNaN(productQuantity)) {
-          console.log(total + productPrice * productQuantity);
           state.totalProductsPrice = total + productPrice * productQuantity;
           return total + productPrice * productQuantity;
         }
         return total;
       }, 0);
-      setUserTotalProductsPrice(state.totalProductsPrice);
+      setUserTotalProductsPriceInLocalStorage(state.totalProductsPrice);
     },
 
     setAddToCartProductFromLocalStorage(state, actions) {
       state.products = actions.payload.products;
       state.totalProductsPrice = actions.payload.totalProductsPrice;
+    },
+    setAddToCartProductFromUserDatabaseAfterLogin(state, actions) {
+      state.products = actions.payload;
+      // addToCart to localStorage
+      setUserAddToCartInLocalStorage(state.products);
     },
   },
 });
@@ -89,6 +93,7 @@ export const {
   DecreaseProductQuantity,
   setTotalProductsPrice,
   setAddToCartProductFromLocalStorage,
+  setAddToCartProductFromUserDatabaseAfterLogin,
 } = AddToCartSlice.actions;
 
 export default AddToCartSlice.reducer;

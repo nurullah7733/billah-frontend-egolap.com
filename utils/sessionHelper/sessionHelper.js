@@ -1,16 +1,16 @@
 class SessionHelper {
-  setUserAddToCart(value) {
+  setUserAddToCartInLocalStorage(value) {
     typeof window !== "undefined"
       ? window.localStorage.setItem("AddToCartItems", JSON.stringify(value))
       : false;
   }
-  setUserTotalProductsPrice(value) {
+  setUserTotalProductsPriceInLocalStorage(value) {
     typeof window !== "undefined"
       ? window.localStorage.setItem("totalProductsPrice", JSON.stringify(value))
       : false;
   }
 
-  getUserAddToCart() {
+  getUserAddToCartInLocalStorage() {
     if (typeof window !== "undefined") {
       return JSON.parse(window.localStorage.getItem("AddToCartItems"));
     }
@@ -81,8 +81,8 @@ export const {
   getOtp,
   setOtp,
   sessionDestroy,
-  getUserAddToCart,
-  setUserAddToCart,
+  getUserAddToCartInLocalStorage,
+  setUserAddToCartInLocalStorage,
   getTotalProductsPrice,
-  setUserTotalProductsPrice,
+  setUserTotalProductsPriceInLocalStorage,
 } = new SessionHelper();

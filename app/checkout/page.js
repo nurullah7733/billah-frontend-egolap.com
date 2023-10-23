@@ -1,12 +1,15 @@
 "use client";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Drawer from "react-modern-drawer";
 import Summary from "@components/cartPage/summary/summary";
 import { CgList } from "react-icons/cg";
 import { useSelector } from "react-redux";
+import { paymentRequest } from "../../APIRequest/payment/paymentApi";
+import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
 
 const Checkout = () => {
+  const router = useRouter();
   const { products, totalProductsPrice } = useSelector(
     (state) => state.addToCartProducts
   );
@@ -14,6 +17,21 @@ const Checkout = () => {
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
+  let userId = getItemWithExpiry("userData2")?.id;
+
+  let data = {
+    userId,
+    allProducts: products,
+    total_amount: totalProductsPrice,
+  };
+
+  const handleOrderConfirmBtn = async () => {
+    let result = await paymentRequest(data);
+    if (result?.status === "success") {
+      router.push(result?.data);
+    }
+  };
+
   return (
     <div className="px-4 py-8">
       <div className="p-8 px-4 shadow-lg dark:bg-gray-700">
@@ -282,8 +300,11 @@ const Checkout = () => {
 
                   {/* confirm order btn */}
                   <div className="mt-8 mb-0">
-                    <button className="bg-primary font-semibold dark:bg-gray-800 hidden md:block hover:bg-primary-100 py-3 md:py-2 text-sm md:text-[12px] text-white uppercase w-full  ">
-                      <Link href="#">Order Confirm</Link>
+                    <button
+                      onClick={handleOrderConfirmBtn}
+                      className="bg-primary font-semibold dark:bg-gray-800 hidden md:block hover:bg-primary-100 py-3 md:py-2 text-sm md:text-[12px] text-white uppercase w-full  "
+                    >
+                      Order Confirm
                     </button>
                   </div>
                 </div>
