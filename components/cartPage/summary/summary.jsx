@@ -14,6 +14,9 @@ const Summary = ({
   confirmOrder = false,
   products,
   totalProductsPrice,
+  shippingCost,
+  otherCost,
+  couponDiscount,
 }) => {
   let router = useRouter();
   const hadleChackoutBtn = async () => {
@@ -56,24 +59,61 @@ const Summary = ({
           <div className="flex justify-between text-sm font-semibold uppercase">
             <span className="text-sm md:text-[12px] ">subtotal</span>
             <span className="md:text-[12px] ">
-              ৳{numberWithCommas(totalProductsPrice)}
+              ৳{numberWithCommas(totalProductsPrice - shippingCost)}
             </span>
           </div>
-          <div className="flex justify-between py-6 text-sm font-semibold uppercase border-b border-white ">
-            <span className="text-sm md:text-[12px] ">Shipping cost</span>
-            <span className="md:text-[12px] "> ৳{numberWithCommas("50")}</span>
+
+          <div className="flex justify-between py-6 text-sm font-semibold uppercase ">
+            {otherCost > 0 ? (
+              <>
+                <span className="text-sm md:text-[12px] ">Other cost</span>
+                <span className="md:text-[12px] ">
+                  ৳{numberWithCommas(otherCost)}
+                </span>
+              </>
+            ) : (
+              ""
+            )}
           </div>
+
+          <div className="flex justify-between pb-6 text-sm font-semibold uppercase border-b border-white ">
+            {shippingCost > 0 ? (
+              <>
+                <span className="text-sm md:text-[12px] ">Shipping cost</span>
+                <span className="md:text-[12px] ">
+                  {" "}
+                  ৳{numberWithCommas(shippingCost)}
+                </span>
+              </>
+            ) : (
+              ""
+            )}
+          </div>
+
           <div className="flex justify-between py-6 text-sm font-semibold uppercase">
             <span className="text-sm md:text-[12px] ">Total</span>
             <span className="md:text-[12px] ">
-              {" "}
-              ৳{numberWithCommas(totalProductsPrice + 50)}
+              ৳{numberWithCommas(totalProductsPrice)}
             </span>
           </div>
+
+          {couponDiscount > 0 ? (
+            <>
+              <div className="flex justify-between  text-sm font-semibold uppercase">
+                <span className="text-sm md:text-[12px] ">
+                  Vauchar Discount (applied)
+                </span>
+                <span className="md:text-[12px] ">{couponDiscount}%</span>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
+
           <div className="flex justify-between py-6 text-sm font-bold uppercase">
             <span className="text-sm md:text-[13px] ">payable Total</span>
             <span className="md:text-[13px] ">
-              ৳{numberWithCommas(totalProductsPrice + 50)}
+              ৳{numberWithCommas(totalProductsPrice)}
             </span>
           </div>
 

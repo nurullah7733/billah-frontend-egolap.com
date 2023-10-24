@@ -1,6 +1,48 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import { getCouponCodeRequest } from "../../../APIRequest/coupon/couponApi";
+import { ErrorToast } from "../../../utils/notificationAlert/notificationAlert";
+import {
+  getItemWithExpiry,
+  setItemWithExpiry,
+} from "../../../utils/localStorageWithExpire/localStorageWithExpire";
+import { userUpdateRequest } from "../../../APIRequest/user/userApi";
+import store from "../../../redux/store";
+import {
+  setCouponDiscount,
+  setTotalProductsPrice,
+} from "../../../redux/features/addToCart/addToCartSlice";
 
 const BtnPromoCode = () => {
+  const [couponCode, setCouponCode] = useState("");
+  const handleCouponCodeApplyBtn = async () => {
+    if (couponCode.length === 0) {
+      ErrorToast("Please provide a coupon code!");
+    } else {
+      let result = await getCouponCodeRequest(couponCode);
+      if (result?.length > 0) {
+        if (getItemWithExpiry("userData2")?.couponCodeUses === couponCode) {
+          return ErrorToast(`You have already use "${couponCode}" coupon code`);
+        } else {
+          let data = { couponCodeUses: couponCode };
+          await userUpdateRequest(data, getItemWithExpiry("userData2")?.id);
+
+          let pushDataToLocalStorage = {
+            firstName: getItemWithExpiry("userData2")?.firstName,
+            lastName: getItemWithExpiry("userData2")?.lastName,
+            email: getItemWithExpiry("userData2")?.email,
+            mobile: getItemWithExpiry("userData2")?.mobile,
+            photo: getItemWithExpiry("userData2")?.img,
+            couponCodeUses: couponCode,
+            id: getItemWithExpiry("userData2")?.id,
+          };
+          setItemWithExpiry("userData2", pushDataToLocalStorage, 2592000);
+          store.dispatch(setCouponDiscount(result[0]?.discound));
+          store.dispatch(setTotalProductsPrice());
+        }
+      }
+    }
+  };
   return (
     <div className="pb-1.5 -mx-3 bg-gray-100 dark:bg-gray-900">
       <div className="px-3 py-3">
@@ -11,10 +53,15 @@ const BtnPromoCode = () => {
         </div>
         <div className="flex w-full gap-x-3">
           <input
+            onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
             type="text"
+            value={couponCode}
             className="w-full px-3 py-1 rounded-sm outline-none"
           />
-          <button className="px-3 text-sm font-semibold text-white bg-primary dark:bg-gray-700 md:text-[13px]">
+          <button
+            onClick={handleCouponCodeApplyBtn}
+            className="px-3 text-sm font-semibold text-white bg-primary dark:bg-gray-700 md:text-[13px]"
+          >
             Apply
           </button>
         </div>

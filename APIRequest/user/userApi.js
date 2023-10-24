@@ -100,7 +100,7 @@ export const userUpdateRequest = async (data, id) => {
     const res = await fetch(url, config);
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
-      SuccessToast("User update success!");
+      // SuccessToast("User update success!"); here not use toast for coupon code use this api
       return true;
     } else if (data.status === "fail" && data?.data?.keyPattern?.mobile === 1) {
       ErrorToast("Mobile number already exits.");

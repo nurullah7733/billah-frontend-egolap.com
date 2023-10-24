@@ -5,9 +5,13 @@ import CartProducts from "@components/cartPage/cartProducts/cartProducts";
 import { useSelector } from "react-redux";
 
 const Cart = () => {
-  const { products, totalProductsPrice } = useSelector(
-    (state) => state.addToCartProducts
-  );
+  const {
+    products,
+    totalProductsPrice,
+    shippingCost,
+    otherCost,
+    couponDiscount,
+  } = useSelector((state) => state.addToCartProducts);
 
   return (
     <div className="container px-4 mx-auto py-7 dark:bg-gray-700">
@@ -23,6 +27,9 @@ const Cart = () => {
 
             {/* order summary */}
             <Summary
+              shippingCost={shippingCost}
+              otherCost={otherCost}
+              couponDiscount={couponDiscount}
               products={products}
               totalProductsPrice={totalProductsPrice}
             />

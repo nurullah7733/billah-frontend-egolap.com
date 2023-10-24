@@ -9,7 +9,12 @@ import {
   getUserAddToCartInLocalStorage,
 } from "../../utils/sessionHelper/sessionHelper";
 import store from "../../redux/store";
-import { setAddToCartProductFromLocalStorage } from "../../redux/features/addToCart/addToCartSlice";
+import {
+  setAddToCartProductFromLocalStorage,
+  setOtherCost,
+  setShippingCost,
+} from "../../redux/features/addToCart/addToCartSlice";
+import { getShippingAndOtherCost } from "../../APIRequest/shippingCost/getShippingCost";
 
 const Footer = () => {
   useEffect(() => {
@@ -26,6 +31,17 @@ const Footer = () => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      let result = await getShippingAndOtherCost();
+      if (result?.length > 0) {
+        store.dispatch(setShippingCost(result[0]?.shippingCost));
+        store.dispatch(setOtherCost(result[0]?.otherCost));
+      }
+    })();
+  }, []);
+
   return (
     <footer className=" bg-primary dark:bg-gray-700">
       <div className="">

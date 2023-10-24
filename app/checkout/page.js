@@ -10,9 +10,13 @@ import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStora
 
 const Checkout = () => {
   const router = useRouter();
-  const { products, totalProductsPrice } = useSelector(
-    (state) => state.addToCartProducts
-  );
+  const {
+    products,
+    totalProductsPrice,
+    shippingCost,
+    otherCost,
+    couponDiscount,
+  } = useSelector((state) => state.addToCartProducts);
   const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
@@ -314,6 +318,9 @@ const Checkout = () => {
               <Summary
                 products={products}
                 totalProductsPrice={totalProductsPrice}
+                shippingCost={shippingCost}
+                otherCost={otherCost}
+                couponDiscount={couponDiscount}
                 width="full"
                 headerPaddingTop="0"
                 checkoutBtn={false}

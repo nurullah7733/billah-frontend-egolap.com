@@ -7,6 +7,9 @@ import { getItemWithExpiry } from "../../../utils/localStorageWithExpire/localSt
 
 const initialState = {
   products: [],
+  couponDiscount: 0,
+  shippingCost: 0,
+  otherCost: 0,
   totalProductsPrice: 0,
 };
 
@@ -66,10 +69,14 @@ const AddToCartSlice = createSlice({
           10
         );
         if (!isNaN(productPrice) && !isNaN(productQuantity)) {
-          state.totalProductsPrice = total + productPrice * productQuantity;
-          return total + productPrice * productQuantity;
+          let totalPrice = total + productPrice * productQuantity;
+          let afterDiscount =
+            totalPrice - (totalPrice * state.couponDiscount) / 100;
+          let addShippingAndOtherCost =
+            afterDiscount + state.shippingCost + state.otherCost;
+          return (state.totalProductsPrice = addShippingAndOtherCost);
         }
-        return total;
+        return totalPrice;
       }, 0);
       setUserTotalProductsPriceInLocalStorage(state.totalProductsPrice);
     },
@@ -83,6 +90,16 @@ const AddToCartSlice = createSlice({
       // addToCart to localStorage
       setUserAddToCartInLocalStorage(state.products);
     },
+
+    setCouponDiscount(state, actions) {
+      state.couponDiscount = actions.payload;
+    },
+    setShippingCost(state, actions) {
+      state.shippingCost = actions.payload;
+    },
+    setOtherCost(state, actions) {
+      state.otherCost = actions.payload;
+    },
   },
 });
 
@@ -94,6 +111,9 @@ export const {
   setTotalProductsPrice,
   setAddToCartProductFromLocalStorage,
   setAddToCartProductFromUserDatabaseAfterLogin,
+  setCouponDiscount,
+  setOtherCost,
+  setShippingCost,
 } = AddToCartSlice.actions;
 
 export default AddToCartSlice.reducer;
