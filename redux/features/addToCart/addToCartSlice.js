@@ -1,9 +1,8 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   setUserAddToCartInLocalStorage,
   setUserTotalProductsPriceInLocalStorage,
 } from "../../../utils/sessionHelper/sessionHelper";
-import { getItemWithExpiry } from "../../../utils/localStorageWithExpire/localStorageWithExpire";
 
 const initialState = {
   products: [],

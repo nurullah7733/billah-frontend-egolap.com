@@ -12,12 +12,15 @@ import {
   setCouponDiscount,
   setTotalProductsPrice,
 } from "../../../redux/features/addToCart/addToCartSlice";
+import { MustLoginModal } from "../../../utils/sweetAlert";
 
 const BtnPromoCode = () => {
   const [couponCode, setCouponCode] = useState("");
   const handleCouponCodeApplyBtn = async () => {
     if (couponCode.length === 0) {
       ErrorToast("Please provide a coupon code!");
+    } else if (!getItemWithExpiry("userData2")) {
+      MustLoginModal();
     } else {
       let result = await getCouponCodeRequest(couponCode);
       if (result?.length > 0) {

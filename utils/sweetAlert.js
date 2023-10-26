@@ -19,7 +19,7 @@ export const productSizeModal = async (itemsHtml) => {
 
 export const MustLoginModal = async () => {
   return await Swal.fire({
-    title: "You must be login to checkout!",
+    title: "You must be login!",
     html: `<h2><a href="/login">Login</a></h2>`,
     width: 350,
     customClass: {

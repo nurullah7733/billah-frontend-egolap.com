@@ -7,9 +7,16 @@ import { CgList } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { paymentRequest } from "../../APIRequest/payment/paymentApi";
 import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
+import store from "../../redux/store";
+import { setShippingAddressFormValue } from "../../redux/features/userShippingAddressForm/userShippingAddressFormSlice";
+import { ErrorToast } from "../../utils/notificationAlert/notificationAlert";
+import { IsEmail, IsEmpty } from "../../utils/formValidation/formValidation";
+import { createOrder } from "../../APIRequest/orders/ordersApi";
 
 const Checkout = () => {
-  const router = useRouter();
+  const formValue = useSelector(
+    (state) => state.userShippingAddressForm.formValue
+  );
   const {
     products,
     totalProductsPrice,
@@ -17,6 +24,8 @@ const Checkout = () => {
     otherCost,
     couponDiscount,
   } = useSelector((state) => state.addToCartProducts);
+
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
@@ -30,10 +39,62 @@ const Checkout = () => {
   };
 
   const handleOrderConfirmBtn = async () => {
-    let result = await paymentRequest(data);
-    if (result?.status === "success") {
-      router.push(result?.data);
+    if (IsEmpty(formValue.name)) {
+      ErrorToast("Please provide your name");
+    } else if (!IsEmpty(formValue.email)) {
+      ErrorToast("Please provide your email");
+    } else if (!IsEmail(formValue.email)) {
+      ErrorToast("Invalid email");
+    } else if (!IsEmpty(formValue.mobile)) {
+      ErrorToast("Please provide your mobile");
+    } else if (!IsMobileNumber(formValue.mobile)) {
+      ErrorToast("Invalid mobile number");
+    } else if (
+      IsEmpty(formValue?.alternativeMobile) &&
+      !IsMobileNumber(formValue?.alternativeMobile)
+    ) {
+      ErrorToast("Invalid alternative mobile number");
+    } else if (!IsEmpty(formValue.country)) {
+      ErrorToast("Please provide your country");
+    } else if (!IsEmpty(formValue.city)) {
+      ErrorToast("Please provide your city");
+    } else if (!IsEmpty(formValue.thana)) {
+      ErrorToast("Please provide your thana");
+    } else if (!IsEmpty(formValue.address)) {
+      ErrorToast("Please provide your address");
+    } else if (!IsEmpty(formValue.paymentMethod)) {
+      ErrorToast("Please select payment method");
+    } else if (!formValue.termAndCondition) {
+      ErrorToast("Please agree the term & conditions");
+    } else {
+      if (formValue.paymentMethod === "cashOnDelivery") {
+        let data = {
+          allProducts: products,
+          "paymentIntent.paymentMethod": formValue.paymentMethod,
+          amount: formValue.totalProductsPrice,
+          voucherDiscount: couponDiscount,
+          otherCost: otherCost,
+          subTotal: totalProductsPrice - shippingCost,
+          shippingCost: shippingCost,
+          grandTotal: totalProductsPrice,
+          grandTotal: totalProductsPrice,
+          "shippingAddress.name": formValue.name,
+          "shippingAddress.email": formValue.email,
+          "shippingAddress.mobile": formValue.mobile,
+          "shippingAddress.alternativeMobile": formValue?.alternativeMobile,
+          "shippingAddress.city": formValue.city,
+          "shippingAddress.country": formValue.country,
+          "shippingAddress.zipCode": formValue.zipCode,
+          "shippingAddress.address": formValue.address,
+        };
+        let result = await createOrder(data);
+      }
     }
+
+    // let result = await paymentRequest(data);
+    // if (result?.status === "success") {
+    //   router.push(result?.data);
+    // }
   };
 
   return (
@@ -56,10 +117,19 @@ const Checkout = () => {
                         htmlFor="Name"
                         className="block text-sm font-medium leading-6 text-black dark:text-white"
                       >
-                        Name
+                        Name <span className="text-red-600">*</span>
                       </label>
                       <div className="mt-2">
                         <input
+                          onChange={(e) =>
+                            store.dispatch(
+                              setShippingAddressFormValue({
+                                Name: "name",
+                                Value: e.target.value,
+                              })
+                            )
+                          }
+                          value={formValue?.name}
                           type="text"
                           name="Name"
                           id="Name"
@@ -74,10 +144,19 @@ const Checkout = () => {
                         htmlFor="email"
                         className="block text-sm font-medium leading-6 text-black dark:text-white"
                       >
-                        Email
+                        Email <span className="text-red-600">*</span>
                       </label>
                       <div className="mt-2">
                         <input
+                          onChange={(e) =>
+                            store.dispatch(
+                              setShippingAddressFormValue({
+                                Name: "email",
+                                Value: e.target.value,
+                              })
+                            )
+                          }
+                          value={formValue?.email}
                           type="email"
                           name="email"
                           id="email"
@@ -95,10 +174,19 @@ const Checkout = () => {
                         htmlFor="phoneNumber"
                         className="block text-sm font-medium leading-6 text-black dark:text-white"
                       >
-                        Mobile Number
+                        Mobile Number <span className="text-red-600">*</span>
                       </label>
                       <div className="mt-2">
                         <input
+                          onChange={(e) =>
+                            store.dispatch(
+                              setShippingAddressFormValue({
+                                Name: "mobile",
+                                Value: e.target.value,
+                              })
+                            )
+                          }
+                          value={formValue?.mobile}
                           type="phone"
                           name="phoneNumber"
                           id="phoneNumber"
@@ -116,6 +204,15 @@ const Checkout = () => {
                       </label>
                       <div className="mt-2">
                         <input
+                          onChange={(e) =>
+                            store.dispatch(
+                              setShippingAddressFormValue({
+                                Name: "alternativeMobile",
+                                Value: e.target.value,
+                              })
+                            )
+                          }
+                          value={formValue?.alternativeMobile}
                           type="phone"
                           name="phoneNumber2"
                           id="phoneNumber2"
@@ -136,6 +233,15 @@ const Checkout = () => {
                       </label>
                       <div className="mt-2">
                         <select
+                          onChange={(e) =>
+                            store.dispatch(
+                              setShippingAddressFormValue({
+                                Name: "country",
+                                Value: e.target.value,
+                              })
+                            )
+                          }
+                          value={formValue?.country}
                           id="country"
                           name="country"
                           autoComplete="country-name"
@@ -151,10 +257,19 @@ const Checkout = () => {
                         htmlFor="city"
                         className="block text-sm font-medium leading-6 text-black dark:text-white"
                       >
-                        City
+                        City <span className="text-red-600">*</span>
                       </label>
                       <div className="mt-2">
                         <input
+                          onChange={(e) =>
+                            store.dispatch(
+                              setShippingAddressFormValue({
+                                Name: "city",
+                                Value: e.target.value,
+                              })
+                            )
+                          }
+                          value={formValue?.city}
                           type="text"
                           name="city"
                           id="city"
@@ -172,10 +287,19 @@ const Checkout = () => {
                         htmlFor="thana"
                         className="block text-sm font-medium leading-6 text-black dark:text-white"
                       >
-                        Thana
+                        Thana <span className="text-red-600">*</span>
                       </label>
                       <div className="mt-2">
                         <input
+                          onChange={(e) =>
+                            store.dispatch(
+                              setShippingAddressFormValue({
+                                Name: "thana",
+                                Value: e.target.value,
+                              })
+                            )
+                          }
+                          value={formValue?.thana}
                           type="text"
                           name="thana"
                           id="thana"
@@ -194,6 +318,15 @@ const Checkout = () => {
                       </label>
                       <div className="mt-2">
                         <input
+                          onChange={(e) =>
+                            store.dispatch(
+                              setShippingAddressFormValue({
+                                Name: "zipCode",
+                                Value: e.target.value,
+                              })
+                            )
+                          }
+                          value={formValue?.zipCode}
                           type="text"
                           name="postal-code"
                           id="postal-code"
@@ -209,10 +342,19 @@ const Checkout = () => {
                       htmlFor="street-address"
                       className="block text-sm font-medium leading-6 text-black dark:text-white"
                     >
-                      Address
+                      Address <span className="text-red-600">*</span>
                     </label>
                     <div className="mt-2">
                       <textarea
+                        onChange={(e) =>
+                          store.dispatch(
+                            setShippingAddressFormValue({
+                              Name: "address",
+                              Value: e.target.value,
+                            })
+                          )
+                        }
+                        value={formValue?.address}
                         id="street-address"
                         rows="2"
                         placeholder="বাসা/ফ্ল্যাট নম্বর, পাড়া-মহল্লার নাম, পরিচিতির এলাকা উল্লেখ করুন"
@@ -265,7 +407,16 @@ const Checkout = () => {
                     <div className="flex gap-5 md:flex-col">
                       <div className="flex items-center w-full gap-4 p-5 bg-gray-200 md:p-3 dark:bg-gray-500">
                         <input
+                          onChange={(e) =>
+                            store.dispatch(
+                              setShippingAddressFormValue({
+                                Name: "paymentMethod",
+                                Value: e.target.value,
+                              })
+                            )
+                          }
                           type="radio"
+                          value="cashOnDelivery"
                           name="paymentMethod"
                           className="w-5 h-5 accent-primary"
                           id="cashOnDelivery"
@@ -286,17 +437,29 @@ const Checkout = () => {
                       </div>
                       <div className="flex items-center w-full gap-4 p-5 bg-gray-200 md:p-3 dark:bg-gray-500">
                         <input
+                          onChange={(e) =>
+                            store.dispatch(
+                              setShippingAddressFormValue({
+                                Name: "paymentMethod",
+                                Value: e.target.value,
+                              })
+                            )
+                          }
                           type="radio"
+                          value="digitalPayment"
                           name="paymentMethod"
                           className="w-5 h-5 accent-primary"
                           id="bkash"
                         />
                         <label htmlFor="bkash" className="cursor-pointer ">
-                          <img
-                            src="/assets/img/logo/bkash.png"
+                          {/* <img
+                            src="/assets/img/logo/mobile-banking-bangladesh.webp"
                             width="70"
                             height="70"
-                          />
+                          /> */}
+                          <span className="font-semibold text-[17px] text-gray-500 dark:text-gray-300 md:text-[15px]">
+                            Online Banking
+                          </span>
                         </label>
                       </div>
                     </div>
