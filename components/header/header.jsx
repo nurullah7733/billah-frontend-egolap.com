@@ -110,8 +110,15 @@ const Header = ({ token }) => {
                       <DarkModeToggleButton />
                     </div>
                     {/* cart */}
-                    <div className="flex items-center justify-center cursor-pointer">
+                    <div className="flex items-center justify-center cursor-pointer relative">
                       <Link href="/cart">
+                        {addToCartProducts?.length > 0 ? (
+                          <p className="flex items-center absolute left-2 bottom-3 justify-center w-5 h-5 text-[12px]  rounded-full bg-red-600 font-semibold">
+                            {addToCartProducts?.length}
+                          </p>
+                        ) : (
+                          ""
+                        )}
                         <FaShoppingCart className="text-xl" />
                       </Link>
                     </div>

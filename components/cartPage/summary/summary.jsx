@@ -20,6 +20,9 @@ import { createOrder } from "../../../APIRequest/orders/ordersApi";
 
 const Summary = ({
   width = "1/2",
+  header = "",
+  termAndConditionCheckbox = "",
+  confirmOrderBtn = "",
   checkoutBtn = true,
   confirmOrder = false,
   products,
@@ -46,12 +49,8 @@ const Summary = ({
       router.push("/checkout");
     }
   };
+
   let userId = getItemWithExpiry("userData2")?.id;
-  let data = {
-    userId,
-    allProducts: products,
-    total_amount: totalProductsPrice,
-  };
   const handleOrderConfirmBtn = async () => {
     if (!IsEmpty(formValue.name)) {
       ErrorToast("Please provide your name");
@@ -82,7 +81,7 @@ const Summary = ({
       ErrorToast("Please agree the term & conditions");
     } else {
       if (formValue.paymentMethod === "cashOnDelivery") {
-        let data = {
+        let forCashOnDeliveryData = {
           allProducts: products,
           "paymentIntent.paymentMethod": formValue.paymentMethod,
           amount: formValue.totalProductsPrice,
@@ -91,25 +90,48 @@ const Summary = ({
           subTotal: totalProductsPrice - shippingCost,
           shippingCost: shippingCost,
           grandTotal: totalProductsPrice,
-          grandTotal: totalProductsPrice,
-          "shippingAddress.name": formValue.name,
-          "shippingAddress.email": formValue.email,
-          "shippingAddress.mobile": formValue.mobile,
-          "shippingAddress.alternativeMobile": formValue?.alternativeMobile,
-          "shippingAddress.city": formValue.city,
-          "shippingAddress.country": formValue.country,
-          "shippingAddress.zipCode": formValue.zipCode,
-          "shippingAddress.address": formValue.address,
+          shippingAddress: {
+            name: formValue.name,
+            email: formValue.email,
+            mobile: formValue.mobile,
+            alternativeMobile: formValue.alternativeMobile,
+            thana: formValue.thana,
+            city: formValue.city,
+            country: formValue.country,
+            zipCode: formValue.zipCode,
+            address: formValue.address,
+          },
         };
-        let result = await createOrder(data);
-        console.log(result, "result");
+        await createOrder(forCashOnDeliveryData);
+      } else {
+        let forOnlineBankingData = {
+          userId: userId,
+          allProducts: products,
+          "paymentIntent.paymentMethod": formValue.paymentMethod,
+          amount: formValue.totalProductsPrice,
+          voucherDiscount: couponDiscount,
+          otherCost: otherCost,
+          subTotal: totalProductsPrice - shippingCost,
+          shippingCost: shippingCost,
+          grandTotal: totalProductsPrice,
+          shippingAddress: {
+            name: formValue.name,
+            email: formValue.email,
+            mobile: formValue.mobile,
+            alternativeMobile: formValue.alternativeMobile,
+            thana: formValue.thana,
+            city: formValue.city,
+            country: formValue.country,
+            zipCode: formValue.zipCode,
+            address: formValue.address,
+          },
+        };
+        let result = await paymentRequest(forOnlineBankingData);
+        if (result?.status === "success") {
+          router.push(result?.data);
+        }
       }
     }
-
-    // let result = await paymentRequest(data);
-    // if (result?.status === "success") {
-    //   router.push(result?.data);
-    // }
   };
 
   return (
@@ -117,7 +139,9 @@ const Summary = ({
       id="summary"
       className={`w-${width}  xl:w-full px-3 md:px-0  xl:pb-14`}
     >
-      <h1 className="pt-4 pb-8 text-2xl font-semibold text-black dark:text-white md:text-xl ">
+      <h1
+        className={`pt-4 pb-8 text-2xl font-semibold text-black dark:text-white md:text-xl ${header}`}
+      >
         Order Summary
       </h1>
 
@@ -201,30 +225,28 @@ const Summary = ({
           {/* Confirm Order btn */}
           {confirmOrder && (
             <div className="mt-[18px] mb-0">
-              <div className="flex items-center gap-1 mb-4">
-                <input
-                  onChange={(e) =>
-                    store.dispatch(
-                      setShippingAddressFormValue({
-                        Name: "termAndCondition",
-                        Value: e.target.checked ? true : false,
-                      })
-                    )
-                  }
-                  type="checkbox"
-                  className="w-3.5 h-3.5"
-                  id="iAgree"
-                />
-                <label
-                  className="text-sm font-semibold text-black dark:text-white"
-                  htmlFor="iAgree"
-                >
+              <div
+                className={`flex items-center gap-1 mb-4 ${termAndConditionCheckbox}`}
+              >
+                <label className="text-sm font-semibold text-black dark:text-white flex items-center gap-1">
+                  <input
+                    onChange={(e) =>
+                      store.dispatch(
+                        setShippingAddressFormValue({
+                          Name: "termAndCondition",
+                          Value: e.target.checked ? true : false,
+                        })
+                      )
+                    }
+                    type="checkbox"
+                    className="w-3.5 h-3.5"
+                  />
                   I agree the rules of term & conditions.
                 </label>
               </div>
               <button
                 onClick={handleOrderConfirmBtn}
-                className="w-full py-3 text-sm font-semibold text-white uppercase bg-primary dark:bg-gray-700 hover:bg-primary-100"
+                className={`w-full py-3 text-sm font-semibold text-white uppercase bg-primary dark:bg-gray-700 hover:bg-primary-100 ${confirmOrderBtn}`}
               >
                 Confirm Order
               </button>

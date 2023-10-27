@@ -13,7 +13,7 @@ export const getCouponCodeRequest = async (data) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name: data }),
+    body: JSON.stringify({ name: data.toUpperCase() }),
   };
   try {
     const res = await fetch(url, config);

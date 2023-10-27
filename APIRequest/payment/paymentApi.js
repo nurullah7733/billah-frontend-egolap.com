@@ -1,7 +1,6 @@
 import baseUrl from "../../utils/config/baseUrl";
 
 export const paymentRequest = async (data) => {
-  console.log(data);
   let url = `${baseUrl}/payment`;
   const config = {
     method: "POST",
@@ -23,6 +22,6 @@ export const paymentRequest = async (data) => {
     }
   } catch (error) {
     console.log(error, "error");
-    // throw new Error("Something went wrong");
+    throw new Error("Something went wrong");
   }
 };

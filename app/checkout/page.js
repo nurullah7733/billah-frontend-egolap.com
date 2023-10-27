@@ -10,7 +10,11 @@ import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStora
 import store from "../../redux/store";
 import { setShippingAddressFormValue } from "../../redux/features/userShippingAddressForm/userShippingAddressFormSlice";
 import { ErrorToast } from "../../utils/notificationAlert/notificationAlert";
-import { IsEmail, IsEmpty } from "../../utils/formValidation/formValidation";
+import {
+  IsEmail,
+  IsEmpty,
+  IsMobileNumber,
+} from "../../utils/formValidation/formValidation";
 import { createOrder } from "../../APIRequest/orders/ordersApi";
 
 const Checkout = () => {
@@ -32,14 +36,8 @@ const Checkout = () => {
   };
   let userId = getItemWithExpiry("userData2")?.id;
 
-  let data = {
-    userId,
-    allProducts: products,
-    total_amount: totalProductsPrice,
-  };
-
   const handleOrderConfirmBtn = async () => {
-    if (IsEmpty(formValue.name)) {
+    if (!IsEmpty(formValue.name)) {
       ErrorToast("Please provide your name");
     } else if (!IsEmpty(formValue.email)) {
       ErrorToast("Please provide your email");
@@ -68,7 +66,7 @@ const Checkout = () => {
       ErrorToast("Please agree the term & conditions");
     } else {
       if (formValue.paymentMethod === "cashOnDelivery") {
-        let data = {
+        let forCashOnDeliveryData = {
           allProducts: products,
           "paymentIntent.paymentMethod": formValue.paymentMethod,
           amount: formValue.totalProductsPrice,
@@ -77,17 +75,46 @@ const Checkout = () => {
           subTotal: totalProductsPrice - shippingCost,
           shippingCost: shippingCost,
           grandTotal: totalProductsPrice,
-          grandTotal: totalProductsPrice,
-          "shippingAddress.name": formValue.name,
-          "shippingAddress.email": formValue.email,
-          "shippingAddress.mobile": formValue.mobile,
-          "shippingAddress.alternativeMobile": formValue?.alternativeMobile,
-          "shippingAddress.city": formValue.city,
-          "shippingAddress.country": formValue.country,
-          "shippingAddress.zipCode": formValue.zipCode,
-          "shippingAddress.address": formValue.address,
+          shippingAddress: {
+            name: formValue.name,
+            email: formValue.email,
+            mobile: formValue.mobile,
+            alternativeMobile: formValue.alternativeMobile,
+            thana: formValue.thana,
+            city: formValue.city,
+            country: formValue.country,
+            zipCode: formValue.zipCode,
+            address: formValue.address,
+          },
         };
-        let result = await createOrder(data);
+        await createOrder(forCashOnDeliveryData);
+      } else {
+        let forOnlineBankingData = {
+          userId: userId,
+          allProducts: products,
+          "paymentIntent.paymentMethod": formValue.paymentMethod,
+          amount: formValue.totalProductsPrice,
+          voucherDiscount: couponDiscount,
+          otherCost: otherCost,
+          subTotal: totalProductsPrice - shippingCost,
+          shippingCost: shippingCost,
+          grandTotal: totalProductsPrice,
+          shippingAddress: {
+            name: formValue.name,
+            email: formValue.email,
+            mobile: formValue.mobile,
+            alternativeMobile: formValue.alternativeMobile,
+            thana: formValue.thana,
+            city: formValue.city,
+            country: formValue.country,
+            zipCode: formValue.zipCode,
+            address: formValue.address,
+          },
+        };
+        let result = await paymentRequest(forOnlineBankingData);
+        if (result?.status === "success") {
+          router.push(result?.data);
+        }
       }
     }
 
@@ -394,7 +421,20 @@ const Checkout = () => {
                       size={"280px"}
                     >
                       <div>
-                        <Summary width="full" checkoutBtn={false} />
+                        <Summary
+                          width="full"
+                          header="hidden"
+                          termAndConditionCheckbox="hidden"
+                          confirmOrderBtn="hidden"
+                          checkoutBtn={false}
+                          products={products}
+                          totalProductsPrice={totalProductsPrice}
+                          shippingCost={shippingCost}
+                          otherCost={otherCost}
+                          couponDiscount={couponDiscount}
+                          headerPaddingTop="0"
+                          confirmOrder={true}
+                        />
                       </div>
                     </Drawer>
                   </div>
@@ -465,8 +505,28 @@ const Checkout = () => {
                     </div>
                   </div>
 
+                  <div className="hidden md:flex">
+                    <div className={`flex items-center gap-1 my-4  `}>
+                      <label className="text-sm font-semibold text-black dark:text-white flex items-center gap-1">
+                        <input
+                          onChange={(e) =>
+                            store.dispatch(
+                              setShippingAddressFormValue({
+                                Name: "termAndCondition",
+                                Value: e.target.checked ? true : false,
+                              })
+                            )
+                          }
+                          type="checkbox"
+                          className="w-3.5 h-3.5"
+                        />
+                        I agree the rules of term & conditions.
+                      </label>
+                    </div>
+                  </div>
+
                   {/* confirm order btn */}
-                  <div className="mt-8 mb-0">
+                  <div className=" mb-0">
                     <button
                       onClick={handleOrderConfirmBtn}
                       className="bg-primary font-semibold dark:bg-gray-800 hidden md:block hover:bg-primary-100 py-3 md:py-2 text-sm md:text-[12px] text-white uppercase w-full  "

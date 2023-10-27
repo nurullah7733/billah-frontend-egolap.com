@@ -42,7 +42,7 @@ const CartProducts = ({ items, products }) => {
                     <AiOutlineClose />
                   </button>
                 </div>
-                <div className="grid grid-cols-4 gap-1 md:grid-cols-2">
+                <div className="grid grid-cols-4 gap-1 md:grid-cols-2 md:flex md:flex-col md:items-center md: justify-center">
                   <div className="col-span-1">
                     <Image
                       src={item?.img[0]?.secure_url}

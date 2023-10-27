@@ -1,8 +1,11 @@
 import baseUrl from "../../utils/config/baseUrl";
+import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
 import {
   ErrorToast,
   SuccessToast,
 } from "../../utils/notificationAlert/notificationAlert";
+import { setUserAddToCartInLocalStorage } from "../../utils/sessionHelper/sessionHelper";
+import { userUpdateRequest } from "../user/userApi";
 
 export const createOrder = async (data) => {
   let url = `${baseUrl}/create-order`;
@@ -21,7 +24,17 @@ export const createOrder = async (data) => {
     let data = await res.json();
 
     if (res.status === 200) {
-      return data?.data;
+      if (Object.keys(data?.data).length > 0) {
+        let id = getItemWithExpiry("userData2")?.id;
+        let data = { cart: [] };
+        await userUpdateRequest(data, id);
+        setUserAddToCartInLocalStorage([]);
+      }
+      window.location.href = "/";
+      SuccessToast(
+        "We received your purchase request; we'll be in touch shortly!"
+      );
+      return data;
     } else {
       ErrorToast("Request fail. Please try again.");
       return false;

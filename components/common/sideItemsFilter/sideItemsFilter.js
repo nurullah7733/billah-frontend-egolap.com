@@ -17,16 +17,57 @@ import {
   DecreaseProductQuantity,
   IncreaseProductQuantity,
   deleteAddToCartProduct,
+  setCouponDiscount,
   setTotalProductsPrice,
 } from "../../../redux/features/addToCart/addToCartSlice";
 import { MustLoginModal } from "../../../utils/sweetAlert";
-import { getItemWithExpiry } from "../../../utils/localStorageWithExpire/localStorageWithExpire";
+import {
+  getItemWithExpiry,
+  setItemWithExpiry,
+} from "../../../utils/localStorageWithExpire/localStorageWithExpire";
+import { getCouponCodeRequest } from "../../../APIRequest/coupon/couponApi";
+import { ErrorToast } from "../../../utils/notificationAlert/notificationAlert";
+import { userUpdateRequest } from "../../../APIRequest/user/userApi";
 
 const SideItemsFilter = ({ products, totalProductsPrice }) => {
+  const [couponCode, setCouponCode] = useState("");
+
   const router = useRouter();
   let [isOpenDiscountInput, setIsOpenDiscountInput] = useState(false);
   let handleOpenDiscountInput = () => {
     setIsOpenDiscountInput((prev) => !prev);
+  };
+
+  const handleCouponCodeApplyBtn = async () => {
+    if (couponCode.length === 0) {
+      ErrorToast("Please provide a coupon code!");
+    } else if (!getItemWithExpiry("userData2")) {
+      MustLoginModal();
+    } else {
+      let result = await getCouponCodeRequest(couponCode);
+      console.log(result);
+      if (result?.length > 0) {
+        if (getItemWithExpiry("userData2")?.couponCodeUses == couponCode) {
+          return ErrorToast(`You have already use "${couponCode}" coupon code`);
+        } else {
+          let data = { couponCodeUses: couponCode };
+          await userUpdateRequest(data, getItemWithExpiry("userData2")?.id);
+
+          let pushDataToLocalStorage = {
+            firstName: getItemWithExpiry("userData2")?.firstName,
+            lastName: getItemWithExpiry("userData2")?.lastName,
+            email: getItemWithExpiry("userData2")?.email,
+            mobile: getItemWithExpiry("userData2")?.mobile,
+            photo: getItemWithExpiry("userData2")?.img,
+            couponCodeUses: couponCode,
+            id: getItemWithExpiry("userData2")?.id,
+          };
+          setItemWithExpiry("userData2", pushDataToLocalStorage, 2592000);
+          store.dispatch(setCouponDiscount(result[0]?.discound));
+          store.dispatch(setTotalProductsPrice());
+        }
+      }
+    }
   };
 
   const handleOrderPlaceOrder = async () => {
@@ -147,13 +188,18 @@ const SideItemsFilter = ({ products, totalProductsPrice }) => {
             <div className="flex justify-between p-2 gap-x-2">
               <div className="">
                 <input
+                  onChange={(e) => setCouponCode(e.target.value)}
                   className="bg-gray-300 w-[150px] rounded-sm p-0.5 border-none outline-none text-black"
                   type="text"
+                  value={couponCode.toUpperCase()}
                   placeholder="Discount code"
                 />
               </div>
               <div className="flex text-white gap-x-1">
-                <button className="px-1 rounded-sm bg-primary dark:bg-gray-700 text-[14px]">
+                <button
+                  onClick={handleCouponCodeApplyBtn}
+                  className="px-1 rounded-sm bg-primary dark:bg-gray-700 text-[14px]"
+                >
                   Go
                 </button>
                 <button
