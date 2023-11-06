@@ -49,7 +49,7 @@ const Header = ({ token }) => {
 
     const search = current.toString();
     const query = search ? `?${search}` : "";
-    console.log(pathname === "/store", "path condition");
+
     if (pathname === "/store") {
       router.push(`${pathname}${query}`);
     } else {

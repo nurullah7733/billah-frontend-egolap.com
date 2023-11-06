@@ -4,7 +4,7 @@ import TabConentOne from "../_component/tabOne/TabContentOne";
 import TabContentTwo from "../_component/tabTwo/TabContentTwo";
 import TabContentThree from "../_component/tabThree/TabContentThree";
 
-const EachTabContentHeader = ({ product }) => {
+const EachTabContentHeader = ({ product, productPrivacyPolicy }) => {
   const productReviewTab = useSelector(
     (state) => state.websiteSettings.productReviewTab
   );
@@ -21,7 +21,7 @@ const EachTabContentHeader = ({ product }) => {
       </div>
       {/* SHIPPING & DELIVERY information */}
       <div className={productReviewTab === 3 ? "block" : "hidden"}>
-        <TabContentThree />
+        <TabContentThree productPrivacyPolicy={productPrivacyPolicy} />
       </div>
     </>
   );

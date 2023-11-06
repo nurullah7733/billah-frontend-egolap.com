@@ -5,7 +5,6 @@ import BtnPlaceOrder from "@components/common/btnPlaceOrder/btnPlaceOrder";
 
 const ProductInfo = ({ product }) => {
   let ratingAvg;
-  console.log(ratingAvg);
   if (product?.ratings?.length > 0) {
     const sum = product?.ratings?.reduce(
       (total, item) => total + item?.star,
@@ -39,7 +38,9 @@ const ProductInfo = ({ product }) => {
 
         {/* description */}
         <div className="mt-3">
-          <p className="text-base md:text-[15px]">{product?.sortDescription}</p>
+          <p className="text-base md:text-[15px]">
+            {product?.shortDescription}
+          </p>
         </div>
         {/* sub description */}
         <div className="mt-3">
@@ -70,7 +71,9 @@ const ProductInfo = ({ product }) => {
             <div className="flex mb-3">
               <p className="w-32 font-semibold text-[14px]">Size:</p>
               {product?.size?.map((s, i) => (
-                <p key={i}>{s}</p>
+                <p key={i} className="mr-2 border-[1px] border-black px-1">
+                  {s}
+                </p>
               ))}
             </div>
           ) : (

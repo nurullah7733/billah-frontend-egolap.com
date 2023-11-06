@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 import Slider from "react-slick";
 
-const MainSlider = () => {
+const MainSlider = ({ slider }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -27,35 +27,19 @@ const MainSlider = () => {
     >
       <div className="mx-auto max-w-[1680px]">
         <Slider {...settings}>
-          <Link href="#">
-            <img
-              src="/slider/1.jpg"
-              alt=""
-              width="1680px"
-              height="450px"
-              className="cursor-pointer"
-            />
-          </Link>
-
-          <Link href="#">
-            <img
-              src="/slider/2.jpg"
-              alt=""
-              width="1680px"
-              height="450px"
-              className="cursor-pointer"
-            />
-          </Link>
-
-          <Link href="#">
-            <img
-              src="/slider/3.jpg"
-              alt=""
-              width="1680px"
-              height="450px"
-              className="cursor-pointer"
-            />
-          </Link>
+          {slider?.map((item, index) => (
+            <div key={index}>
+              <Link href="#">
+                <Image
+                  src={item?.secure_url}
+                  alt=""
+                  width={1680}
+                  height={450}
+                  className="cursor-pointer"
+                />
+              </Link>
+            </div>
+          ))}
         </Slider>
       </div>
     </div>

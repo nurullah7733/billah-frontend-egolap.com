@@ -2,10 +2,14 @@ import ProductInfo from "../_components/productInfo/productInfo";
 import ImgSliderAndZoom from "../_components/ImgSliderAndZoom/ImgSliderAndZoom";
 import ProductDescription from "../_components/productDescription/productDescription";
 import RelatedProducts from "../_components/relatedProducts/relatedProducts";
-import { getSingleProductsRequest } from "../../../APIRequest/products/productsApi";
+import {
+  getProductsPrivacyPolicyRequest,
+  getSingleProductsRequest,
+} from "../../../APIRequest/products/productsApi";
 
 const ProductDetails = async ({ params }) => {
   let product = await getSingleProductsRequest(params.id);
+  const productPrivacyPolicy = await getProductsPrivacyPolicyRequest();
 
   return (
     <div className="container px-4 mx-auto py-14 md:py-8">
@@ -13,7 +17,10 @@ const ProductDetails = async ({ params }) => {
         <ImgSliderAndZoom images={product?.img} />
         <ProductInfo product={product} />
       </div>
-      <ProductDescription product={product} />
+      <ProductDescription
+        product={product}
+        productPrivacyPolicy={productPrivacyPolicy}
+      />
       <RelatedProducts subcategory={product?.subCategory[0]?.name} />
     </div>
   );

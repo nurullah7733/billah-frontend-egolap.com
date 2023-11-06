@@ -45,7 +45,7 @@ const SideItemsFilter = ({ products, totalProductsPrice }) => {
       MustLoginModal();
     } else {
       let result = await getCouponCodeRequest(couponCode);
-      console.log(result);
+
       if (result?.length > 0) {
         if (getItemWithExpiry("userData2")?.couponCodeUses == couponCode) {
           return ErrorToast(`You have already use "${couponCode}" coupon code`);

@@ -1,7 +1,7 @@
 import ClickToAnotherTabHandle from "./_component/clickToAnotherTabHandle";
 import EachTabContentHeader from "./_component/eachtabHeader";
 
-const ProductDescription = ({ product }) => {
+const ProductDescription = ({ product, productPrivacyPolicy }) => {
   return (
     <>
       <div className="flex flex-wrap py-14">
@@ -15,7 +15,10 @@ const ProductDescription = ({ product }) => {
           <div className="relative flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded dark:bg-gray-700 ">
             <div className="flex-auto px-4 py-5">
               <div className="tab-content tab-space">
-                <EachTabContentHeader product={product} />
+                <EachTabContentHeader
+                  product={product}
+                  productPrivacyPolicy={productPrivacyPolicy}
+                />
               </div>
             </div>
           </div>

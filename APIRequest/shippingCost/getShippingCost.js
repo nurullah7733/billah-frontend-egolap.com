@@ -15,7 +15,6 @@ export const getShippingAndOtherCost = async () => {
     const res = await fetch(url, config);
     const data = await res.json();
     if (res.status === 200) {
-      console.log(data);
       return data;
     } else {
       return false;

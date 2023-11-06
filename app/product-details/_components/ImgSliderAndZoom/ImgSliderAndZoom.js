@@ -6,9 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 
 const ImgSliderAndZoom = ({ images }) => {
-  console.log(images, "iamges");
   const [img, setImg] = useState(images[0].secure_url);
-  console.log(img, "state");
 
   const refs = useRef([]);
 

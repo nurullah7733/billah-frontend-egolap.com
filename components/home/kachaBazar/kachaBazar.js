@@ -2,6 +2,7 @@ import Product from "../../common/product/product";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { getBestSalesProvisionalProducts } from "../../../APIRequest/products/productsApi";
 
 let hi = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11, 12];
 let item = {
@@ -15,7 +16,9 @@ let item = {
   showAddToCardBtn: 0,
 };
 
-const KachaBazar = () => {
+const KachaBazar = async ({ banner }) => {
+  const data = await getBestSalesProvisionalProducts();
+
   return (
     <div className="block px-3 py-5 mt-3 ">
       <div className="container mx-auto">
@@ -27,7 +30,7 @@ const KachaBazar = () => {
           <div className="pb-4">
             <Link href="#">
               <Image
-                src="/assets/img/banner/3.jpg"
+                src={banner[0]?.secure_url}
                 width={1536}
                 height={200}
                 alt="3"
@@ -36,28 +39,15 @@ const KachaBazar = () => {
           </div>
           {/* products */}
           <div className="grid grid-cols-6 gap-4 xs:gap-2 xl:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 md:grid-cols-3 2xl:grid-cols-6">
-            {hi.map((it, index) => {
-              return (
-                <Product
-                  key={index}
-                  index={index + 25}
-                  name={item.productName}
-                  price={item.price}
-                  unitPrice={item.unitPrice}
-                  available={item.available}
-                  weight={item.weight}
-                  percentegeOfPrice={item.percentegeOfPrice}
-                  ratting={item.ratting}
-                  showAddToCardBtn={item.showAddToCardBtn}
-                />
-              );
+            {data.map((product, index) => {
+              return <Product key={index} product={product} />;
             })}
           </div>
-          <div className="pt-4 text-center">
+          {/* <div className="pt-4 text-center">
             <button className="px-2 py-1 capitalize bg-gray-200 rounded hover:bg-primary hover:text-white">
               See more
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -3,7 +3,17 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useEffect } from "react";
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaTwitter,
+  FaYoutube,
+  FaWhatsapp,
+  FaWechat,
+  FaTiktok,
+  FaLinkedin,
+} from "react-icons/fa";
+import { BsWechat } from "react-icons/bs";
 import {
   getTotalProductsPrice,
   getUserAddToCartInLocalStorage,
@@ -16,7 +26,7 @@ import {
 } from "../../redux/features/addToCart/addToCartSlice";
 import { getShippingAndOtherCost } from "../../APIRequest/shippingCost/getShippingCost";
 
-const Footer = () => {
+const Footer = ({ socialLink }) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       let addToCartItemsTolocalStorage = getUserAddToCartInLocalStorage();
@@ -105,24 +115,76 @@ const Footer = () => {
               {/* social icons */}
               <div className="flex gap-2 pt-3">
                 <p>
-                  <a href="#" target="_blank">
-                    <FaFacebook size={23} color="fff" />
-                  </a>
+                  {socialLink?.facebook.length > 3 ? (
+                    <a href={socialLink?.facebook} target="_blank">
+                      <FaFacebook size={23} color="fff" />
+                    </a>
+                  ) : (
+                    ""
+                  )}
                 </p>
                 <p>
-                  <a href="#" target="_blank">
-                    <FaYoutube size={23} color="fff" />
-                  </a>
+                  {socialLink?.youtube.length > 3 ? (
+                    <a href={socialLink?.youtube} target="_blank">
+                      <FaYoutube size={23} color="fff" />
+                    </a>
+                  ) : (
+                    ""
+                  )}
                 </p>
                 <p>
-                  <a href="#" target="_blank">
-                    <FaTwitter size={23} color="fff" />
-                  </a>
+                  {socialLink?.twitter.length > 3 ? (
+                    <a href={socialLink?.twitter} target="_blank">
+                      <FaTwitter size={23} color="fff" />
+                    </a>
+                  ) : (
+                    ""
+                  )}
                 </p>
                 <p>
-                  <a href="#" target="_blank">
-                    <FaInstagram size={23} color="fff" />
-                  </a>
+                  {socialLink?.instagram.length > 3 ? (
+                    <a href={socialLink?.instagram} target="_blank">
+                      <FaInstagram size={23} color="fff" />
+                    </a>
+                  ) : (
+                    ""
+                  )}
+                </p>
+                <p>
+                  {socialLink?.whatsapp.length > 3 ? (
+                    <a href={socialLink?.whatsapp} target="_blank">
+                      <FaWhatsapp size={23} color="fff" />
+                    </a>
+                  ) : (
+                    ""
+                  )}
+                </p>
+                <p>
+                  {socialLink?.wechat.length > 3 ? (
+                    <a href={socialLink?.wechat} target="_blank">
+                      <BsWechat size={23} color="fff" />
+                    </a>
+                  ) : (
+                    ""
+                  )}
+                </p>
+                <p>
+                  {socialLink?.tiktok.length > 3 ? (
+                    <a href={socialLink?.tiktok} target="_blank">
+                      <FaTiktok size={23} color="fff" />
+                    </a>
+                  ) : (
+                    ""
+                  )}
+                </p>
+                <p>
+                  {socialLink?.linkedin.length > 3 ? (
+                    <a href={socialLink?.linkedin} target="_blank">
+                      <FaLinkedin size={23} color="fff" />
+                    </a>
+                  ) : (
+                    ""
+                  )}
                 </p>
               </div>
             </div>
