@@ -2,15 +2,14 @@ import { NextResponse } from "next/server";
 
 export async function middleware(req, res) {
   // check login
+  let token = req.cookies.has("token");
   if (req.nextUrl.pathname.startsWith("/login")) {
-    let token = req.cookies.has("token");
     if (!token) {
       return NextResponse.next();
     } else {
       return NextResponse.redirect(new URL("/", req.url));
     }
   }
-
   // check checkout && confirm order
   if (
     req.nextUrl.pathname.startsWith("/checkout") ||

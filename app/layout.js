@@ -23,7 +23,7 @@ export default async function RootLayout({ children }) {
   let cookie = cookies();
   let token = cookie.get("token")?.value;
   const getAllWebSettingsData = await getAllWebSettings();
-
+  console.log(token, "ttoken");
   return (
     <html lang="en">
       <body>
