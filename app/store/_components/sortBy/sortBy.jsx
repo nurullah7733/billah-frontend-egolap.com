@@ -25,6 +25,7 @@ const SortByPrice = () => {
       <select
         onChange={handleChange}
         id="countries"
+        defaultValue={"default"}
         className="outline-none  flex justify-center items-center gap-x-1 w-[120px] text-[16px] rounded-lg text-black bg-[#f1f3f5] dark:bg-gray-800 dark:text-white p-1 h-8  "
       >
         <option value="default" selected>

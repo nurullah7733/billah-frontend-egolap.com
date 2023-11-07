@@ -7,7 +7,12 @@ function SuccessPage() {
         <div className=" p-5">
           <div>
             <div className="flex justify-center">
-              <Image width={50} height={50} src={"/assets/icons/failed.svg"} />
+              <Image
+                width={50}
+                height={50}
+                src={"/assets/icons/failed.svg"}
+                alt="fail Img"
+              />
             </div>
             <div className="py-3">
               <h1

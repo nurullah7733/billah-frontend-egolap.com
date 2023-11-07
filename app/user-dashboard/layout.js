@@ -12,6 +12,7 @@ import useWindowSize from "../../utils/windowResize/useWindowResize";
 import { getUserData } from "../../utils/sessionHelper/sessionHelper";
 import ClientOnly from "@components/clientOnly/clientOnly";
 import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
+import Image from "next/image";
 
 const Layout = ({ children }) => {
   const [open, setOpen] = useState(true);
@@ -46,7 +47,10 @@ const Layout = ({ children }) => {
               </div>
             </ClientOnly>
           ) : (
-            <img
+            <Image
+              alt="user"
+              width={56}
+              height={56}
               src={getItemWithExpiry("userData2")?.photo}
               className={`cursor-pointer duration-500  rounded-[50%] w-14 h-14 `}
             />

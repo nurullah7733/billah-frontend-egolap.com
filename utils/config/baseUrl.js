@@ -1,3 +1,3 @@
-let baseUrl = "http://localhost:4000";
+let baseUrl = process.env.BASE_URL;
 
 export default baseUrl;

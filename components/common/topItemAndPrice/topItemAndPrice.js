@@ -6,8 +6,6 @@ import CountUp from "react-countup";
 import SideItemsFilter from "../sideItemsFilter/sideItemsFilter.js";
 import { useSelector } from "react-redux";
 
-let item = "25";
-
 const TopItemAndPrice = () => {
   const { products, totalProductsPrice } = useSelector(
     (state) => state.addToCartProducts
@@ -51,6 +49,7 @@ const TopItemAndPrice = () => {
       >
         <div>
           <SideItemsFilter
+            key={1}
             products={products}
             totalProductsPrice={totalProductsPrice}
           />
