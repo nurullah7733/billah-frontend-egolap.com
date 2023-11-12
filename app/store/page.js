@@ -4,18 +4,11 @@ import createParams from "../../utils/createParams/createParams";
 import DrawerComponents from "./_components/drawer";
 import Filter from "@components/common/filter/filter";
 import SortByPrice from "./_components/sortBy/sortBy";
+import Image from "next/image";
 
 const Store = async ({ searchParams }) => {
   let allQueryParams = createParams(searchParams);
   let data = await getAllProductsRequest(allQueryParams);
-
-  if (data?.total?.length < 1) {
-    return (
-      <div className="container">
-        <h1 className="text-2xk">No products available</h1>
-      </div>
-    );
-  }
 
   return (
     <div className="px-3 py-8 mx-auto ">
@@ -33,13 +26,29 @@ const Store = async ({ searchParams }) => {
           <Filter />
         </div>
         {/* products */}
-        <div>
-          <div className="grid grid-cols-5 gap-4 xs:gap-2 xl:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5">
-            {data?.rows?.map((product, index) => {
-              return <Product key={index} product={product} />;
-            })}
+        {data?.total?.length < 1 ? (
+          <div className="h-[100vh] w-full bg-primary-100 dark:bg-gray-700 rounded-md">
+            <center>
+              <Image
+                alt="sorry, we couldn't find any result"
+                src="/assets/icons/sorry.png"
+                width={300}
+                height={300}
+              />
+              <h1 className="px-5 md:text-base text-2xl  bg-primary max-w-lg rounded-md text-white dark:bg-gray-800">
+                Sorry, we coundn't find any result
+              </h1>
+            </center>
           </div>
-        </div>
+        ) : (
+          <div>
+            <div className="grid grid-cols-5 gap-4 xs:gap-2 xl:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5">
+              {data?.rows?.map((product, index) => {
+                return <Product key={index} product={product} />;
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

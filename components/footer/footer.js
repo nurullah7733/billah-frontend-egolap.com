@@ -100,7 +100,12 @@ const Footer = ({ socialLink }) => {
             <div className="max-w-[50%] lg:max-w-none">
               <div className="pb-1">
                 <Link href="/">
-                  <img src="/logo.png" alt="" width="100" height="80" />
+                  <Image
+                    src="/assets/icons/e-golap.png"
+                    alt=""
+                    width="60"
+                    height="50"
+                  />
                 </Link>
               </div>
               <p className="text-justify text-white">
