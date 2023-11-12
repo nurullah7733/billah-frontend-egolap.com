@@ -29,6 +29,7 @@ export const loginRequest = async (data) => {
     const timestamp = new Date().getTime(); // Generate a unique timestamp
     // const urlWithCacheBusting = `${url}?timestamp=${timestamp}`;
     const res = await fetch(url, config);
+
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
       setItemWithExpiry("userData2", data.data, 2592000);
