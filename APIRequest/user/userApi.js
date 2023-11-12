@@ -38,8 +38,6 @@ export const loginRequest = async (data) => {
       store.dispatch(setTotalProductsPrice());
       SuccessToast("Login success!");
 
-      // window.location.reload();
-      // window.history.go(-1);
       return data;
     } else if (res.status === 200 && data.status === "Invalid Credentials") {
       ErrorToast(data.status);

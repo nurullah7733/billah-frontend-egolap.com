@@ -24,7 +24,8 @@ const LoginForm = () => {
       Cookies.set("token2", result?.token);
       if (Object.keys(result?.data).length > 0) {
         Cookies.set("token2", result?.token);
-        // window.history.go(-1);
+        window.history.go(-1);
+        window.location.reload();
       }
     },
   });
