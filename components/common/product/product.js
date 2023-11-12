@@ -10,6 +10,7 @@ const Product = ({ product }) => {
       <Link href={`/product-details/${product?._id}`}>
         <Image
           className="rounded-t-lg cursor-pointer"
+          priority
           width={300}
           height={300}
           src={product?.img[0]?.secure_url}

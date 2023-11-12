@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { loginRequest } from "../../APIRequest/user/userApi";
+import Cookies from "js-cookie";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().required("Email is required").email(),
@@ -19,8 +20,11 @@ const LoginForm = () => {
     onSubmit: async ({ email, password }) => {
       let data = { email, password };
       let result = await loginRequest(data);
-      if (result) {
-        window.history.go(-1);
+
+      Cookies.set("token2", result?.token);
+      if (Object.keys(result?.data).length > 0) {
+        Cookies.set("token2", result?.token);
+        // window.history.go(-1);
       }
     },
   });

@@ -21,9 +21,9 @@ import { getAllWebSettings } from "../APIRequest/webSettings/webSettingsApi";
 
 export default async function RootLayout({ children }) {
   let cookie = cookies();
-  let token = cookie.get("token")?.value;
+  let token = cookie.get("token2")?.value;
   const getAllWebSettingsData = await getAllWebSettings();
-  console.log(token, "ttoken");
+
   return (
     <html lang="en">
       <body>

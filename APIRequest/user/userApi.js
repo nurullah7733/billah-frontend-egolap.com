@@ -1,5 +1,5 @@
 import baseUrl from "../../utils/config/baseUrl";
-
+import Cookies from "js-cookie";
 import {
   ErrorToast,
   SuccessToast,
@@ -17,6 +17,7 @@ export const loginRequest = async (data) => {
   const config = {
     method: "POST",
     mode: "cors",
+    redirect: "follow",
     credentials: "include",
     headers: {
       Accept: "application/json",
@@ -37,8 +38,8 @@ export const loginRequest = async (data) => {
       store.dispatch(setTotalProductsPrice());
       SuccessToast("Login success!");
 
-      window.location.reload();
-      window.history.go(-1);
+      // window.location.reload();
+      // window.history.go(-1);
       return data;
     } else if (res.status === 200 && data.status === "Invalid Credentials") {
       ErrorToast(data.status);
@@ -129,6 +130,8 @@ export const logOutRequest = async () => {
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
       sessionDestroy();
+      Cookies.remove("token");
+      Cookies.remove("token2");
       SuccessToast("logout success!");
       return data;
     } else {

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function middleware(req, res) {
   // check login
-  let token = req.cookies.has("token");
+  let token = req.cookies.has("token2");
   if (req.nextUrl.pathname.startsWith("/login")) {
     if (!token) {
       return NextResponse.next();
@@ -21,7 +21,7 @@ export async function middleware(req, res) {
     req.nextUrl.pathname.startsWith("/user-dashboard/orders/return-orders") ||
     req.nextUrl.pathname.startsWith("/user-dashboard/orders/cancel-orders")
   ) {
-    let token = req.cookies.has("token");
+    let token = req.cookies.has("token2");
     if (token) {
       return NextResponse.next();
     } else {
