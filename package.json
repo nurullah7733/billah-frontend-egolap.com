@@ -32,6 +32,7 @@
     "react-icons": "^4.10.1",
     "react-image-magnify": "^2.7.4",
     "react-modern-drawer": "^1.2.0",
+    "react-paginate": "^8.2.0",
     "react-range-slider-input": "^3.0.7",
     "react-redux": "^8.0.5",
     "react-responsive-carousel": "^3.2.23",

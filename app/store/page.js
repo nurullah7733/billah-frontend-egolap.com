@@ -5,11 +5,13 @@ import DrawerComponents from "./_components/drawer";
 import Filter from "@components/common/filter/filter";
 import SortByPrice from "./_components/sortBy/sortBy";
 import Image from "next/image";
+import Paginate from "./_components/paginate";
 
 const Store = async ({ searchParams }) => {
   let allQueryParams = createParams(searchParams);
-  let data = await getAllProductsRequest(allQueryParams);
-
+  let pageNo = searchParams?.pageNo ?? 1;
+  let data = await getAllProductsRequest(allQueryParams, pageNo);
+  console.log(data);
   return (
     <div className="px-3 py-8 mx-auto ">
       <div className="w-full py-1.5 mb-2 bg-white border dark:border-none border-gray-200 rounded-lg shadow px-3 flex justify-between dark:bg-gray-700">
@@ -47,6 +49,7 @@ const Store = async ({ searchParams }) => {
                 return <Product key={index} product={product} />;
               })}
             </div>
+            <Paginate total={data?.total[0]?.count} perPage={10} />
           </div>
         )}
       </div>

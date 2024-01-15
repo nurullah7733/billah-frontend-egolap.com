@@ -19,13 +19,17 @@ const Product = ({ product }) => {
       </Link>
       <div className="p-2">
         <Link href={`/product-details/${product?._id}`}>
-          <h1 className="mb-2 text-sm font-bold tracking-tight cursor-pointer dark:text-white">
+          <h1 className="mb-2 h-8 text-sm font-bold tracking-tight cursor-pointer dark:text-white">
             {product?.name.length > 30
-              ? product?.name.substring(0, 30) + " ..."
+              ? product?.name.substring(0, 40) + "..."
               : product?.name}
           </h1>
         </Link>
-        <p className="text-gray-700 dark:text-gray-400">{product?.weight}</p>
+        {product?.weight.length > 0 ? (
+          <p className="text-gray-700 dark:text-gray-400">{product?.weight}</p>
+        ) : (
+          <p className="text-gray-700 dark:text-gray-400">each</p>
+        )}
 
         <RatingReadOnly ratting={product?.totalRatting} />
         <p className="mb-1 text-base font-normal text-gray-700 dark:text-gray-400 ">

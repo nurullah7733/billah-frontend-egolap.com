@@ -10,9 +10,10 @@ import {
 } from "../../utils/sessionHelper/sessionHelper";
 
 // get All Products
-export const getAllProductsRequest = async (allQueryParams) => {
+export const getAllProductsRequest = async (allQueryParams, pageNo) => {
   // let url = `${baseUrl}/list-product-global/?${allQueryParams}`;
-  let url = `${baseUrl}/list-product-global/?pageNo=1&perPage=100&searchKeyword=0${allQueryParams}`;
+
+  let url = `${baseUrl}/list-product-global/?pageNo=${pageNo}&perPage=50&searchKeyword=0${allQueryParams}`;
 
   const config = {
     method: "GET",
