@@ -9,9 +9,11 @@ import Paginate from "./_components/paginate";
 
 const Store = async ({ searchParams }) => {
   let allQueryParams = createParams(searchParams);
+  let allProducts = [];
   let pageNo = searchParams?.pageNo ?? 1;
-  let data = await getAllProductsRequest(allQueryParams, pageNo);
-  console.log(data);
+  let { products, total } = await getAllProductsRequest(allQueryParams, pageNo);
+  let hiallProducts = allProducts.push(products);
+  console.log(hiallProducts.length);
   return (
     <div className="px-3 py-8 mx-auto ">
       <div className="w-full py-1.5 mb-2 bg-white border dark:border-none border-gray-200 rounded-lg shadow px-3 flex justify-between dark:bg-gray-700">
@@ -28,7 +30,7 @@ const Store = async ({ searchParams }) => {
           <Filter />
         </div>
         {/* products */}
-        {data?.total?.length < 1 ? (
+        {total < 1 ? (
           <div className="h-[100vh] w-full bg-primary-100 dark:bg-gray-700 rounded-md">
             <center>
               <Image
@@ -45,11 +47,11 @@ const Store = async ({ searchParams }) => {
         ) : (
           <div>
             <div className="grid grid-cols-5 gap-4 xs:gap-2 xl:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5">
-              {data?.rows?.map((product, index) => {
+              {products?.map((product, index) => {
                 return <Product key={index} product={product} />;
               })}
             </div>
-            <Paginate total={data?.total[0]?.count} perPage={10} />
+            <Paginate total={total} perPage={10} />
           </div>
         )}
       </div>

@@ -5,6 +5,7 @@ import React from "react";
 import Slider from "react-slick";
 
 const MainSlider = ({ slider }) => {
+  console.log(slider, "slider");
   const settings = {
     dots: true,
     infinite: true,
@@ -32,7 +33,9 @@ const MainSlider = ({ slider }) => {
               <Link href="#">
                 <Image
                   src={item?.secure_url}
-                  alt=""
+                  placeholder="blur"
+                  blurDataURL={item?.secure_url}
+                  alt="Daily egolap offers"
                   width={1680}
                   height={450}
                   className="cursor-pointer"
