@@ -5,7 +5,6 @@ import React from "react";
 import Slider from "react-slick";
 
 const MainSlider = ({ slider }) => {
-  console.log(slider, "slider");
   const settings = {
     dots: true,
     infinite: true,

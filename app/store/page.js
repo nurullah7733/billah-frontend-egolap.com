@@ -5,7 +5,6 @@ import DrawerComponents from "./_components/drawer";
 import Filter from "@components/common/filter/filter";
 import SortByPrice from "./_components/sortBy/sortBy";
 import Image from "next/image";
-import Paginate from "./_components/paginate";
 import LoadMore from "@components/common/loadMore/loadMore";
 
 const Store = async ({ searchParams }) => {
