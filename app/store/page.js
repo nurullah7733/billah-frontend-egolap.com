@@ -6,14 +6,14 @@ import Filter from "@components/common/filter/filter";
 import SortByPrice from "./_components/sortBy/sortBy";
 import Image from "next/image";
 import Paginate from "./_components/paginate";
+import LoadMore from "@components/common/loadMore/loadMore";
 
 const Store = async ({ searchParams }) => {
   let allQueryParams = createParams(searchParams);
-  let allProducts = [];
+
   let pageNo = searchParams?.pageNo ?? 1;
   let { products, total } = await getAllProductsRequest(allQueryParams, pageNo);
-  let hiallProducts = allProducts.push(products);
-  console.log(hiallProducts.length);
+
   return (
     <div className="px-3 py-8 mx-auto ">
       <div className="w-full py-1.5 mb-2 bg-white border dark:border-none border-gray-200 rounded-lg shadow px-3 flex justify-between dark:bg-gray-700">
@@ -51,7 +51,7 @@ const Store = async ({ searchParams }) => {
                 return <Product key={index} product={product} />;
               })}
             </div>
-            <Paginate total={total} perPage={10} />
+            <LoadMore />
           </div>
         )}
       </div>

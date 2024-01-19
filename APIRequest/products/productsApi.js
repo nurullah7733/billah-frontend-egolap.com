@@ -12,9 +12,8 @@ import {
 // get All Products
 export const getAllProductsRequest = async (allQueryParams, pageNo) => {
   // let url = `${baseUrl}/list-product-global/?${allQueryParams}`;
-  let increasePerPage = pageNo * 10;
-  console.log(increasePerPage, "increase");
-  let url = `${baseUrl}/list-product-global/?pageNo=1&perPage=${increasePerPage}&searchKeyword=0${allQueryParams}`;
+
+  let url = `${baseUrl}/list-product-global/?pageNo=${pageNo}&perPage=10&searchKeyword=0${allQueryParams}`;
 
   const res = await fetch(url, { next: { revalidate: 600 } });
   if (!res.ok) {
