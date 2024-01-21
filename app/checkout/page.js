@@ -37,6 +37,7 @@ const Checkout = () => {
   let userId = getItemWithExpiry("userData2")?.id;
 
   const handleOrderConfirmBtn = async () => {
+    console.log("ok");
     if (!IsEmpty(formValue.name)) {
       ErrorToast("Please provide your name");
     } else if (!IsEmpty(formValue.email)) {
@@ -66,7 +67,7 @@ const Checkout = () => {
       ErrorToast("Please agree the term & conditions");
     } else {
       if (formValue.paymentMethod === "cashOnDelivery") {
-        let forCashOnDeliveryData = {
+        let userAllInfo = {
           allProducts: products,
           "paymentIntent.paymentMethod": formValue.paymentMethod,
           amount: formValue.totalProductsPrice,
@@ -87,9 +88,9 @@ const Checkout = () => {
             address: formValue.address,
           },
         };
-        await createOrder(forCashOnDeliveryData);
+        await createOrder(userAllInfo);
       } else {
-        let forOnlineBankingData = {
+        let userAllInfoAndPaymentData = {
           userId: userId,
           allProducts: products,
           "paymentIntent.paymentMethod": formValue.paymentMethod,
@@ -111,10 +112,12 @@ const Checkout = () => {
             address: formValue.address,
           },
         };
-        let result = await paymentRequest(forOnlineBankingData);
-        if (result?.status === "success") {
-          router.push(result?.data);
-        }
+        let result = await paymentRequest(userAllInfoAndPaymentData);
+        window.location.href = result;
+
+        // if (result?.status === "success") {
+        //   router.push(result?.data);
+        // }
       }
     }
 
@@ -393,7 +396,7 @@ const Checkout = () => {
                   {/* Payable Total */}
                   <div className="hidden p-4 -mx-4 bg-gray-200 dark:bg-gray-500 mt-9 md:block">
                     <h2 className="mb-1 text-2xl font-semibold md:text-xl">
-                      Payable Total: {640} Tk.
+                      Payable Total: {totalProductsPrice} Tk.
                     </h2>
                     <div
                       className="flex items-center underline dark:decoration-gray-200 text-primary"
@@ -475,32 +478,32 @@ const Checkout = () => {
                           </span>
                         </label>
                       </div>
-                      <div className="flex items-center w-full gap-4 p-5 bg-gray-200 md:p-3 dark:bg-gray-500">
-                        <input
-                          onChange={(e) =>
-                            store.dispatch(
-                              setShippingAddressFormValue({
-                                Name: "paymentMethod",
-                                Value: e.target.value,
-                              })
-                            )
-                          }
-                          type="radio"
-                          value="digitalPayment"
-                          name="paymentMethod"
-                          className="w-5 h-5 accent-primary"
-                          id="bkash"
-                        />
-                        <label htmlFor="bkash" className="cursor-pointer ">
-                          {/* <img
-                            src="/assets/img/logo/mobile-banking-bangladesh.webp"
-                            width="70"
-                            height="70"
-                          /> */}
-                          <span className="font-semibold text-[17px] text-gray-500 dark:text-gray-300 md:text-[15px]">
-                            Online Banking
-                          </span>
-                        </label>
+                      <div className="w-full bg-gray-200 dark:bg-gray-500">
+                        <div className="flex items-center  gap-4 p-5   md:p-3 ">
+                          <input
+                            onChange={(e) =>
+                              store.dispatch(
+                                setShippingAddressFormValue({
+                                  Name: "paymentMethod",
+                                  Value: e.target.value,
+                                })
+                              )
+                            }
+                            type="radio"
+                            value="bkash"
+                            name="paymentMethod"
+                            className="w-5 h-5 accent-primary"
+                            id="bkash"
+                          />
+                          <label htmlFor="bkash" className="cursor-pointer ">
+                            <img
+                              src="/assets/icons/bkash-logo.png"
+                              width="70"
+                              height="70"
+                              alt="bkash"
+                            />
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>

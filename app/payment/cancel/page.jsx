@@ -17,9 +17,9 @@ function SuccessPage() {
             <div className="py-3">
               <h1
                 className="text-center font-bold text-red-600
-             text-xl"
+             text-xl capitalize"
               >
-                Payment Cancelled
+                Payment {searchParams?.status}
               </h1>
               <p className="py-3 text-center font-semibold text-slate-500 dark:text-white">
                 Please try again for Oder!

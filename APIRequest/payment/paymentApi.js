@@ -1,7 +1,7 @@
 import baseUrl from "../../utils/config/baseUrl";
 
 export const paymentRequest = async (data) => {
-  let url = `${baseUrl}/payment`;
+  let url = `${baseUrl}/bkash-payment`;
   const config = {
     method: "POST",
     credentials: "include",
@@ -16,7 +16,7 @@ export const paymentRequest = async (data) => {
     let status = res.status;
     let data = await res.json();
     if (res.status === 200) {
-      return data;
+      return data?.data?.bkashURL;
     } else {
       return false;
     }

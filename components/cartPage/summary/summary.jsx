@@ -127,9 +127,7 @@ const Summary = ({
           },
         };
         let result = await paymentRequest(forOnlineBankingData);
-        if (result?.status === "success") {
-          router.push(result?.data);
-        }
+        window.location.href = result;
       }
     }
   };
