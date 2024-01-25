@@ -68,6 +68,7 @@ class SessionHelper {
       window.localStorage.removeItem("email");
       window.localStorage.removeItem("otp");
       window.location.href = "/";
+      window.localStorage.clear();
     }
   }
 }
