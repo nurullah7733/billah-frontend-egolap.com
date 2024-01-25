@@ -10,14 +10,22 @@ import SpecialProducts from "@components/home/specialProducts/specialProducts";
 import TrendingProducts from "@components/home/trendingProducts/trendingProducts";
 import NewProducts from "@components/home/newProducts/newProducts";
 
+import { cookies } from "next/headers";
+
 export default async function Home() {
+  let cookie = cookies();
+  let token = cookie.get("token2")?.value;
+
   const getAllWebSettingsData = await getAllWebSettings();
 
   return (
     <>
       <main>
         {/* Main Slider */}
-        <MainSlider slider={getAllWebSettingsData[0]?.mainSlider} />
+        <MainSlider
+          slider={getAllWebSettingsData[0]?.mainSlider}
+          token={token}
+        />
         {/* Best sales */}
         <BestSales banner={getAllWebSettingsData[0]?.bestSales} />
         {/* kacha bazar */}

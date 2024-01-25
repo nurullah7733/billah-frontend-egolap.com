@@ -15,7 +15,7 @@ const ProductInfo = ({ product }) => {
   }
   return (
     <div>
-      <div>
+      <div className="md:pt-0 lg:pt-24">
         {/* title */}
         <h1 className="text-3xl font-semibold md:text-xl ">{product?.name}</h1>
         {/* rattings */}
@@ -24,13 +24,15 @@ const ProductInfo = ({ product }) => {
           {product?.totalRating}) &nbsp; | &nbsp; Ratings
         </div>
         {/* price */}
-        <div className="py-5 mt-2 bg-gray-200 md:py-2 px-7">
+        <div className="py-5 mt-2 bg-gray-200 dark:bg-gray-700 md:py-2 px-7">
           <div className="flex items-center gap-4">
-            <del className="text-primary-100">৳ {product?.price} </del>
-            <p className="text-xl font-semibold text-primary">
+            <del className="text-primary-100 dark:text-white">
+              ৳ {product?.price}{" "}
+            </del>
+            <p className="text-xl font-semibold text-primary dark:text-white">
               ৳ {product?.finalPrice}
             </p>
-            <p className="p-1 md:p-0.5 text-sm text-white rounded-sm bg-primary">
+            <p className="p-1 md:p-0.5 text-sm text-white rounded-sm bg-primary dark:bg-gray-500">
               {product?.discount}% OFF
             </p>
           </div>
@@ -116,10 +118,10 @@ const ProductInfo = ({ product }) => {
 
         {/* wishlist button */}
         <div className="mt-3">
-          <div className="px-2 py-2 bg-gray-200 md:py-1 ">
+          <div className="px-2 py-2 bg-gray-200 dark:bg-gray-700  md:py-1 ">
             <div className="flex items-center gap-1 cursor-pointer">
               <AiOutlineHeart color="#ff007f" className="md:text-[15px]" />{" "}
-              <button className="font-semibold text-[14px]   text-black">
+              <button className="font-semibold text-[14px] dark:text-white  text-black">
                 Add to wishlist
               </button>
             </div>

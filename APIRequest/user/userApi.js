@@ -26,8 +26,6 @@ export const loginRequest = async (data) => {
     body: JSON.stringify(data),
   };
   try {
-    const timestamp = new Date().getTime(); // Generate a unique timestamp
-    // const urlWithCacheBusting = `${url}?timestamp=${timestamp}`;
     const res = await fetch(url, config);
 
     const data = await res.json();
@@ -129,7 +127,7 @@ export const logOutRequest = async () => {
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
       sessionDestroy();
-      Cookies.remove("token");
+      // Cookies.remove("token");
       Cookies.remove("token2");
       SuccessToast("logout success!");
       return data;

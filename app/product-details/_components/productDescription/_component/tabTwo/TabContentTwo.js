@@ -1,14 +1,18 @@
 import StarInfo from "./starInfo";
+import WriteReview from "./_components/writeReview/writeReview";
 
 const TabContentTwo = ({ product }) => {
   return (
     <div>
       <div>
+        <div className="">
+          <WriteReview product={product} />
+          <hr className="py-5 mt-5" />
+        </div>
         {product?.ratings?.length > 0 ? (
           <>
-            {" "}
             {product?.ratingsUser?.map((rating, index) => (
-              <div className="mb-5" key={index}>
+              <div className="mb-7" key={index}>
                 <div className="flex items-center gap-x-2">
                   <img
                     src={rating?.photo}

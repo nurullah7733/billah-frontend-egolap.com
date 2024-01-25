@@ -9,9 +9,6 @@ import ClientOnly from "@components/clientOnly/clientOnly";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
-import { userAddToCartOrUpdateRequest } from "../../APIRequest/user/userApi";
 
 const Header = ({ token }) => {
   let addToCartProducts = useSelector(
@@ -40,7 +37,6 @@ const Header = ({ token }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // const value = e.target.value.trim();
     if (!searchValue) {
       current.set("searchKeyword", "0");
     } else {
@@ -53,22 +49,9 @@ const Header = ({ token }) => {
     if (pathname === "/store") {
       router.push(`${pathname}${query}`);
     } else {
-      router.push(`/store?pageNo=1&perPage=100&searchKeyword=${searchValue}`);
+      router.push(`/store?pageNo=1&perPage=50&searchKeyword=${searchValue}`);
     }
   };
-
-  useEffect(() => {
-    if (token !== undefined) {
-      let id = getItemWithExpiry("userData2")?.id;
-      (async function instantCall() {
-        if (pathname !== "/" && pathname !== "/store") {
-          let cart = addToCartProducts;
-
-          await userAddToCartOrUpdateRequest(id, cart);
-        }
-      })();
-    }
-  }, [pathname]);
 
   const dropdownMenus = [
     { menuName: "Dashboard", link: "/user-dashboard" },

@@ -1,11 +1,17 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Images from "next/image";
 import ReactImageMagnify from "react-image-magnify";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import { getItemWithExpiry } from "../../../../utils/localStorageWithExpire/localStorageWithExpire";
+import { userAddToCartOrUpdateRequest } from "../../../../APIRequest/user/userApi";
+import { useSelector } from "react-redux";
 
-const ImgSliderAndZoom = ({ images }) => {
+const ImgSliderAndZoom = ({ images, token }) => {
+  let addToCartProducts = useSelector(
+    (state) => state.addToCartProducts.products
+  );
   const [img, setImg] = useState(images[0].secure_url);
 
   const refs = useRef([]);
@@ -27,6 +33,19 @@ const ImgSliderAndZoom = ({ images }) => {
     }
   };
 
+  useEffect(() => {
+    // when store page unmounted then localstorage cart item save to database.
+    return async () => {
+      if (token !== undefined) {
+        console.log("hi ami product details page");
+        let id = getItemWithExpiry("userData2")?.id;
+        let cart = addToCartProducts;
+        console.log(cart.length);
+        await userAddToCartOrUpdateRequest(id, cart);
+      }
+    };
+  });
+
   return (
     <div>
       {/* slider for mobile */}
@@ -42,8 +61,8 @@ const ImgSliderAndZoom = ({ images }) => {
         >
           {images.map((img, index) => (
             <div className="mx-auto " key={index}>
-              <div className="">
-                <img src={img?.secure_url} />
+              <div>
+                <img src={img?.secure_url} className="!rounded-lg" />
               </div>
             </div>
           ))}
@@ -54,12 +73,20 @@ const ImgSliderAndZoom = ({ images }) => {
         <div className="left_1">
           {images.map((image, i) => (
             <div
-              className={i == 0 ? `img_wrap product_zoom_active` : `img_wrap`}
+              className={
+                i == 0 ? `img_wrap product_zoom_active ` : `img_wrap  `
+              }
               key={i}
               onMouseOver={() => hoverHandler(image?.secure_url, i)}
               ref={addRefs}
             >
-              <Images src={image?.secure_url} alt="" width={300} height={400} />
+              <Images
+                src={image?.secure_url}
+                alt=""
+                width={300}
+                height={400}
+                className="!rounded-lg"
+              />
             </div>
           ))}
         </div>

@@ -1,10 +1,13 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Summary from "@components/cartPage/summary/summary";
 import CartProducts from "@components/cartPage/cartProducts/cartProducts";
 import { useSelector } from "react-redux";
-
+import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
+import { userAddToCartOrUpdateRequest } from "../../APIRequest/user/userApi";
+import Cookies from "js-cookie";
 const Cart = () => {
+  let token = Cookies.get("token2");
   const {
     products,
     totalProductsPrice,
@@ -12,6 +15,17 @@ const Cart = () => {
     otherCost,
     couponDiscount,
   } = useSelector((state) => state.addToCartProducts);
+
+  useEffect(() => {
+    // when store page unmounted then localstorage cart item save to database.
+    return async () => {
+      if (token !== undefined) {
+        let id = getItemWithExpiry("userData2")?.id;
+        let cart = products;
+        await userAddToCartOrUpdateRequest(id, cart);
+      }
+    };
+  });
 
   return (
     <div className="container px-4 mx-auto py-7 dark:bg-gray-700">

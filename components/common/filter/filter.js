@@ -1,12 +1,29 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import PriceRange from "./priceRange";
 import Brand from "./brand";
 import Category from "./category";
 import Avaibility from "./avaibility";
 import SubCategory from "./subCategory";
+import { getItemWithExpiry } from "../../../utils/localStorageWithExpire/localStorageWithExpire";
+import { userAddToCartOrUpdateRequest } from "../../../APIRequest/user/userApi";
+import { useSelector } from "react-redux";
 
-const Filter = () => {
+const Filter = ({ token }) => {
+  let addToCartProducts = useSelector(
+    (state) => state.addToCartProducts.products
+  );
+  useEffect(() => {
+    // when store page unmounted then localstorage cart item save to database.
+    return async () => {
+      if (token !== undefined) {
+        let id = getItemWithExpiry("userData2")?.id;
+        let cart = addToCartProducts;
+        await userAddToCartOrUpdateRequest(id, cart);
+      }
+    };
+  });
+
   return (
     <div className=" max-w-[275px] ">
       <PriceRange />

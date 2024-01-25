@@ -2,19 +2,23 @@ import ProductInfo from "../_components/productInfo/productInfo";
 import ImgSliderAndZoom from "../_components/ImgSliderAndZoom/ImgSliderAndZoom";
 import ProductDescription from "../_components/productDescription/productDescription";
 import RelatedProducts from "../_components/relatedProducts/relatedProducts";
+import { cookies } from "next/headers";
 import {
   getProductsPrivacyPolicyRequest,
   getSingleProductsRequest,
 } from "../../../APIRequest/products/productsApi";
 
 const ProductDetails = async ({ params }) => {
+  let cookie = cookies();
+  let token = cookie.get("token2")?.value;
+
   let product = await getSingleProductsRequest(params.id);
   const productPrivacyPolicy = await getProductsPrivacyPolicyRequest();
 
   return (
     <div className="container px-4 mx-auto py-14 md:py-8">
-      <div className="flex gap-5 py-4 md:gap-0 md:flex-col">
-        <ImgSliderAndZoom images={product?.img} />
+      <div className="flex gap-5 py-4   lg:flex-col">
+        <ImgSliderAndZoom images={product?.img} token={token} />
         <ProductInfo product={product} />
       </div>
       <ProductDescription

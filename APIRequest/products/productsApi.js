@@ -1,18 +1,10 @@
 import baseUrl from "../../utils/config/baseUrl";
-import {
-  ErrorToast,
-  SuccessToast,
-} from "../../utils/notificationAlert/notificationAlert";
-import {
-  sessionDestroy,
-  setToken,
-  setUserData,
-} from "../../utils/sessionHelper/sessionHelper";
+import { ErrorToast } from "../../utils/notificationAlert/notificationAlert";
+
+import { sessionDestroy } from "../../utils/sessionHelper/sessionHelper";
 
 // get All Products
 export const getAllProductsRequest = async (allQueryParams, pageNo) => {
-  // let url = `${baseUrl}/list-product-global/?${allQueryParams}`;
-
   let url = `${baseUrl}/list-product-global/?pageNo=${pageNo}&perPage=10&searchKeyword=0${allQueryParams}`;
 
   const res = await fetch(url, { next: { revalidate: 600 } });
@@ -45,11 +37,10 @@ export const getSingleProductsRequest = async (id) => {
     if (res.status === 200 && data.status === "success") {
       return data?.data[0];
     } else if (data.status === "fail") {
-      ErrorToast("Request fail. Please try again.");
+      return false;
     } else if (res.status === 401 && data.status == "unauthorized") {
       sessionDestroy();
     } else {
-      ErrorToast("Request fail. Please try again.");
       return false;
     }
   } catch (error) {
@@ -76,7 +67,6 @@ export const getProductsPrivacyPolicyRequest = async () => {
     if (res.status === 200 && data.status === "success") {
       return data?.data[0];
     } else {
-      ErrorToast("Request fail. Please try again.");
       return false;
     }
   } catch (error) {
@@ -103,11 +93,10 @@ export const getRelatedProductsRequest = async (subCategory) => {
     if (res.status === 200 && data.status === "success") {
       return data?.data[0];
     } else if (data.status === "fail") {
-      ErrorToast("Request fail. Please try again.");
+      return false;
     } else if (res.status === 401 && data.status == "unauthorized") {
       sessionDestroy();
     } else {
-      ErrorToast("Request fail. Please try again.");
       return false;
     }
   } catch (error) {
@@ -209,4 +198,34 @@ export const getNewProducts = async () => {
   }
   const data = await res.json();
   return data?.data[0]?.rows;
+};
+
+export const ratingProduct = async (productId, data) => {
+  let url = `${baseUrl}/ratings-product/${productId}`;
+
+  const config = {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+  try {
+    const res = await fetch(url, config);
+    const data = await res.json();
+    console.log(data);
+    if (res.status === 200 && data.status === "success") {
+      return true;
+    } else if (data.status === "fail") {
+      ErrorToast("Product review failed to submit");
+      return false;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
 };

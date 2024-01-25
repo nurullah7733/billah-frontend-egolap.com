@@ -6,8 +6,12 @@ import Filter from "@components/common/filter/filter";
 import SortByPrice from "./_components/sortBy/sortBy";
 import Image from "next/image";
 import LoadMore from "@components/common/loadMore/loadMore";
+import { cookies } from "next/headers";
 
 const Store = async ({ searchParams }) => {
+  let cookie = cookies();
+  let token = cookie.get("token2")?.value;
+
   let allQueryParams = createParams(searchParams);
 
   let pageNo = searchParams?.pageNo ?? 1;
@@ -26,7 +30,7 @@ const Store = async ({ searchParams }) => {
 
       <div className="flex gap-x-4">
         <div className="lg:hidden">
-          <Filter />
+          <Filter token={token} />
         </div>
         {/* products */}
         {total < 1 ? (

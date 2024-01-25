@@ -62,6 +62,10 @@ select:focus {
   outline: 1px solid #ff007f;
 }
 
+.customModal {
+  max-width: 345px !important;
+}
+
 /* Hide scrollbar for IE, Edge and Firefox */
 .filter_scrollbar {
   -ms-overflow-style: none; /* IE and Edge */

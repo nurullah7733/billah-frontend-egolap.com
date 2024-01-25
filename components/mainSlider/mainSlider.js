@@ -1,10 +1,17 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import Slider from "react-slick";
+import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
+import { useSelector } from "react-redux";
+import { userAddToCartOrUpdateRequest } from "../../APIRequest/user/userApi";
 
-const MainSlider = ({ slider }) => {
+const MainSlider = ({ slider, token }) => {
+  let addToCartProducts = useSelector(
+    (state) => state.addToCartProducts.products
+  );
+
   const settings = {
     dots: true,
     infinite: true,
@@ -14,6 +21,17 @@ const MainSlider = ({ slider }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
+  useEffect(() => {
+    // when home page unmounted then localstorage cart item save to database.
+    return async () => {
+      if (token !== undefined) {
+        let id = getItemWithExpiry("userData2")?.id;
+        let cart = addToCartProducts;
+        await userAddToCartOrUpdateRequest(id, cart);
+      }
+    };
+  });
 
   return (
     <div
