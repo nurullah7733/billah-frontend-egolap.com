@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import {
   setUserAddToCartInLocalStorage,
   setUserTotalProductsPriceInLocalStorage,
@@ -85,7 +85,19 @@ const AddToCartSlice = createSlice({
       state.totalProductsPrice = actions.payload.totalProductsPrice;
     },
     setAddToCartProductFromUserDatabaseAfterLogin(state, actions) {
-      state.products = actions.payload;
+      let newProducts = actions.payload;
+      let oldProducts = state.products;
+
+      function isDuplicate(existingArray, newObj) {
+        return existingArray.some((obj) => obj._id === newObj._id);
+      }
+
+      newProducts.forEach((obj) => {
+        if (!isDuplicate(oldProducts, obj)) {
+          oldProducts.push(obj);
+        }
+      });
+      console.log(current(state.products, "slice"));
       // addToCart to localStorage
       setUserAddToCartInLocalStorage(state.products);
     },

@@ -36,7 +36,7 @@ const ImgSliderAndZoom = ({ images, token }) => {
   useEffect(() => {
     // when store page unmounted then localstorage cart item save to database.
     return async () => {
-      if (token !== undefined) {
+      if (token !== undefined && addToCartProducts?.length > 0) {
         console.log("hi ami product details page");
         let id = getItemWithExpiry("userData2")?.id;
         let cart = addToCartProducts;

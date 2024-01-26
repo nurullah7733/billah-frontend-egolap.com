@@ -2,8 +2,20 @@
 import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { loginRequest } from "../../APIRequest/user/userApi";
+import {
+  loginRequest,
+  userAddToCartOrUpdateRequest,
+} from "../../APIRequest/user/userApi";
 import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
+import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
+import { SuccessToast } from "../../utils/notificationAlert/notificationAlert";
+import store from "../../redux/store";
+import {
+  setAddToCartProductFromUserDatabaseAfterLogin,
+  setTotalProductsPrice,
+} from "../../redux/features/addToCart/addToCartSlice";
+import { useState } from "react";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().required("Email is required").email(),
@@ -11,6 +23,15 @@ const loginSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
+  let [
+    whenConcatAddToCartProductsAndUseSelectorCards,
+    setWhenConcatAddToCartProductsAndUseSelectorCards,
+  ] = useState(false);
+
+  let addToCartProducts = useSelector(
+    (state) => state.addToCartProducts.products
+  );
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -18,19 +39,34 @@ const LoginForm = () => {
     },
     validationSchema: loginSchema,
     onSubmit: async ({ email, password }) => {
-      let data = { email, password };
-      let result = await loginRequest(data);
+      let loginData = { email, password };
+      let { result, data } = await loginRequest(loginData);
 
-      Cookies.set("token2", result?.token);
-      if (Object.keys(result?.data).length > 0) {
-        Cookies.set("token2", result?.token);
+      if (result) {
+        Cookies.set("token2", data?.token);
+
+        // user add to cart in useState from user database.
+
+        store.dispatch(
+          setAddToCartProductFromUserDatabaseAfterLogin(data?.data?.cart)
+        );
+        store.dispatch(setTotalProductsPrice());
+        setWhenConcatAddToCartProductsAndUseSelectorCards(true);
+
+        SuccessToast("Login success!");
         window.location.href = "/";
       }
     },
   });
   const { errors, touched, values, handleBlur, handleChange, handleSubmit } =
     formik;
-
+  if (whenConcatAddToCartProductsAndUseSelectorCards) {
+    // when user login then localstorage cart item save to database.
+    let id = getItemWithExpiry("userData2")?.id;
+    (async () => {
+      await userAddToCartOrUpdateRequest(id, addToCartProducts);
+    })();
+  }
   return (
     <div className="container py-14 mx-auto !max-w-sm px-3">
       <div className="bg-white shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] w-full px-3 dark:bg-gray-700">

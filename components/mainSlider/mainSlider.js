@@ -25,7 +25,7 @@ const MainSlider = ({ slider, token }) => {
   useEffect(() => {
     // when home page unmounted then localstorage cart item save to database.
     return async () => {
-      if (token !== undefined) {
+      if (token !== undefined && addToCartProducts?.length > 0) {
         let id = getItemWithExpiry("userData2")?.id;
         let cart = addToCartProducts;
         await userAddToCartOrUpdateRequest(id, cart);

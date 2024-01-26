@@ -31,13 +31,7 @@ export const loginRequest = async (data) => {
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
       setItemWithExpiry("userData2", data.data, 2592000);
-      store.dispatch(
-        setAddToCartProductFromUserDatabaseAfterLogin(data?.data?.cart)
-      );
-      store.dispatch(setTotalProductsPrice());
-      SuccessToast("Login success!");
-
-      return data;
+      return { result: true, data };
     } else if (res.status === 200 && data.status === "Invalid Credentials") {
       ErrorToast(data.status);
       return false;
