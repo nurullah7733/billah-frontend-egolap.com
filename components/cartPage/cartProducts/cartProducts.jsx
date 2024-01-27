@@ -44,13 +44,15 @@ const CartProducts = ({ items, products }) => {
                 </div>
                 <div className="grid grid-cols-4 gap-1 md:grid-cols-2 md:flex md:flex-col md:items-center md: justify-center">
                   <div className="col-span-1">
-                    <Image
-                      src={item?.img[0]?.secure_url}
-                      alt={item?.name}
-                      width={100}
-                      height={100}
-                      className="rounded-md"
-                    />
+                    {item?.img?.length > 0 && (
+                      <Image
+                        src={item?.img[0]?.secure_url}
+                        alt={item?.name}
+                        width={100}
+                        height={100}
+                        className="rounded-md"
+                      />
+                    )}
                   </div>
 
                   <div className="col-span-3">

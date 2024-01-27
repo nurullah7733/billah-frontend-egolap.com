@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import BtnPromoCode from "@components/common/btnPromoCode/btnPromoCode";
 import numberWithCommas from "../../../utils/numberWithComma/numberWithComma";
 import { MustLoginModal } from "../../../utils/sweetAlert";
@@ -31,6 +31,7 @@ const Summary = ({
   otherCost,
   couponDiscount,
 }) => {
+  let [loading, setLoading] = useState(false);
   const formValue = useSelector(
     (state) => state.userShippingAddressForm.formValue
   );
@@ -80,6 +81,7 @@ const Summary = ({
     } else if (!formValue.termAndCondition) {
       ErrorToast("Please agree the term & conditions");
     } else {
+      setLoading(true);
       if (formValue.paymentMethod === "cashOnDelivery") {
         let forCashOnDeliveryData = {
           allProducts: products,
@@ -103,7 +105,9 @@ const Summary = ({
           },
         };
         await createOrder(forCashOnDeliveryData);
+        setLoading(false);
       } else {
+        setLoading(true);
         let forOnlineBankingData = {
           userId: userId,
           allProducts: products,
@@ -127,6 +131,7 @@ const Summary = ({
           },
         };
         let result = await paymentRequest(forOnlineBankingData);
+        setLoading(false);
         window.location.href = result;
       }
     }
@@ -244,8 +249,10 @@ const Summary = ({
               </div>
               <button
                 onClick={handleOrderConfirmBtn}
-                className={`w-full py-3 text-sm font-semibold text-white uppercase bg-primary dark:bg-gray-700 hover:bg-primary-100 ${confirmOrderBtn}`}
+                disabled={loading}
+                className={`flex justify-center items-center gap-2 w-full py-3 text-sm font-semibold text-white uppercase bg-primary dark:bg-gray-700 hover:bg-primary-100   disabled:bg-primary-100/75 dark:disabled:bg-gray-800/10 dark:disabled:text-gray-800 ${confirmOrderBtn}`}
               >
+                {loading && <img src="/assets/icons/spinner.svg" width={22} />}
                 Confirm Order
               </button>
             </div>

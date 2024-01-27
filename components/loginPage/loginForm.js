@@ -23,6 +23,7 @@ const loginSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
+  let [loading, setLoading] = useState(false);
   let [
     whenConcatAddToCartProductsAndUseSelectorCards,
     setWhenConcatAddToCartProductsAndUseSelectorCards,
@@ -39,14 +40,14 @@ const LoginForm = () => {
     },
     validationSchema: loginSchema,
     onSubmit: async ({ email, password }) => {
+      setLoading(true);
       let loginData = { email, password };
       let { result, data } = await loginRequest(loginData);
 
       if (result) {
+        setLoading(false);
         Cookies.set("token2", data?.token);
-
         // user add to cart in useState from user database.
-
         store.dispatch(
           setAddToCartProductFromUserDatabaseAfterLogin(data?.data?.cart)
         );
@@ -107,9 +108,11 @@ const LoginForm = () => {
 
           <button
             type="submit"
-            className="w-full py-2 my-1 text-sm text-center text-white uppercase rounded bg-green bg-primary hover:bg-green-dark focus:outline-none dark:bg-gray-800"
+            disabled={loading}
+            className="flex justify-center gap-2 w-full py-2 my-1 text-sm text-center text-white uppercase rounded bg-green bg-primary hover:bg-green-dark focus:outline-none dark:bg-gray-800 disabled:bg-primary-100/75 dark:disabled:bg-gray-800/10 dark:disabled:text-gray-800"
           >
-            log in
+            {loading && <img src="/assets/icons/spinner.svg" width={22} />} log
+            in
           </button>
         </form>
 

@@ -51,6 +51,7 @@ const TopItemAndPrice = () => {
           <SideItemsFilter
             key={1}
             products={products}
+            setIsOpen={setIsOpen}
             totalProductsPrice={totalProductsPrice}
           />
         </div>

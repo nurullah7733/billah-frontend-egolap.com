@@ -74,16 +74,16 @@ const NumberOrderCardBtn = ({
 
   return (
     <div
-      className={`flex items-center justify-between h-${btnHeight} text-white rounded-lg bg-primary-100 dark:bg-gray-500`}
+      className={`flex items-center justify-between h-${btnHeight} text-white rounded-lg bg-primary-100 dark:bg-gray-700`}
     >
       <button
         disabled={1 === addToCartOneItem?.customerChoiceProductQuantity}
         onClick={DecreaseAddToCartProduct}
-        className={` disabled:bg-primary-100 px-2 py-2   border-e-[1px] h-${btnHeight}  flex items-center rounded-l-lg  bg-primary hover:dark:bg-gray-700`}
+        className={` disabled:bg-primary-100 px-2 py-2   border-e-[1px] h-${btnHeight}  flex items-center rounded-l-lg  bg-primary dark:bg-gray-500 disabled:dark:bg-gray-700`}
       >
         -
       </button>
-      <p className="min-w-[72px] text-center">
+      <p className="min-w-[72px] text-center ">
         {addToCartOneItem?.customerChoiceProductQuantity} in bag
       </p>
       <button
@@ -92,7 +92,7 @@ const NumberOrderCardBtn = ({
           addToCartOneItem?.customerChoiceProductQuantity
         }
         onClick={IncreateAddToCartProduct}
-        className={` disabled:bg-primary-100 px-2 py-2   border-s-[1px] h-${btnHeight} flex items-center rounded-r-lg bg-primary hover:dark:bg-gray-700`}
+        className={` disabled:bg-primary-100 px-2 py-2   border-s-[1px] h-${btnHeight} flex items-center rounded-r-lg bg-primary dark:bg-gray-500 disabled:dark:bg-gray-700`}
       >
         +
       </button>

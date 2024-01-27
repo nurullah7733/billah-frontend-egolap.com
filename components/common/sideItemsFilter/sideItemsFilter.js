@@ -29,7 +29,7 @@ import { getCouponCodeRequest } from "../../../APIRequest/coupon/couponApi";
 import { ErrorToast } from "../../../utils/notificationAlert/notificationAlert";
 import { userUpdateRequest } from "../../../APIRequest/user/userApi";
 
-const SideItemsFilter = ({ products, totalProductsPrice }) => {
+const SideItemsFilter = ({ products, totalProductsPrice, setIsOpen }) => {
   const [couponCode, setCouponCode] = useState("");
 
   const router = useRouter();
@@ -71,6 +71,8 @@ const SideItemsFilter = ({ products, totalProductsPrice }) => {
   };
 
   const handleOrderPlaceOrder = async () => {
+    // side items filter close
+    setIsOpen(false);
     if (
       getItemWithExpiry("userData2") == null ||
       Object.values(getItemWithExpiry("userData2"))?.length < 1
@@ -129,13 +131,15 @@ const SideItemsFilter = ({ products, totalProductsPrice }) => {
                 </button>
               </div>
               <div>
-                <img
-                  className="object-contain	"
-                  width={"40px"}
-                  height={"40px"}
-                  src={item?.img[0]?.secure_url}
-                  alt="bag"
-                />
+                {item?.img?.length > 0 && (
+                  <img
+                    className="object-contain	"
+                    width={"40px"}
+                    height={"40px"}
+                    src={item?.img[0]?.secure_url}
+                    alt="bag"
+                  />
+                )}
               </div>
               <div>
                 <p className="text-[13px] text-black dark:text-white">

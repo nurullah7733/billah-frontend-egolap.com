@@ -18,6 +18,8 @@ import {
 import { createOrder } from "../../APIRequest/orders/ordersApi";
 
 const Checkout = () => {
+  const [loading, setLoading] = useState(false);
+
   const formValue = useSelector(
     (state) => state.userShippingAddressForm.formValue
   );
@@ -37,7 +39,6 @@ const Checkout = () => {
   let userId = getItemWithExpiry("userData2")?.id;
 
   const handleOrderConfirmBtn = async () => {
-    console.log("ok");
     if (!IsEmpty(formValue.name)) {
       ErrorToast("Please provide your name");
     } else if (!IsEmpty(formValue.email)) {
@@ -66,6 +67,7 @@ const Checkout = () => {
     } else if (!formValue.termAndCondition) {
       ErrorToast("Please agree the term & conditions");
     } else {
+      setLoading(true);
       if (formValue.paymentMethod === "cashOnDelivery") {
         let userAllInfo = {
           allProducts: products,
@@ -89,7 +91,9 @@ const Checkout = () => {
           },
         };
         await createOrder(userAllInfo);
+        setLoading(false);
       } else {
+        setLoading(true);
         let userAllInfoAndPaymentData = {
           userId: userId,
           allProducts: products,
@@ -113,6 +117,7 @@ const Checkout = () => {
           },
         };
         let result = await paymentRequest(userAllInfoAndPaymentData);
+        setLoading(false);
         window.location.href = result;
 
         // if (result?.status === "success") {
@@ -531,10 +536,16 @@ const Checkout = () => {
                   {/* confirm order btn */}
                   <div className=" mb-0">
                     <button
+                      disabled={loading}
                       onClick={handleOrderConfirmBtn}
-                      className="bg-primary font-semibold dark:bg-gray-800 hidden md:block hover:bg-primary-100 py-3 md:py-2 text-sm md:text-[12px] text-white uppercase w-full  "
+                      className=" bg-primary font-semibold   hidden md:block hover:bg-primary-100 py-3 md:py-2 text-sm md:text-[12px] text-white uppercase w-full dark:bg-gray-800 disabled:bg-primary-100/75 dark:disabled:bg-gray-800/10 dark:disabled:text-gray-800 "
                     >
-                      Order Confirm
+                      <p className="flex justify-center items-center gap-2">
+                        {loading && (
+                          <img src="/assets/icons/spinner.svg" width={22} />
+                        )}
+                        Order Confirm
+                      </p>
                     </button>
                   </div>
                 </div>

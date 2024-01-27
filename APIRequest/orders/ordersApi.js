@@ -1,10 +1,15 @@
+import { setAddToCartProduct } from "../../redux/features/addToCart/addToCartSlice";
+import store from "../../redux/store";
 import baseUrl from "../../utils/config/baseUrl";
 import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
 import {
   ErrorToast,
   SuccessToast,
 } from "../../utils/notificationAlert/notificationAlert";
-import { setUserAddToCartInLocalStorage } from "../../utils/sessionHelper/sessionHelper";
+import {
+  setUserAddToCartInLocalStorage,
+  setUserTotalProductsPriceInLocalStorage,
+} from "../../utils/sessionHelper/sessionHelper";
 import { userUpdateRequest } from "../user/userApi";
 
 export const createOrder = async (data) => {
@@ -26,15 +31,21 @@ export const createOrder = async (data) => {
     if (res.status === 200) {
       if (Object.keys(data?.data).length > 0) {
         let id = getItemWithExpiry("userData2")?.id;
+
+        // Order created success then empty user cart
         let data = { cart: [] };
         await userUpdateRequest(data, id);
+
+        // Order created success then empty user cart from localstorage, useSelector
         setUserAddToCartInLocalStorage([]);
+        // setUserTotalProductsPriceInLocalStorage(0);
+        // store.dispatch(setAddToCartProduct([]));
       }
       window.location.href = "/";
       SuccessToast(
         "We received your purchase request; we'll be in touch shortly!"
       );
-      return data;
+      return true;
     } else {
       ErrorToast("Request fail. Please try again.");
       return false;
