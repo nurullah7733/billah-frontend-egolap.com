@@ -117,7 +117,7 @@ const LoginForm = () => {
         </form>
 
         <div className="py-1 text-center ">
-          <Link href="/forget-password/verify-email" legacyBehavior>
+          <Link href="/forget-password" legacyBehavior>
             <a className=" text-blue text-primary dark:text-white">
               Forget password
             </a>

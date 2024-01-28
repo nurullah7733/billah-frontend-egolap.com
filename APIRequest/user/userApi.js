@@ -190,3 +190,79 @@ export const userRemoveCartItem = async (id, data) => {
     throw new Error("Something went wrong");
   }
 };
+
+// Forget Password
+export const VerifyEmailRequest = async (email) => {
+  let url = `${baseUrl}/verify-email/${email}`;
+  const config = {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await fetch(url, config);
+    const data = await res.json();
+    if (res.status === 200 && data.status === "success") {
+      return true;
+    } else {
+      ErrorToast(data?.data);
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
+};
+
+export const VerifyOTPRequest = async (email, otp) => {
+  let url = `${baseUrl}/verify-otp/${email}/${otp}`;
+  const config = {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await fetch(url, config);
+    const data = await res.json();
+    if (res.status === 200 && data.status === "success") {
+      return true;
+    } else {
+      ErrorToast(data?.data);
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
+};
+
+export const CreateNewPasswordRequest = async (data) => {
+  let url = `${baseUrl}/reset-password`;
+  const config = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+  try {
+    const res = await fetch(url, config);
+    const data = await res.json();
+    if (res.status === 200 && data.status === "success") {
+      return true;
+    } else {
+      ErrorToast(data?.data);
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
+};
