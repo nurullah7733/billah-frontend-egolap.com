@@ -33,7 +33,7 @@ const Store = async ({ searchParams }) => {
           <Filter token={token} />
         </div>
         {/* products */}
-        {total < 1 ? (
+        {total === 0 || total === undefined ? (
           <div className="h-[100vh] w-full bg-primary-100 dark:bg-gray-700 rounded-md">
             <center>
               <Image
@@ -54,7 +54,8 @@ const Store = async ({ searchParams }) => {
                 return <Product key={index} product={product} />;
               })}
             </div>
-            <LoadMore />
+
+            <LoadMore storePageTotal={total} />
           </div>
         )}
       </div>

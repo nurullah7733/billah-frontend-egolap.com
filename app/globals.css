@@ -105,7 +105,7 @@ select:focus {
 }
 
 .slick-dots {
-  bottom: 10px;
+  bottom: 15px !important;
 }
 @media only screen and (max-width: 768px) {
   .slick-dots {
@@ -113,15 +113,15 @@ select:focus {
   }
 }
 .slick-dots li {
-  width: 25px;
+  width: 20px;
   height: 15px;
 }
 .slick-dots li button:before {
-  width: 25px;
-  background-color: #ff007f;
-  height: 10px;
-  border-radius: 27%;
-  content: "";
+  width: 20px !important;
+  background-color: #ff007f !important;
+  height: 10px !important;
+  border-radius: 27% !important;
+  content: "" !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

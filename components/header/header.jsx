@@ -145,7 +145,8 @@ const Header = ({ token }) => {
                 <div className="cursor-pointer ">
                   <Link href="/">
                     <Image
-                      src="/assets/icons/e-golap.png"
+                      // src="/assets/icons/e-golap.png"
+                      src="/assets/icons/egolap1.png"
                       alt=""
                       width="60"
                       height="50"

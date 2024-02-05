@@ -16,7 +16,7 @@ const MainSlider = ({ slider, token }) => {
     dots: true,
     infinite: true,
     speed: 500,
-    arrows: false,
+    arrows: true,
     autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -37,7 +37,6 @@ const MainSlider = ({ slider, token }) => {
     <div
       className="relative pt-16 mt-3 text-black dark:bg-gray-700 dark:text-white md:pt-32"
       style={{
-        overflow: "hidden",
         display: "block",
         paddingTop: "0",
         textAlign: "center",
@@ -55,7 +54,7 @@ const MainSlider = ({ slider, token }) => {
                   alt="Daily egolap offers"
                   width={1680}
                   height={450}
-                  className="cursor-pointer"
+                  className="cursor-pointer "
                 />
               </Link>
             </div>

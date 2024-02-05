@@ -9,7 +9,7 @@ import Product from "../../common/product/product";
 import {} from "next/router";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
-function LoadMore() {
+function LoadMore({ storePageTotal }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -24,7 +24,7 @@ function LoadMore() {
   const perPage = 10;
   const allQueryParams = searchParams.toString();
   useEffect(() => {
-    if (inView && data.length + perPage !== total) {
+    if (inView && storePageTotal !== total) {
       setIsLoading(true);
       // Add a delay of 500 milliseconds
 
@@ -54,7 +54,8 @@ function LoadMore() {
 
       <div className=" flex items-center justify-center pt-5">
         <div ref={ref}>
-          {inView && isLoading && data.length + perPage !== total && (
+          {/* {inView && isLoading && data.length + perPage !== total && ( */}
+          {inView && isLoading && storePageTotal !== total && (
             <Image
               src="/assets/icons/spinner.svg"
               alt="spinner"
