@@ -46,7 +46,7 @@ const MainSlider = ({ slider, token }) => {
         <Slider {...settings}>
           {slider?.map((item, index) => (
             <div key={index}>
-              <Link href="#">
+              <Link href={item?.link ? item?.link : "#"}>
                 <Image
                   src={item?.secure_url}
                   placeholder="blur"
