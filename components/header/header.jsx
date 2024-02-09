@@ -67,17 +67,12 @@ const Header = ({ token }) => {
             {/* mobile header */}
             <div className="hidden md:block">
               <div>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between ">
                   <div className="flex items-center gap-2">
                     {/* logo */}
                     <div className="cursor-pointer">
                       <Link href="/">
-                        <Image
-                          src="/assets/icons/e-golap.png"
-                          alt=""
-                          width="60"
-                          height="50"
-                        />
+                        <Image src="/logo.png" alt="" width="70" height="70" />
                       </Link>
                     </div>
                   </div>
@@ -141,16 +136,10 @@ const Header = ({ token }) => {
             </div>
             {/* Desktop header */}
             <div className="block md:hidden">
-              <div className="flex items-center justify-between ">
+              <div className="flex items-center justify-between pt-[3px] ">
                 <div className="cursor-pointer ">
                   <Link href="/">
-                    <Image
-                      // src="/assets/icons/e-golap.png"
-                      src="/assets/icons/egolap1.png"
-                      alt=""
-                      width="60"
-                      height="50"
-                    />
+                    <Image src="/logo.png" alt="" width="70" height="70" />
                   </Link>
                 </div>
                 {/* search */}
