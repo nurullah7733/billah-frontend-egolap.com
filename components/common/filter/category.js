@@ -34,11 +34,13 @@ const Category = () => {
     (async () => {
       let data = await getCategoriesRequest();
       setAllCategories(data);
+      console.log(data);
     })();
   }, []);
+
   let content = (
     <>
-      {allCategories.map((item, index) => (
+      {allCategories[0]?.rows?.map((item, index) => (
         <div className="flex items-center gap-x-2" key={index}>
           <label className="dark:text-white sm:text-[14px]  flex items-center">
             <input

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useEffect } from "react";
+import parse from "html-react-parser";
 import {
   FaFacebook,
   FaInstagram,
@@ -25,8 +26,11 @@ import {
   setShippingCost,
 } from "../../redux/features/addToCart/addToCartSlice";
 import { getShippingAndOtherCost } from "../../APIRequest/shippingCost/getShippingCost";
+import { aboutUsFooterParagraphRequest } from "../../APIRequest/webSettings/webSettingsApi";
 
 const Footer = ({ socialLink }) => {
+  let [footerPara, setFooterPara] = React.useState([]);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       let addToCartItemsTolocalStorage = getUserAddToCartInLocalStorage();
@@ -52,6 +56,13 @@ const Footer = ({ socialLink }) => {
     })();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      let footerParagraph = await aboutUsFooterParagraphRequest();
+      setFooterPara(footerParagraph);
+    })();
+  }, []);
+
   return (
     <footer className=" bg-primary dark:bg-gray-700">
       <div className="">
@@ -70,7 +81,7 @@ const Footer = ({ socialLink }) => {
                   />
                   <p className="text-base text-white">30 minutes delivery</p>
                 </div>
-                <div className="flex pt-1.5 space-x-2">
+                <div className="flex pt-1.5 space-x-2 items-center">
                   <img
                     src="/assets/img/logo/trade.png"
                     width="25"
@@ -79,17 +90,23 @@ const Footer = ({ socialLink }) => {
                   <p className="text-base text-white">Cash on delivery</p>
                 </div>
               </div>
-              <div className="flex gap-x-2 md:pt-3">
+              <div className="flex gap-x-2 md:pt-3 items-center">
                 <p className="text-base text-white">Pay with</p>
-                <img
-                  src="/assets/img/logo/american.png"
-                  width="35"
-                  height="20"
-                />
-                <img src="/assets/img/logo/cash.png" width="35" height="20" />
-                <img src="/assets/img/logo/bkash.png" width="35" height="20" />
-                <img src="/assets/img/logo/nagad.png" width="35" height="20" />
-                <img src="/assets/img/logo/rocket.png" width="35" height="20" />
+                <div className="w-[40px]    ">
+                  <img src="/assets/img/logo/american.png" />
+                </div>
+                <div className="w-[40px]  ">
+                  <img src="/assets/img/logo/cash.png" />
+                </div>
+                <div className="w-[40px]    ">
+                  <img src="/assets/img/logo/bkash.png" />
+                </div>
+                <div className="w-[40px]   ">
+                  <img src="/assets/img/logo/nagad.png" />
+                </div>
+                <div className="w-[40px]    ">
+                  <img src="/assets/img/logo/rocket.png" />
+                </div>
               </div>
             </div>
           </div>
@@ -103,15 +120,11 @@ const Footer = ({ socialLink }) => {
                   <Image src="/logo.png" alt="" width="70" height="70" />
                 </Link>
               </div>
-              <p className="text-justify text-white">
-                E-golap.com is an online shop available in Dhaka, Chattogram,
-                Jashore, Khulna and Narayanganj. We believe time is valuable to
-                our fellow residents, and that they should not have to waste
-                hours in traffic, brave bad weather and wait in line just to buy
-                basic necessities like eggs! This is why Chaldal delivers
-                everything you need right at your door-step and at no additional
-                cost.
-              </p>
+
+              <div className="text-justify text-white">
+                {footerPara.length > 0 &&
+                  parse(footerPara?.slice(-1)[0]?.aboutUs)}
+              </div>
               {/* social icons */}
               <div className="flex gap-2 pt-3">
                 <p>
@@ -201,6 +214,13 @@ const Footer = ({ socialLink }) => {
                 <Link href="/help/faq" legacyBehavior>
                   <a className="text-white transition-all hover:tracking-wider">
                     FAQ
+                  </a>
+                </Link>
+              </p>
+              <p>
+                <Link href="/help/team" legacyBehavior>
+                  <a className="text-white transition-all hover:tracking-wider">
+                    Team
                   </a>
                 </Link>
               </p>

@@ -37,7 +37,7 @@ const SubCategory = () => {
   }, []);
   let content = (
     <>
-      {allSubCategories.map((item, index) => (
+      {allSubCategories?.map((item, index) => (
         <div className="flex items-center gap-x-2" key={index}>
           <label className="dark:text-white sm:text-[14px]">
             <input
