@@ -35,7 +35,9 @@ export default async function Home() {
         {/* PopularProducts */}
         <PopularProducts />
         {/* Marquee */}
-        <MarqueeComponent />
+        <MarqueeComponent
+          dealerBrandLogo={getAllWebSettingsData[0]?.dealerBrandLogo}
+        />
         {/* Best of Electronics*/}
         <Electronics banner={getAllWebSettingsData[0]?.bestOfElectronics} />
         {/* Special products*/}

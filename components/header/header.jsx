@@ -49,7 +49,7 @@ const Header = ({ token }) => {
     if (pathname === "/store") {
       router.push(`${pathname}${query}`);
     } else {
-      router.push(`/store?pageNo=1&perPage=50&searchKeyword=${searchValue}`);
+      router.push(`/store?pageNo=1&perPage=30&searchKeyword=${searchValue}`);
     }
   };
 
@@ -79,7 +79,7 @@ const Header = ({ token }) => {
                   <div className="flex items-center gap-6">
                     {/* our store */}
                     <div className="cursor-pointer">
-                      <Link href="/store?pageNo=1&perPage=10&searchKeyword=0">
+                      <Link href="/store?pageNo=1&perPage=30&searchKeyword=0">
                         <p className="font-semibold ">Store</p>
                       </Link>
                     </div>
@@ -165,7 +165,7 @@ const Header = ({ token }) => {
 
                 <div className="cursor-pointer ">
                   <Link
-                    href="/store?pageNo=1&perPage=10&searchKeyword=0"
+                    href="/store?pageNo=1&perPage=30&searchKeyword=0"
                     legacyBehavior
                   >
                     <a className="ml-2 font-semibold text-md">Store</a>

@@ -15,6 +15,7 @@ export const paymentRequest = async (data) => {
     const res = await fetch(url, config);
     let status = res.status;
     let data = await res.json();
+    console.log(data);
     if (res.status === 200) {
       return data?.data?.bkashURL;
     } else {

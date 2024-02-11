@@ -59,7 +59,7 @@ const CategoriesSlider = () => {
     ],
   };
   return (
-    <div className="block border border-gray-200 rounded-lg shadow dark:border-gray-700 pt-[5px]">
+    <div className="block border border-gray-200 rounded-lg shadow dark:border-gray-700 pt-[5px] overflow-hidden">
       <div className="py-2 pt-16 text-black dark:text-white md:pt-32">
         <div className="lg:max-w-[750px] md:max-w-[700px] sm:max-w-[500px]  w-[1120px] @screen(max-width: 500px) xs:max-w-[400px] xxs:max-w-[320px] mx-auto ">
           <Slider {...settings}>

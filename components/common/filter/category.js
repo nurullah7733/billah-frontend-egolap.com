@@ -34,7 +34,6 @@ const Category = () => {
     (async () => {
       let data = await getCategoriesRequest();
       setAllCategories(data);
-      console.log(data);
     })();
   }, []);
 

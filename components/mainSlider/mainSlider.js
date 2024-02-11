@@ -42,7 +42,7 @@ const MainSlider = ({ slider, token }) => {
         textAlign: "center",
       }}
     >
-      <div className="mx-auto max-w-[1680px]">
+      <div className="mx-auto max-w-[1680px] overflow-hidden">
         <Slider {...settings}>
           {slider?.map((item, index) => (
             <div key={index}>

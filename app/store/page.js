@@ -7,13 +7,13 @@ import SortByPrice from "./_components/sortBy/sortBy";
 import Image from "next/image";
 import LoadMore from "@components/common/loadMore/loadMore";
 import { cookies } from "next/headers";
+import LoadMoreQueryProducts from "@components/common/loadMore/loadMoreForQueryProducts";
 
 const Store = async ({ searchParams }) => {
   let cookie = cookies();
   let token = cookie.get("token2")?.value;
 
   let allQueryParams = createParams(searchParams);
-
   let pageNo = searchParams?.pageNo ?? 1;
   let { products, total } = await getAllProductsRequest(allQueryParams, pageNo);
 
@@ -54,8 +54,13 @@ const Store = async ({ searchParams }) => {
                 return <Product key={index} product={product} />;
               })}
             </div>
-
-            <LoadMore storePageTotal={total} />
+            {/* when user products query search then LoadMoreQueryProducts */}
+            {Object.keys(searchParams).length === 3 &&
+            searchParams.searchKeyword == "0" ? (
+              <LoadMore storePageTotal={total} />
+            ) : (
+              <LoadMoreQueryProducts storePageTotal={total} />
+            )}
           </div>
         )}
       </div>

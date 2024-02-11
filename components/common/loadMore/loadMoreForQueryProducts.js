@@ -9,21 +9,20 @@ import Product from "../../common/product/product";
 import {} from "next/router";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
-function LoadMore({ storePageTotal }) {
+function LoadMoreQueryProducts({ storePageTotal }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { ref, inView } = useInView();
-  const perPage = Number(searchParams.get("perPage"));
 
   const [data, setData] = useState([]);
-  const [runningProductsTotal, setRunningProductsTotal] = useState(perPage);
+  const [total, setTotal] = useState([0]);
   const [isLoading, setIsLoading] = useState(true);
   const [pageNo, setPageNo] = useState(2);
 
   const allQueryParams = searchParams.toString();
   useEffect(() => {
-    if (inView && storePageTotal !== runningProductsTotal) {
+    if (inView && storePageTotal !== total) {
       setIsLoading(true);
       // Add a delay of 500 milliseconds
       const delay = 500;
@@ -33,7 +32,7 @@ function LoadMore({ storePageTotal }) {
           pageNo
         );
         setData([...data, ...products]);
-        setRunningProductsTotal(runningProductsTotal + Number(products.length));
+        setTotal(total);
         setPageNo(pageNo + 1);
         setIsLoading(false);
       }, delay);
@@ -41,7 +40,7 @@ function LoadMore({ storePageTotal }) {
       //   Clear the timeout if the component is unmounted or inView becomes false
       return () => clearTimeout(timeoutId);
     }
-  }, [inView, data, isLoading, pageNo, runningProductsTotal, allQueryParams]);
+  }, [inView, data, isLoading, pageNo, total, allQueryParams]);
 
   return (
     <div className="pt-4">
@@ -53,8 +52,7 @@ function LoadMore({ storePageTotal }) {
 
       <div className=" flex items-center justify-center pt-5">
         <div ref={ref}>
-          {/* {inView && isLoading && data.length + perPage !== total && ( */}
-          {inView && isLoading && storePageTotal !== runningProductsTotal && (
+          {inView && isLoading && storePageTotal !== total && (
             <Image
               src="/assets/icons/spinner.svg"
               alt="spinner"
@@ -69,4 +67,4 @@ function LoadMore({ storePageTotal }) {
   );
 }
 
-export default LoadMore;
+export default LoadMoreQueryProducts;

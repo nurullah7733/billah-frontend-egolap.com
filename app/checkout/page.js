@@ -117,8 +117,9 @@ const Checkout = () => {
           },
         };
         let result = await paymentRequest(userAllInfoAndPaymentData);
+        console.log(result);
         setLoading(false);
-        window.location.href = result;
+        // window.location.href = result;
 
         // if (result?.status === "success") {
         //   router.push(result?.data);
