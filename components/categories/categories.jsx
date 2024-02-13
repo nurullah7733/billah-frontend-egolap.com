@@ -67,25 +67,28 @@ const CategoriesSlider = () => {
       setCategories(data[0]?.rows);
     })();
   }, []);
-
+  const containerStyle = {
+    overflowX: "auto",
+    overflowY: "hidden", // Hide the vertical scrollbar
+    whiteSpace: "nowrap", // Prevent text from wrapping to the next line
+    maxWidth: "100%", // Ensure the content does not exceed the container width
+  };
   return (
-    <div className="block border border-gray-200 rounded-lg shadow dark:border-gray-700 pt-[5px] overflow-hidden">
-      <div className="py-2 pt-16 text-black dark:text-white md:pt-32">
-        <div className="lg:max-w-[750px] md:max-w-[700px] sm:max-w-[500px]  w-[1120px] @screen(max-width: 500px) xs:max-w-[400px] xxs:max-w-[320px] mx-auto ">
-          <div className="flex max-h-[120px] overflow-x-auto header_categories">
-            {categories?.map((category, index) => (
-              <div className="!flex flex-col items-center ">
-                <img
-                  src={category?.img[0]?.secure_url}
-                  alt=""
-                  width="50"
-                  height="50"
-                  className="rounded-sm"
-                />
-                <h3>{category?.name}</h3>
-              </div>
-            ))}
-          </div>
+    <div className="container mx-auto pt-16 md:pt-[150px]">
+      <div>
+        <div className="flex max-h-[120px] overflow-x-auto overflow-y-hidden whitespace-nowrap max-w-full header_categories">
+          {categories?.map((category, index) => (
+            <div className="!flex flex-col items-center justify-center category_item gap-y-1 w-[200px] margin-x-1">
+              <img
+                src={category?.img[0]?.secure_url}
+                alt=""
+                width="50"
+                height="50"
+                className="rounded-sm"
+              />
+              <h3>{category?.name}</h3>
+            </div>
+          ))}
         </div>
       </div>
     </div>
