@@ -11,6 +11,7 @@ import { cookies } from "next/headers";
 import Header from "@components/header/header";
 import Footer from "../components/footer/footer";
 import CategoriesSlider from "../components/categories/categories";
+import Categories from "../components/categories/categories2";
 import TopItemAndPrice from "../components/common/topItemAndPrice/topItemAndPrice";
 import { getAllWebSettings } from "../APIRequest/webSettings/webSettingsApi";
 
@@ -38,6 +39,7 @@ export default async function RootLayout({ children }) {
           <NextThemeProvider attribute="class">
             <Header token={token} />
             <CategoriesSlider />
+            {/* <Categories /> */}
             {children}
             <AppProgressbarProvider />
             <TopItemAndPrice />
