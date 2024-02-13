@@ -11,9 +11,9 @@ import { cookies } from "next/headers";
 import Header from "@components/header/header";
 import Footer from "../components/footer/footer";
 import CategoriesSlider from "../components/categories/categories";
-import Categories from "../components/categories/categories2";
 import TopItemAndPrice from "../components/common/topItemAndPrice/topItemAndPrice";
 import { getAllWebSettings } from "../APIRequest/webSettings/webSettingsApi";
+import { getCategoriesRequest } from "../APIRequest/categories/categoriesApi";
 
 export const metadata = {
   title:
@@ -31,6 +31,7 @@ export default async function RootLayout({ children }) {
   let cookie = cookies();
   let token = cookie.get("token2")?.value;
   const getAllWebSettingsData = await getAllWebSettings();
+  let categories = await getCategoriesRequest();
 
   return (
     <html lang="en">
@@ -38,8 +39,7 @@ export default async function RootLayout({ children }) {
         <ReduxProvider>
           <NextThemeProvider attribute="class">
             <Header token={token} />
-            <CategoriesSlider />
-            {/* <Categories /> */}
+            <CategoriesSlider categories={categories[0]?.rows} />
             {children}
             <AppProgressbarProvider />
             <TopItemAndPrice />
