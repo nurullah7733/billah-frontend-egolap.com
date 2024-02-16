@@ -3,8 +3,12 @@ import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const CategoriesSlider = ({ categories }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [dropdownIndex, setDropdownIndex] = useState(0);
   const openDropdown = (index) => {
     if (dropdownIndex === index) {
@@ -13,6 +17,7 @@ const CategoriesSlider = ({ categories }) => {
       setDropdownIndex(index);
     }
   };
+
   return (
     <div className="container mx-auto pt-[70px] md:pt-[150px]">
       <div>
@@ -25,35 +30,79 @@ const CategoriesSlider = ({ categories }) => {
                 key={index}
                 className="!flex flex-col items-center justify-between category_item gap-y-1  min-w-[140px] select-none cursor-pointer"
               >
-                <img
-                  src={category?.img[0]?.secure_url}
-                  alt={category?.name}
-                  width="50"
-                  height="50"
-                  className="rounded-sm"
-                />
-                <h3 className="relative justify-center text-left flex items-center font-semibold ">
-                  {category?.name}
-                  {category?.subCategory?.length > 0 && (
-                    <>
-                      {dropdownIndex === index + 1 ? (
-                        <RiArrowDropUpLine size={24} className="ml-[-4px]" />
-                      ) : (
-                        <RiArrowDropDownLine size={24} className="ml-[-4px]" />
+                {category?.subCategory?.length > 0 ? (
+                  <>
+                    <img
+                      src={category?.img[0]?.secure_url}
+                      alt={category?.name}
+                      width="50"
+                      height="50"
+                      className="rounded-sm"
+                    />
+                    <h3 className="relative justify-center text-left flex items-center font-semibold ">
+                      {category?.name}
+                      {category?.subCategory?.length > 0 && (
+                        <>
+                          {dropdownIndex === index + 1 ? (
+                            <RiArrowDropUpLine
+                              size={24}
+                              className="ml-[-4px]"
+                            />
+                          ) : (
+                            <RiArrowDropDownLine
+                              size={24}
+                              className="ml-[-4px]"
+                            />
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                </h3>
+                    </h3>
+                  </>
+                ) : (
+                  <Link
+                    href={`/store?pageNo=1&perPage=30&searchKeyword=0&category=${category?.name}`}
+                  >
+                    <img
+                      src={category?.img[0]?.secure_url}
+                      alt={category?.name}
+                      width="50"
+                      height="50"
+                      className="rounded-sm"
+                    />
+                    <h3 className="relative justify-center text-left flex items-center font-semibold ">
+                      {category?.name}
+                      {category?.subCategory?.length > 0 && (
+                        <>
+                          {dropdownIndex === index + 1 ? (
+                            <RiArrowDropUpLine
+                              size={24}
+                              className="ml-[-4px]"
+                            />
+                          ) : (
+                            <RiArrowDropDownLine
+                              size={24}
+                              className="ml-[-4px]"
+                            />
+                          )}
+                        </>
+                      )}
+                    </h3>
+                  </Link>
+                )}
 
-                {/* dropdown */}
                 {category?.subCategory?.length > 0 && (
                   <>
                     {dropdownIndex === index + 1 && (
                       <div className="category-dropdown  absolute  ">
                         <div className="category-dropdown-content bg-white dark:bg-gray-900">
                           {category?.subCategory?.map((sub, index) => (
-                            <div className="p-2 rounded hover:bg-base-300">
-                              <Link href="#">
+                            <div
+                              key={index}
+                              className="p-2 rounded hover:bg-base-300"
+                            >
+                              <Link
+                                href={`/store?pageNo=1&perPage=30&searchKeyword=0&category=${category?.name}&subcategory=${sub?.name}`}
+                              >
                                 <p>{sub?.name}</p>
                               </Link>
                             </div>

@@ -20,7 +20,8 @@ export const metadata = {
     "Online Shopping in Bangladesh. Egolap Emporium: Elevate Your Shopping Experience",
   description:
     "Discover a world of limitless possibilities at Egolap.com, your ultimate destination for online shopping. Immerse yourself in a curated selection of provisial products, fashion-forward clothing, cutting-edge electronics, and luxurious cosmetics. Egolap.com brings you a seamless and secure shopping experience, where convenience meets quality. Explore a diverse range of products, unbeatable deals, and personalized recommendations. Elevate your online shopping journey with Egolap.com – where every click opens the door to endless choices. Shop smart, shop Egolap.com.",
-  image: "/opengraph.jpg", // Path to your Open Graph image
+  image: "/logo.png", // Path to your Open Graph image
+
   twitter: {
     card: "summary", // Twitter card type
     site: "@your_twitter_handle", // Your Twitter handle

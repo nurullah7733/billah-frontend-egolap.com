@@ -72,7 +72,12 @@ const Header = ({ token }) => {
                     {/* logo */}
                     <div className="cursor-pointer">
                       <Link href="/">
-                        <Image src="/logo.png" alt="" width="70" height="70" />
+                        <Image
+                          src="/egolap-logo-for-bkash.png"
+                          alt=""
+                          width="70"
+                          height="70"
+                        />
                       </Link>
                     </div>
                   </div>
@@ -139,7 +144,12 @@ const Header = ({ token }) => {
               <div className="flex items-center justify-between pt-[3px] ">
                 <div className="cursor-pointer ">
                   <Link href="/">
-                    <Image src="/logo.png" alt="" width="70" height="70" />
+                    <Image
+                      src="/logo.png"
+                      alt="egolap logo"
+                      width="70"
+                      height="70"
+                    />
                   </Link>
                 </div>
                 {/* search */}
