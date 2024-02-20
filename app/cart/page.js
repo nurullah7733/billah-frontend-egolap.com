@@ -19,6 +19,7 @@ export const metadata = {
     site: "@Egolap1",
   },
 };
+
 const Cart = () => {
   let token = Cookies.get("token2");
   const {
@@ -35,7 +36,6 @@ const Cart = () => {
       if (token !== undefined && products?.length > 0) {
         let id = getItemWithExpiry("userData2")?.id;
         let cart = products;
-        console.log(products, "cart");
         await userAddToCartOrUpdateRequest(id, cart);
       }
     };

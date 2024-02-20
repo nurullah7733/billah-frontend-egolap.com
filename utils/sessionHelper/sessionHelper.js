@@ -4,17 +4,20 @@ class SessionHelper {
       ? window.localStorage.setItem("AddToCartItems", JSON.stringify(value))
       : false;
   }
-  setUserTotalProductsPriceInLocalStorage(value) {
-    typeof window !== "undefined"
-      ? window.localStorage.setItem("totalProductsPrice", JSON.stringify(value))
-      : false;
-  }
 
   getUserAddToCartInLocalStorage() {
     if (typeof window !== "undefined") {
       return JSON.parse(window.localStorage.getItem("AddToCartItems"));
     }
   }
+
+  setUserTotalProductsPriceInLocalStorage(value) {
+    console.log(value, "value");
+    typeof window !== "undefined"
+      ? window.localStorage.setItem("totalProductsPrice", JSON.stringify(value))
+      : false;
+  }
+
   getTotalProductsPrice() {
     if (typeof window !== "undefined") {
       return JSON.parse(window.localStorage.getItem("totalProductsPrice"));

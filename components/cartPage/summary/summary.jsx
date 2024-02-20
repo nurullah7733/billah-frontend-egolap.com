@@ -153,16 +153,16 @@ const Summary = ({
           <div className="flex justify-between text-sm font-semibold uppercase">
             <span className="text-sm md:text-[12px] ">subtotal</span>
             <span className="md:text-[12px] ">
-              ৳{numberWithCommas(totalProductsPrice - shippingCost)}
+              ৳{numberWithCommas(totalProductsPrice)}
             </span>
           </div>
 
           <div className="flex justify-between py-6 text-sm font-semibold uppercase ">
-            {otherCost > 0 ? (
+            {shippingCost > 0 ? (
               <>
-                <span className="text-sm md:text-[12px] ">Other cost</span>
+                <span className="text-sm md:text-[12px] ">SHIPPING COST</span>
                 <span className="md:text-[12px] ">
-                  ৳{numberWithCommas(otherCost)}
+                  ৳{numberWithCommas(shippingCost)}
                 </span>
               </>
             ) : (
@@ -171,12 +171,11 @@ const Summary = ({
           </div>
 
           <div className="flex justify-between pb-6 text-sm font-semibold uppercase border-b border-white ">
-            {shippingCost > 0 ? (
+            {otherCost > 0 ? (
               <>
-                <span className="text-sm md:text-[12px] ">Shipping cost</span>
+                <span className="text-sm md:text-[12px] ">OTHER COST</span>
                 <span className="md:text-[12px] ">
-                  {" "}
-                  ৳{numberWithCommas(shippingCost)}
+                  ৳{numberWithCommas(otherCost)}
                 </span>
               </>
             ) : (
@@ -187,7 +186,10 @@ const Summary = ({
           <div className="flex justify-between py-6 text-sm font-semibold uppercase">
             <span className="text-sm md:text-[12px] ">Total</span>
             <span className="md:text-[12px] ">
-              ৳{numberWithCommas(totalProductsPrice)}
+              ৳
+              {numberWithCommas(
+                totalProductsPrice + Number(shippingCost) + Number(otherCost)
+              )}
             </span>
           </div>
 
@@ -207,7 +209,10 @@ const Summary = ({
           <div className="flex justify-between py-6 text-sm font-bold uppercase">
             <span className="text-sm md:text-[13px] ">payable Total</span>
             <span className="md:text-[13px] ">
-              ৳{numberWithCommas(totalProductsPrice)}
+              ৳
+              {numberWithCommas(
+                totalProductsPrice + Number(shippingCost) + Number(otherCost)
+              )}
             </span>
           </div>
 
@@ -244,7 +249,7 @@ const Summary = ({
                     type="checkbox"
                     className="w-3.5 h-3.5"
                   />
-                  I agree the rules of term & conditions.
+                  I agree the rules of terms & conditions.
                 </label>
               </div>
               <button

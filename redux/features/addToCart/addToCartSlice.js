@@ -75,8 +75,10 @@ const AddToCartSlice = createSlice({
             afterDiscount + state.shippingCost + state.otherCost;
           return (state.totalProductsPrice = addShippingAndOtherCost);
         }
+
         return totalPrice;
       }, 0);
+      state.products.length === 0 && (state.totalProductsPrice = 0);
       setUserTotalProductsPriceInLocalStorage(state.totalProductsPrice);
     },
 
@@ -106,6 +108,7 @@ const AddToCartSlice = createSlice({
       state.couponDiscount = actions.payload;
     },
     setShippingCost(state, actions) {
+      console.log(actions.payload, "payload");
       state.shippingCost = actions.payload;
     },
     setOtherCost(state, actions) {

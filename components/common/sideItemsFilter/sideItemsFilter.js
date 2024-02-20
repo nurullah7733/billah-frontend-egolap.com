@@ -158,9 +158,10 @@ const SideItemsFilter = ({ products, totalProductsPrice, setIsOpen }) => {
               </div>
               <div>
                 <button
-                  onClick={() =>
-                    store.dispatch(deleteAddToCartProduct(item?._id))
-                  }
+                  onClick={() => {
+                    store.dispatch(deleteAddToCartProduct(item?._id));
+                    store.dispatch(setTotalProductsPrice());
+                  }}
                 >
                   <AiOutlineClose size={13} />
                 </button>

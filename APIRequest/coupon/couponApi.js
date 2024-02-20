@@ -18,6 +18,7 @@ export const getCouponCodeRequest = async (data) => {
   try {
     const res = await fetch(url, config);
     let data = await res.json();
+
     if (res.status === 200) {
       if (data?.data.length > 0) {
         return data?.data;

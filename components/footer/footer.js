@@ -49,9 +49,10 @@ const Footer = ({ socialLink }) => {
   useEffect(() => {
     (async () => {
       let result = await getShippingAndOtherCost();
-      if (result?.length > 0) {
-        store.dispatch(setShippingCost(result[0]?.shippingCost));
-        store.dispatch(setOtherCost(result[0]?.otherCost));
+      console.log(result?.data[0]?.otherCost, "fff");
+      if (result?.data?.length > 0) {
+        store.dispatch(setShippingCost(result?.data[0]?.shippingCost));
+        store.dispatch(setOtherCost(result?.data[0]?.otherCost));
       }
     })();
   }, []);
