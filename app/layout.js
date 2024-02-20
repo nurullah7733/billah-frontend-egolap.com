@@ -17,14 +17,14 @@ import { getCategoriesRequest } from "../APIRequest/categories/categoriesApi";
 
 export const metadata = {
   title:
-    "Online Shopping in Bangladesh. Egolap Emporium: Elevate Your Shopping Experience",
+    "Egolap.com - Your One-Stop Bangladeshi Ecommerce Destination for Provisional Bazar, Electronics, Cosmetics, and More!",
   description:
-    "Discover a world of limitless possibilities at Egolap.com, your ultimate destination for online shopping. Immerse yourself in a curated selection of provisial products, fashion-forward clothing, cutting-edge electronics, and luxurious cosmetics. Egolap.com brings you a seamless and secure shopping experience, where convenience meets quality. Explore a diverse range of products, unbeatable deals, and personalized recommendations. Elevate your online shopping journey with Egolap.com – where every click opens the door to endless choices. Shop smart, shop Egolap.com.",
-  image: "/logo.png", // Path to your Open Graph image
+    "Discover a world of convenience at Egolap.com! Explore a diverse range of products, from Provisional Bazar essentials to cutting-edge electronics, trendy cosmetics, and stylish clothing. Shop hassle-free for all your needs in one place. Quality, variety, and convenience – experience it all with Egolap.com.",
+  image: "/seo1.jpg",
 
   twitter: {
-    card: "summary", // Twitter card type
-    site: "@your_twitter_handle", // Your Twitter handle
+    card: "Explore a world of variety at Egolap.com! 🌐 From fresh fruits 🍎 to cutting-edge electronics 📱, trendy clothing 👗, and luxurious cosmetics 💄 – find it all in one place. Your go-to destination for quality and convenience. Shop smart at Egolap.com! #Egolap #Shopping #DiversityInProducts",
+    site: "@Egolap1",
   },
 };
 

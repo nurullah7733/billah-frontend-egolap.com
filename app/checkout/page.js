@@ -17,6 +17,19 @@ import {
 } from "../../utils/formValidation/formValidation";
 import { createOrder } from "../../APIRequest/orders/ordersApi";
 
+export const metadata = {
+  title:
+    "Secure Checkout at Egolap.com - Complete Your Order Safely for Fruits, Electronics, Clothing, and Cosmetics!",
+  description:
+    "Finalize your purchase with confidence at Egolap.com! Our secure checkout ensures a smooth and safe transaction for your fresh fruits, cutting-edge electronics, trendy clothing, and luxurious cosmetics. Experience hassle-free shopping and enjoy the convenience of Egolap.com!",
+  image: "/seo_checkout.jpg",
+
+  twitter: {
+    card: "Ready to make it yours? 🛍️ Complete your order securely at Egolap.com! From fresh fruits 🍇 to top-notch electronics 📲, trendy clothing 👗, and elegant cosmetics 💄. Your seamless checkout experience awaits. Shop smart with Egolap.com! #Egolap #SecureCheckout #ShopSmart",
+    site: "@Egolap1",
+  },
+};
+
 const Checkout = () => {
   const [loading, setLoading] = useState(false);
 
@@ -117,20 +130,10 @@ const Checkout = () => {
           },
         };
         let result = await paymentRequest(userAllInfoAndPaymentData);
-        console.log(result);
         setLoading(false);
-        // window.location.href = result;
-
-        // if (result?.status === "success") {
-        //   router.push(result?.data);
-        // }
+        window.location.href = result;
       }
     }
-
-    // let result = await paymentRequest(data);
-    // if (result?.status === "success") {
-    //   router.push(result?.data);
-    // }
   };
 
   return (

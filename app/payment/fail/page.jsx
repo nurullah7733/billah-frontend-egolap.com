@@ -1,5 +1,17 @@
 import Image from "next/image";
 
+export const metadata = {
+  title: "Thank You for Shopping with Egolap.com!",
+  description:
+    "Thank you for choosing Egolap.com.We're preparing to deliver your favorite items. Enjoy a seamless shopping experience with Egolap.com!",
+  image: "/seo_payment.jpg",
+
+  twitter: {
+    card: "Your payment on Egolap.com was a breeze. We're on our way to delivering joy. Shop smart, shop Egolap.com! #Egolap #PaymentSuccess #HappyShopping",
+    site: "@Egolap1",
+  },
+};
+
 function SuccessPage({ searchParams }) {
   return (
     <div className=" flex items-center justify-center my-5">

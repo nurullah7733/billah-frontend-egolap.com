@@ -5,7 +5,7 @@ import { sessionDestroy } from "../../utils/sessionHelper/sessionHelper";
 
 // get All Products
 export const getAllProductsRequest = async (allQueryParams, pageNo) => {
-  let url = `${baseUrl}/list-product-global/?pageNo=${pageNo}&perPage=10&searchKeyword=0${allQueryParams}`;
+  let url = `${baseUrl}/list-product-global/?pageNo=${pageNo}&perPage=30&searchKeyword=0${allQueryParams}`;
 
   const res = await fetch(url, { next: { revalidate: 600 } });
   if (!res.ok) {

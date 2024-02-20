@@ -6,6 +6,19 @@ import { useSelector } from "react-redux";
 import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
 import { userAddToCartOrUpdateRequest } from "../../APIRequest/user/userApi";
 import Cookies from "js-cookie";
+
+export const metadata = {
+  title:
+    "Your Egolap.com Shopping Cart - Securely Store and Checkout with Ease for Fruits, Electronics, Clothing, and Cosmetics!",
+  description:
+    "Review and finalize your order at Egolap.com! Your secure shopping cart awaits, filled with fresh fruits, cutting-edge electronics, trendy clothing, and luxurious cosmetics. Effortlessly manage your selections and proceed to checkout. Shopping made simple at Egolap.com!",
+  image: "/seo_card.jpg",
+
+  twitter: {
+    card: "Ready to make it yours? 🛒 Your Egolap.com cart is packed with goodies – from fresh fruits 🍏 to top-notch electronics 📦, trendy clothing 👜, and elegant cosmetics 💅. Securely checkout for an unmatched shopping experience. Shop smart with Egolap.com! #Egolap #SecureCheckout #ShopSmart",
+    site: "@Egolap1",
+  },
+};
 const Cart = () => {
   let token = Cookies.get("token2");
   const {

@@ -9,6 +9,18 @@ import {
 import Paragraph from "./paragraph/paragraph";
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "Egolap.com Terms of Use - Your Guide to Responsible Shopping",
+  description:
+    "Review the Egolap.com Terms of Use to understand the guidelines and policies for a responsible and secure shopping experience. Know your rights and obligations as an Egolap.com user.",
+  image: "/seo_terms-of-use.jpg",
+
+  twitter: {
+    card: "Responsible shopping starts with understanding our Terms of Use. Explore the Egolap.com guidelines for a secure and enjoyable shopping experience. #Egolap #TermsOfUse #ShopResponsibly",
+    site: "@Egolap1",
+  },
+};
+
 const Page = async () => {
   let getAllWebSettingsPromise = getAllWebSettings();
   let termOfUseParagraphPromise = termOfUseParagraphRequest();

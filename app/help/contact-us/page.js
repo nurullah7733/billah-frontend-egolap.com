@@ -9,6 +9,18 @@ import Paragraph from "./paragraph/paragraph";
 import { Suspense } from "react";
 import ContactForm from "./contactForm/contactForm";
 
+export const metadata = {
+  title: "Contact Egolap.com - We're Here to Assist You!",
+  description:
+    "Need assistance? Reach out to the Egolap.com team. Whether you have questions, feedback, or concerns, we're here to help. Contact us for a prompt and friendly response. Your satisfaction is our priority.",
+  image: "/seo_contact.jpg",
+
+  twitter: {
+    card: "Have a question or need assistance? Reach out to the Egolap.com team! 🤝 Our support team is ready to assist you with any queries. Contact us for a seamless shopping experience. #Egolap #CustomerSupport #ContactUs",
+    site: "@Egolap1",
+  },
+};
+
 const Page = async () => {
   let getAllWebSettingsPromise = getAllWebSettings();
   let contactUsParagraphPromise = contactUsParagraphRequest();

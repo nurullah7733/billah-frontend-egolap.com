@@ -14,6 +14,19 @@ import parse from "html-react-parser";
 import { Suspense } from "react";
 import Paragraph from "./paragraph/paragraph";
 
+export const metadata = {
+  title:
+    "Meet the Egolap.com Team - Dedicated to Enhancing Your Shopping Experience",
+  description:
+    "Get to know the faces behind Egolap.com! Meet our dedicated team working to provide you with an exceptional and enjoyable shopping journey. Discover the people shaping your experience.",
+  image: "/seo_team.jpg",
+
+  twitter: {
+    card: "Behind every great shopping experience is a great team! Meet the faces behind Egolap.com dedicated to enhancing your journey. #Egolap #MeetTheTeam #ShoppingExperience",
+    site: "@Egolap1",
+  },
+};
+
 const Page = async () => {
   let getAllWebSettingsPromise = getAllWebSettings();
   let teamParagraphPromise = teamParagraphRequest();

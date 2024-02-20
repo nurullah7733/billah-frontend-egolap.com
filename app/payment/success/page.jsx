@@ -1,19 +1,12 @@
 "use client";
 import Image from "next/image";
 import { useEffect } from "react";
-import {
-  setUserAddToCartInLocalStorage,
-  setUserTotalProductsPriceInLocalStorage,
-} from "../../../utils/sessionHelper/sessionHelper";
-import store from "../../../redux/store";
-import { setAddToCartProduct } from "../../../redux/features/addToCart/addToCartSlice";
+import { setUserAddToCartInLocalStorage } from "../../../utils/sessionHelper/sessionHelper";
 
 function SuccessPage() {
   useEffect(() => {
     // Order created success then empty user cart from localstorage, useSelector
     setUserAddToCartInLocalStorage([]);
-    // setUserTotalProductsPriceInLocalStorage(0);
-    // store.dispatch(setAddToCartProduct([]));
   }, []);
 
   return (

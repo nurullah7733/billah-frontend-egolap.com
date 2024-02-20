@@ -9,6 +9,18 @@ import {
 } from "../../../APIRequest/webSettings/webSettingsApi";
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "Egolap.com Privacy Policy - Your Data, Your Privacy, Our Commitment",
+  description:
+    "Read the Egolap.com Privacy Policy to learn how we protect your data and prioritize your privacy. Your trust is important to us, and we're committed to safeguarding your personal information.",
+  image: "/seo_privacy.jpg",
+
+  twitter: {
+    card: "Your privacy matters. Read the Egolap.com Privacy Policy to understand how we protect your data. Trust us for a secure shopping experience. #Egolap #PrivacyPolicy #DataProtection",
+    site: "@Egolap1",
+  },
+};
+
 const Page = async () => {
   let getAllWebSettingsPromise = getAllWebSettings();
   let privacyPolicyParagraphPromise = privacyPolicyParagraphRequest();

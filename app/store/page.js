@@ -1,3 +1,4 @@
+import baseUrl from "../../utils/config/baseUrl";
 import { getAllProductsRequest } from "../../APIRequest/products/productsApi";
 import Product from "../../components/common/product/product";
 import createParams from "../../utils/createParams/createParams";
@@ -8,6 +9,22 @@ import Image from "next/image";
 import LoadMore from "@components/common/loadMore/loadMore";
 import { cookies } from "next/headers";
 import LoadMoreQueryProducts from "@components/common/loadMore/loadMoreForQueryProducts";
+
+export async function generateMetadata({ params }) {
+  const products = await fetch(
+    `${baseUrl}/list-product-global/?pageNo=1&perPage=30&searchKeyword=0`
+  ).then((res) => res.json());
+
+  return {
+    title:
+      "Explore the Egolap.com Store - Your Gateway to Diverse and Quality Products",
+    description:
+      "Dive into the Egolap.com Store and discover a treasure trove of diverse and quality products. From fresh fruits to cutting-edge electronics, trendy clothing, and luxurious cosmetics - find everything you need for a smart shopping experience.",
+    openGraph: {
+      images: [...products?.data[0]?.rows[0]?.img[0]?.secure_url],
+    },
+  };
+}
 
 const Store = async ({ searchParams }) => {
   let cookie = cookies();

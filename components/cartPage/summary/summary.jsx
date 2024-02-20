@@ -132,7 +132,7 @@ const Summary = ({
         };
         let result = await paymentRequest(forOnlineBankingData);
         setLoading(false);
-        // window.location.href = result;
+        window.location.href = result;
       }
     }
   };
