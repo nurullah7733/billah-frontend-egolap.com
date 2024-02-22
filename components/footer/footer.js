@@ -69,7 +69,7 @@ const Footer = ({ socialLink }) => {
         <div className="h-[57px] md:h-[125px] py-3 bg-primary-100 dark:bg-gray-600 ">
           <div className="container px-3 mx-auto">
             <div className="flex justify-between md:flex-col md:items-center">
-              <div className="flex items-center gap-x-8 md:flex-col ">
+              <div className="flex items-center justify-between gap-x-8">
                 <div className="flex space-x-2">
                   <Image
                     src="/assets/img/logo/food.png"

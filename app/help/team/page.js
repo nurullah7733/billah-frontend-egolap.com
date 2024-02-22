@@ -31,7 +31,7 @@ const Page = async () => {
   let getAllWebSettingsPromise = getAllWebSettings();
   let teamParagraphPromise = teamParagraphRequest();
   let data = await getAllWebSettingsPromise;
-  console.log(data[0]?.teamImgs);
+
   return (
     <div>
       <HelpPageTopImage

@@ -24,10 +24,7 @@ const CategorySection = () => {
     );
   };
 
-  const handleSubcategoryClick = (subcategory) => {
-    // Handle subcategory click logic
-    console.log("Selected Subcategory:", subcategory);
-  };
+  const handleSubcategoryClick = (subcategory) => {};
 
   return (
     <div className="category-section">

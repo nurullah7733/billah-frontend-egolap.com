@@ -12,7 +12,6 @@ class SessionHelper {
   }
 
   setUserTotalProductsPriceInLocalStorage(value) {
-    console.log(value, "value");
     typeof window !== "undefined"
       ? window.localStorage.setItem("totalProductsPrice", JSON.stringify(value))
       : false;
