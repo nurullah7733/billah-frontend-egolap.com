@@ -99,7 +99,7 @@ const AddToCartSlice = createSlice({
           oldProducts.push(obj);
         }
       });
-      console.log(current(state.products, "slice"));
+
       // addToCart to localStorage
       setUserAddToCartInLocalStorage(state.products);
     },
@@ -108,7 +108,6 @@ const AddToCartSlice = createSlice({
       state.couponDiscount = actions.payload;
     },
     setShippingCost(state, actions) {
-      console.log(actions.payload, "payload");
       state.shippingCost = actions.payload;
     },
     setOtherCost(state, actions) {

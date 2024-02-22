@@ -35,7 +35,7 @@ const Store = async ({ searchParams }) => {
   let { products, total } = await getAllProductsRequest(allQueryParams, pageNo);
 
   return (
-    <div className="px-3 py-8 mx-auto ">
+    <div className="px-3 py-3 mx-auto ">
       <div className="w-full py-1.5 mb-2 bg-white border dark:border-none border-gray-200 rounded-lg shadow px-3 flex justify-between dark:bg-gray-700">
         <DrawerComponents />
         <div className="flex items-center gap-x-2">

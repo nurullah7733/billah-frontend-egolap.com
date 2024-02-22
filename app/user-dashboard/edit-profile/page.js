@@ -18,6 +18,7 @@ import {
 } from "../../../utils/localStorageWithExpire/localStorageWithExpire";
 
 const EditProfile = () => {
+  const [loading, setLoading] = useState(false);
   const windowSize = useWindowSize();
   let [img, setImg] = useState("");
   let [name, setName] = useState("");
@@ -43,6 +44,7 @@ const EditProfile = () => {
     } else if (!IsMobileNumber(mobile)) {
       ErrorToast("Invalid mobile number");
     } else {
+      setLoading(true);
       var fullName = name.split(" ");
       let firstName = fullName[0];
       let lastName = fullName[fullName.length - 1];
@@ -57,6 +59,7 @@ const EditProfile = () => {
         data,
         getItemWithExpiry("userData2")?.id
       );
+      setLoading(false);
       if (result) {
         let pushDataToLocalStorage = {
           firstName,
@@ -132,8 +135,12 @@ const EditProfile = () => {
 
             <button
               type="submit"
-              className="w-full py-2 my-1 text-sm text-center text-white uppercase rounded dark:bg-gray-700 bg-green bg-primary hover:bg-green-dark focus:outline-none"
+              disabled={loading}
+              className={`flex justify-center items-center gap-2 w-full py-2 text-sm font-semibold text-white uppercase bg-primary dark:bg-gray-700 hover:bg-primary-100   disabled:bg-primary-100/75 dark:disabled:bg-gray-700 dark:disabled:text-gray-800/90 `}
             >
+              {loading && (
+                <img src="/assets/icons/spinner.svg" className="w-5 h-5" />
+              )}
               Update
             </button>
           </form>

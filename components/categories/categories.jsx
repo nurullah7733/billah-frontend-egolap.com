@@ -2,13 +2,9 @@
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import Link from "next/link";
 
-import { useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const CategoriesSlider = ({ categories }) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [dropdownIndex, setDropdownIndex] = useState(0);
   const openDropdown = (index) => {
     if (dropdownIndex === index) {
@@ -21,7 +17,7 @@ const CategoriesSlider = ({ categories }) => {
   return (
     <div className="container mx-auto pt-[70px] md:pt-[150px]">
       <div>
-        <div className="flex max-h-[120px] items-center justify-between overflow-x-auto overflow-y-hidden whitespace-nowrap max-w-full header_categories">
+        <div className="flex max-h-[120px] items-center justify-between overflow-x-auto overflow-y-hidden whitespace-nowrap max-w-full header_categories mb-2">
           {categories
             ?.slice(0, Math.min(9, categories?.length))
             ?.map((category, index) => (

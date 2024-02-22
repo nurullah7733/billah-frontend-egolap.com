@@ -10,7 +10,6 @@ import {
   FaTwitter,
   FaYoutube,
   FaWhatsapp,
-  FaWechat,
   FaTiktok,
   FaLinkedin,
 } from "react-icons/fa";
@@ -49,7 +48,6 @@ const Footer = ({ socialLink }) => {
   useEffect(() => {
     (async () => {
       let result = await getShippingAndOtherCost();
-      console.log(result?.data[0]?.otherCost, "fff");
       if (result?.data?.length > 0) {
         store.dispatch(setShippingCost(result?.data[0]?.shippingCost));
         store.dispatch(setOtherCost(result?.data[0]?.otherCost));

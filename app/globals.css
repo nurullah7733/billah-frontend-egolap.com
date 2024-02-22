@@ -82,17 +82,17 @@ select:focus {
 
 /* Sub header Category css */
 
-.header_categories::-webkit-scrollbar {
+/* .header_categories::-webkit-scrollbar {
   width: 0 !important;
-}
+} */
 
-.header_categories::-webkit-scrollbar-thumb {
+/* .header_categories::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
 
 .header_categories::-webkit-scrollbar-track {
   background-color: transparent;
-}
+} */
 
 .category-dropdown-content {
   display: block;
