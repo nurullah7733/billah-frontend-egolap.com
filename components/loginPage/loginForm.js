@@ -44,8 +44,8 @@ const LoginForm = () => {
       let loginData = { email, password };
       let { result, data } = await loginRequest(loginData);
 
+      setLoading(false);
       if (result) {
-        setLoading(false);
         Cookies.set("token2", data?.token);
         // user add to cart in useState from user database.
         store.dispatch(
