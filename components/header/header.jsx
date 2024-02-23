@@ -60,9 +60,13 @@ const Header = ({ token }) => {
   ];
 
   return (
-    <header className="fixed z-10 w-full px-3 bg-primary dark:bg-gray-700 h-[57px] md:h-[130px]">
+    <header
+      className={`fixed z-10 w-full px-3 bg-primary dark:bg-gray-700 ${
+        token !== undefined ? "h-[60px]" : "h-[57px]"
+      }  md:h-[130px]`}
+    >
       <div className="container mx-auto">
-        <div className="pt-[5px] text-white  md:h-[120px]">
+        <div className="!pt-[2px] text-white  md:h-[120px]">
           <div>
             {/* mobile header */}
             <div className="hidden md:block">
@@ -141,10 +145,11 @@ const Header = ({ token }) => {
             </div>
             {/* Desktop header */}
             <div className="block md:hidden">
-              <div className="flex items-center justify-between pt-[3px] ">
+              <div className="flex items-center justify-between pt-[6px] ">
                 <div className="cursor-pointer ">
                   <Link href="/">
                     <Image
+                      className="pt-[1px]"
                       src="/logo.png"
                       alt="egolap logo"
                       width="70"
