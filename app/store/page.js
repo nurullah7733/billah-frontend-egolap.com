@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
     description:
       "Dive into the Egolap.com Store and discover a treasure trove of diverse and quality products. From fresh fruits to cutting-edge electronics, trendy clothing, and luxurious cosmetics - find everything you need for a smart shopping experience.",
     openGraph: {
-      images: [...products?.data[0]?.rows[0]?.img[0]?.secure_url],
+      image: products?.data[0]?.rows[0]?.img[0]?.secure_url,
     },
   };
 }

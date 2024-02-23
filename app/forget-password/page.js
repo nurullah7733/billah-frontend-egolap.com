@@ -8,18 +8,6 @@ import {
 import { setEmail } from "../../utils/sessionHelper/sessionHelper";
 import { VerifyEmailRequest } from "../../APIRequest/user/userApi";
 
-export const metadata = {
-  title: "Forgot Your Password? Reset it Easily with Egolap.com",
-  description:
-    "Reset your Egolap.com password effortlessly. Follow the simple steps to regain access to your account and continue enjoying a secure and personalized shopping experience. Your security matters at Egolap.com!",
-  image: "/seoseo_forget.jpg",
-
-  twitter: {
-    card: "Lost your password? No worries! Easily reset it on Egolap.com and regain access to your account. Your security is our priority. Experience hassle-free shopping with Egolap.com! #Egolap #PasswordReset #SecureShopping",
-    site: "@Egolap1",
-  },
-};
-
 const ForgetPassword = () => {
   const router = useRouter();
   let emailRef = useRef();

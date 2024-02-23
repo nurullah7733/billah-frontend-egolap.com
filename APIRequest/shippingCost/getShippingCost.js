@@ -5,7 +5,6 @@ export const getShippingAndOtherCost = async () => {
 
   const config = {
     method: "GET",
-    credentials: "include",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
