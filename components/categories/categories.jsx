@@ -3,6 +3,7 @@ import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import Link from "next/link";
 
 import { useState } from "react";
+import { Fragment } from "react";
 
 const CategoriesSlider = ({ categories }) => {
   const [dropdownIndex, setDropdownIndex] = useState(0);
@@ -58,31 +59,33 @@ const CategoriesSlider = ({ categories }) => {
                   <Link
                     href={`/store?pageNo=1&perPage=30&searchKeyword=0&category=${category?.name}`}
                   >
-                    <img
-                      src={category?.img[0]?.secure_url}
-                      alt={category?.name}
-                      width="50"
-                      height="50"
-                      className="rounded-sm"
-                    />
-                    <h3 className="relative justify-center text-left flex items-center font-semibold ">
-                      {category?.name}
-                      {category?.subCategory?.length > 0 && (
-                        <>
-                          {dropdownIndex === index + 1 ? (
-                            <RiArrowDropUpLine
-                              size={24}
-                              className="ml-[-4px]"
-                            />
-                          ) : (
-                            <RiArrowDropDownLine
-                              size={24}
-                              className="ml-[-4px]"
-                            />
-                          )}
-                        </>
-                      )}
-                    </h3>
+                    <div className=" flex flex-col items-center justify-center">
+                      <img
+                        src={category?.img[0]?.secure_url}
+                        alt={category?.name}
+                        width="50"
+                        height="50"
+                        className="rounded-sm"
+                      />
+                      <h3 className="relative justify-center text-left flex items-center font-semibold ">
+                        {category?.name}
+                        {category?.subCategory?.length > 0 && (
+                          <>
+                            {dropdownIndex === index + 1 ? (
+                              <RiArrowDropUpLine
+                                size={24}
+                                className="ml-[-4px]"
+                              />
+                            ) : (
+                              <RiArrowDropDownLine
+                                size={24}
+                                className="ml-[-4px]"
+                              />
+                            )}
+                          </>
+                        )}
+                      </h3>
+                    </div>
                   </Link>
                 )}
 

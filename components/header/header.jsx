@@ -77,8 +77,9 @@ const Header = ({ token }) => {
                     <div className="cursor-pointer">
                       <Link href="/">
                         <Image
-                          src="/egolap-logo-for-bkash.png"
-                          alt=""
+                          className="py-3"
+                          src="/logo.png"
+                          alt="egolap logo"
                           width="70"
                           height="70"
                         />
