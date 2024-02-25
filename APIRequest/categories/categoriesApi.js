@@ -1,4 +1,5 @@
 import baseUrl from "../../utils/config/baseUrl";
+import Cookies from "js-cookie";
 import {
   ErrorToast,
   SuccessToast,
@@ -9,6 +10,11 @@ export const getCategoriesRequest = async () => {
   const config = {
     method: "GET",
     credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Cookie: `token2=${Cookies.get("token2")}`,
+    },
   };
   try {
     const res = await fetch(url, config);

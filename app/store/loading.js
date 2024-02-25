@@ -4,7 +4,7 @@ const Loading = () => {
   let category = Array.from(Array(10).keys());
   let subcategory = Array.from(Array(15).keys());
   return (
-    <div className="px-5 py-[33px]">
+    <div className="px-5 py-[30px]">
       <div className="animate-pulse ">
         {/* sortby */}
         <div className="w-full h-[45px] flex items-center justify-between mb-[10px] bg-gray-300 rounded-md px-5">

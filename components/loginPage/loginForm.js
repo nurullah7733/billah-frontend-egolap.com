@@ -43,7 +43,6 @@ const LoginForm = () => {
       setLoading(true);
       let loginData = { email, password };
       let { result, data } = await loginRequest(loginData);
-
       setLoading(false);
       if (result) {
         Cookies.set("token2", data?.token);

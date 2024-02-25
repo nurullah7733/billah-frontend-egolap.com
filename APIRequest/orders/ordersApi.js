@@ -2,6 +2,7 @@ import { setAddToCartProduct } from "../../redux/features/addToCart/addToCartSli
 import store from "../../redux/store";
 import baseUrl from "../../utils/config/baseUrl";
 import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
+import Cookies from "js-cookie";
 import {
   ErrorToast,
   SuccessToast,
@@ -20,6 +21,7 @@ export const createOrder = async (data) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Cookie: `token2=${Cookies.get("token2")}`,
     },
     body: JSON.stringify(data),
   };
@@ -60,6 +62,11 @@ export const runningOrdersRequest = async (pageNo, perPage, searchKeyword) => {
   const config = {
     method: "GET",
     credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Cookie: `token2=${Cookies.get("token2")}`,
+    },
   };
   try {
     const res = await fetch(url, config);
@@ -85,6 +92,11 @@ export const deliveryOrdersRequest = async (pageNo, perPage, searchKeyword) => {
   const config = {
     method: "GET",
     credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Cookie: `token2=${Cookies.get("token2")}`,
+    },
   };
   try {
     const res = await fetch(url, config);
@@ -110,6 +122,11 @@ export const returnOrdersRequest = async (pageNo, perPage, searchKeyword) => {
   const config = {
     method: "GET",
     credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Cookie: `token2=${Cookies.get("token2")}`,
+    },
   };
   try {
     const res = await fetch(url, config);
@@ -135,6 +152,11 @@ export const cancelOrdersRequest = async (pageNo, perPage, searchKeyword) => {
   const config = {
     method: "GET",
     credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Cookie: `token2=${Cookies.get("token2")}`,
+    },
   };
   try {
     const res = await fetch(url, config);
@@ -163,6 +185,7 @@ export const changeOrderStatusRequest = async (id) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Cookie: `token2=${Cookies.get("token2")}`,
     },
     body: JSON.stringify({ orderStatus: "Cancelled" }),
   };

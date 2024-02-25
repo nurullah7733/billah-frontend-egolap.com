@@ -85,6 +85,7 @@ export const userUpdateRequest = async (data, id) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Cookie: `token2=${Cookies.get("token2")}`,
     },
     body: JSON.stringify(data),
   };
@@ -114,6 +115,7 @@ export const logOutRequest = async () => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Cookie: `token2=${Cookies.get("token2")}`,
     },
   };
   try {
@@ -144,6 +146,7 @@ export const userAddToCartOrUpdateRequest = async (id, data) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Cookie: `token2=${Cookies.get("token2")}`,
     },
     body: JSON.stringify({ cart: data }),
   };
@@ -172,6 +175,7 @@ export const userRemoveCartItem = async (id, data) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Cookie: `token2=${Cookies.get("token2")}`,
     },
     body: JSON.stringify(data),
   };
