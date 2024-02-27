@@ -70,10 +70,12 @@ const Summary = ({
       ErrorToast("Invalid alternative mobile number");
     } else if (!IsEmpty(formValue.country)) {
       ErrorToast("Please provide your country");
-    } else if (!IsEmpty(formValue.city)) {
-      ErrorToast("Please provide your city");
-    } else if (!IsEmpty(formValue.thana)) {
-      ErrorToast("Please provide your thana");
+    } else if (!IsEmpty(formValue.division)) {
+      ErrorToast("Division is required");
+    } else if (!IsEmpty(formValue.district)) {
+      ErrorToast("District is required");
+    } else if (!IsEmpty(formValue.upazilla)) {
+      ErrorToast("Upazilla is required");
     } else if (!IsEmpty(formValue.address)) {
       ErrorToast("Please provide your address");
     } else if (!IsEmpty(formValue.paymentMethod)) {
@@ -97,10 +99,10 @@ const Summary = ({
             email: formValue.email,
             mobile: formValue.mobile,
             alternativeMobile: formValue.alternativeMobile,
-            thana: formValue.thana,
-            city: formValue.city,
             country: formValue.country,
-            zipCode: formValue.zipCode,
+            division: formValue.division,
+            district: formValue.district,
+            upazilla: formValue.upazilla,
             address: formValue.address,
           },
         };
@@ -123,10 +125,10 @@ const Summary = ({
             email: formValue.email,
             mobile: formValue.mobile,
             alternativeMobile: formValue.alternativeMobile,
-            thana: formValue.thana,
-            city: formValue.city,
             country: formValue.country,
-            zipCode: formValue.zipCode,
+            division: formValue.division,
+            district: formValue.district,
+            upazilla: formValue.upazilla,
             address: formValue.address,
           },
         };
@@ -158,7 +160,7 @@ const Summary = ({
           </div>
 
           <div className="flex justify-between py-6 text-sm font-semibold uppercase ">
-            {shippingCost > 0 ? (
+            {shippingCost > 0 && formValue.upazilla.length > 0 ? (
               <>
                 <span className="text-sm md:text-[12px] ">SHIPPING COST</span>
                 <span className="md:text-[12px] ">
@@ -171,7 +173,7 @@ const Summary = ({
           </div>
 
           <div className="flex justify-between pb-6 text-sm font-semibold uppercase border-b border-white ">
-            {otherCost > 0 ? (
+            {otherCost > 0 && formValue.upazilla.length > 0 ? (
               <>
                 <span className="text-sm md:text-[12px] ">OTHER COST</span>
                 <span className="md:text-[12px] ">

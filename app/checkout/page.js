@@ -1,6 +1,6 @@
 "use client";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import numberWithCommas from "../../utils/numberWithComma/numberWithComma";
+import React, { useEffect, useState } from "react";
 import Drawer from "react-modern-drawer";
 import Summary from "@components/cartPage/summary/summary";
 import { CgList } from "react-icons/cg";
@@ -16,13 +16,29 @@ import {
   IsMobileNumber,
 } from "../../utils/formValidation/formValidation";
 import { createOrder } from "../../APIRequest/orders/ordersApi";
+import {
+  getDistrictsAndUpazilasRequest,
+  getDivisionsRequest,
+} from "../../APIRequest/bd/bdApi";
+import {
+  setOtherCost,
+  setShippingCost,
+} from "../../redux/features/addToCart/addToCartSlice";
 
 const Checkout = () => {
   const [loading, setLoading] = useState(false);
+  const [divisions, setDivisions] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [upazillas, setUpazillas] = useState([]);
 
   const formValue = useSelector(
     (state) => state.userShippingAddressForm.formValue
   );
+
+  const applicationAllSettings = useSelector(
+    (state) => state.applicationAllSettings.applicationAllSettings
+  );
+
   const {
     products,
     totalProductsPrice,
@@ -31,7 +47,6 @@ const Checkout = () => {
     couponDiscount,
   } = useSelector((state) => state.addToCartProducts);
 
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
@@ -56,10 +71,12 @@ const Checkout = () => {
       ErrorToast("Invalid alternative mobile number");
     } else if (!IsEmpty(formValue.country)) {
       ErrorToast("Please provide your country");
-    } else if (!IsEmpty(formValue.city)) {
-      ErrorToast("Please provide your city");
-    } else if (!IsEmpty(formValue.thana)) {
-      ErrorToast("Please provide your thana");
+    } else if (!IsEmpty(formValue.division)) {
+      ErrorToast("Division is required");
+    } else if (!IsEmpty(formValue.district)) {
+      ErrorToast("District is required");
+    } else if (!IsEmpty(formValue.upazilla)) {
+      ErrorToast("Upazilla is required");
     } else if (!IsEmpty(formValue.address)) {
       ErrorToast("Please provide your address");
     } else if (!IsEmpty(formValue.paymentMethod)) {
@@ -83,10 +100,10 @@ const Checkout = () => {
             email: formValue.email,
             mobile: formValue.mobile,
             alternativeMobile: formValue.alternativeMobile,
-            thana: formValue.thana,
-            city: formValue.city,
             country: formValue.country,
-            zipCode: formValue.zipCode,
+            division: formValue.division,
+            district: formValue.district,
+            upazilla: formValue.upazilla,
             address: formValue.address,
           },
         };
@@ -109,10 +126,10 @@ const Checkout = () => {
             email: formValue.email,
             mobile: formValue.mobile,
             alternativeMobile: formValue.alternativeMobile,
-            thana: formValue.thana,
-            city: formValue.city,
             country: formValue.country,
-            zipCode: formValue.zipCode,
+            division: formValue.division,
+            district: formValue.district,
+            upazilla: formValue.upazilla,
             address: formValue.address,
           },
         };
@@ -122,6 +139,101 @@ const Checkout = () => {
       }
     }
   };
+
+  const divisionChangeHandler = (e) => {
+    store.dispatch(
+      setShippingAddressFormValue({
+        Name: "division",
+        Value: e.target.value,
+      })
+    );
+    // when user division change then rest the district and upazillas but district auto reset
+    store.dispatch(
+      setShippingAddressFormValue({
+        Name: "upazilla",
+        Value: "",
+      })
+    );
+    if (formValue.division !== "Select Division") {
+      (async () => {
+        let data = await getDistrictsAndUpazilasRequest(e.target.value);
+        setDistricts(data.data);
+        setUpazillas([]);
+      })();
+    }
+  };
+
+  const districtsChangeHandler = (e) => {
+    store.dispatch(
+      setShippingAddressFormValue({
+        Name: "district",
+        Value: e.target.value,
+      })
+    );
+    if (formValue.district !== "Select District") {
+      let upazilla = districts?.find(
+        (value) => value?.district === e.target.value
+      );
+      setUpazillas(upazilla?.upazilla);
+    }
+  };
+
+  const upazillasChangeHandler = (e) => {
+    store.dispatch(
+      setShippingAddressFormValue({
+        Name: "upazilla",
+        Value: e.target.value,
+      })
+    );
+    // add shipping cost and other cost when user select upazilla
+    if (e.target.value !== "Select Upazilla") {
+      if (e.target.value === "Thakurgaon Sadar") {
+        store.dispatch(
+          setShippingCost(
+            applicationAllSettings[0]?.shippingCostThakurgaonSadar
+          )
+        );
+        store.dispatch(
+          setOtherCost(applicationAllSettings[0]?.otherCostThakurgaonSadar)
+        );
+      } else if (
+        e.target.value === "Haripur" ||
+        e.target.value === "Ranisankail" ||
+        e.target.value === "Baliadangi" ||
+        e.target.value === "Pirganj"
+      ) {
+        store.dispatch(
+          setShippingCost(applicationAllSettings[0]?.shippingCostThakurgaon)
+        );
+        store.dispatch(
+          setOtherCost(applicationAllSettings[0]?.otherCostThakurgaon)
+        );
+      } else if (
+        e.target.value === "Dohar" ||
+        e.target.value === "Savar" ||
+        e.target.value === "Nawabganj" ||
+        e.target.value === "Dhamrai" ||
+        e.target.value === "Keraniganj"
+      ) {
+        store.dispatch(
+          setShippingCost(applicationAllSettings[0]?.shippingCostDhaka)
+        );
+        store.dispatch(setOtherCost(applicationAllSettings[0]?.otherCostDhaka));
+      } else {
+        store.dispatch(
+          setShippingCost(applicationAllSettings[0]?.shippingCost)
+        );
+        store.dispatch(setOtherCost(applicationAllSettings[0]?.otherCost));
+      }
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      let division = await getDivisionsRequest();
+      setDivisions(division.data);
+    })();
+  }, []);
 
   return (
     <div className="px-4 py-8">
@@ -277,88 +389,85 @@ const Checkout = () => {
                         </select>
                       </div>
                     </div>
-                    {/* city */}
-                    <div className="w-full mb-2">
+                    {/* Division */}
+                    <div className="w-full mb-2 ">
                       <label
-                        htmlFor="city"
+                        htmlFor="division"
                         className="block text-sm font-medium leading-6 text-black dark:text-white"
                       >
-                        City <span className="text-red-600">*</span>
+                        Division <span className="text-red-600">*</span>
                       </label>
                       <div className="mt-2">
-                        <input
-                          onChange={(e) =>
-                            store.dispatch(
-                              setShippingAddressFormValue({
-                                Name: "city",
-                                Value: e.target.value,
-                              })
-                            )
-                          }
-                          value={formValue?.city}
-                          type="text"
-                          name="city"
-                          id="city"
-                          autoComplete="address-level2"
+                        <select
+                          onChange={divisionChangeHandler}
+                          value={formValue?.division}
+                          id="division"
+                          name="division"
+                          autoComplete="division-name"
                           className="block w-full rounded-md border-0 ring-1 ring-gray-300 outline-none p-1.5   placeholder:text-gray-400 text-black dark:text-white placeholder:text-sm"
-                        />
+                        >
+                          <option value="">Select Division</option>
+                          {divisions?.map((division, index) => (
+                            <option key={index} value={division?.division}>
+                              {division?.division}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                     </div>
                   </div>
 
                   <div className="flex gap-3 md:flex-col">
-                    {/* Thana */}
-                    <div className="w-full mb-2">
+                    {/* District */}
+                    <div className="w-full mb-2 ">
                       <label
-                        htmlFor="thana"
+                        htmlFor="district"
                         className="block text-sm font-medium leading-6 text-black dark:text-white"
                       >
-                        Thana <span className="text-red-600">*</span>
+                        District <span className="text-red-600">*</span>
                       </label>
                       <div className="mt-2">
-                        <input
-                          onChange={(e) =>
-                            store.dispatch(
-                              setShippingAddressFormValue({
-                                Name: "thana",
-                                Value: e.target.value,
-                              })
-                            )
-                          }
-                          value={formValue?.thana}
-                          type="text"
-                          name="thana"
-                          id="thana"
-                          autoComplete="area"
+                        <select
+                          onChange={districtsChangeHandler}
+                          value={formValue?.district}
+                          id="district"
+                          name="district"
+                          autoComplete="district-name"
                           className="block w-full rounded-md border-0 ring-1 ring-gray-300 outline-none p-1.5   placeholder:text-gray-400 text-black dark:text-white placeholder:text-sm"
-                        />
+                        >
+                          <option value="">Select District</option>
+                          {districts?.map((district, index) => (
+                            <option key={index} value={district?.district}>
+                              {district?.district}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                     </div>
-                    {/* zip code */}
-                    <div className="w-full mb-2">
+                    {/* Thana */}
+                    <div className="w-full mb-2 ">
                       <label
-                        htmlFor="postal-code"
+                        htmlFor="Upazilla"
                         className="block text-sm font-medium leading-6 text-black dark:text-white"
                       >
-                        ZIP / Postal code
+                        Upazilla <span className="text-red-600">*</span>
                       </label>
                       <div className="mt-2">
-                        <input
-                          onChange={(e) =>
-                            store.dispatch(
-                              setShippingAddressFormValue({
-                                Name: "zipCode",
-                                Value: e.target.value,
-                              })
-                            )
-                          }
-                          value={formValue?.zipCode}
-                          type="text"
-                          name="postal-code"
-                          id="postal-code"
-                          autoComplete="postal-code"
+                        <select
+                          onChange={upazillasChangeHandler}
+                          value={formValue?.upazilla}
+                          id="Upazilla"
+                          name="Upazilla"
+                          autoComplete="Upazilla-name"
                           className="block w-full rounded-md border-0 ring-1 ring-gray-300 outline-none p-1.5   placeholder:text-gray-400 text-black dark:text-white placeholder:text-sm"
-                        />
+                        >
+                          <option value="">Select Upazilla</option>
+                          {upazillas?.map((upazilla, index) => (
+                            <option key={index} value={upazilla}>
+                              {upazilla}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -392,7 +501,13 @@ const Checkout = () => {
                   {/* Payable Total */}
                   <div className="hidden p-4 -mx-4 bg-gray-200 dark:bg-gray-500 mt-9 md:block">
                     <h2 className="mb-1 text-2xl font-semibold md:text-xl">
-                      Payable Total: {totalProductsPrice} Tk.
+                      Payable Total:{" "}
+                      {numberWithCommas(
+                        totalProductsPrice +
+                          Number(shippingCost) +
+                          Number(otherCost)
+                      )}{" "}
+                      Tk.
                     </h2>
                     <div
                       className="flex items-center underline dark:decoration-gray-200 text-primary"

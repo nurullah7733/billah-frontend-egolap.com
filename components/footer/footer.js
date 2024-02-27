@@ -19,13 +19,12 @@ import {
   getUserAddToCartInLocalStorage,
 } from "../../utils/sessionHelper/sessionHelper";
 import store from "../../redux/store";
+import { setAddToCartProductFromLocalStorage } from "../../redux/features/addToCart/addToCartSlice";
+import { setApplicationAllSettings } from "../../redux/features/applicationAllSettings/applicationAllSettingsSlice";
 import {
-  setAddToCartProductFromLocalStorage,
-  setOtherCost,
-  setShippingCost,
-} from "../../redux/features/addToCart/addToCartSlice";
-import { getShippingAndOtherCost } from "../../APIRequest/shippingCost/getShippingCost";
-import { aboutUsFooterParagraphRequest } from "../../APIRequest/webSettings/webSettingsApi";
+  aboutUsFooterParagraphRequest,
+  getAllWebSettings,
+} from "../../APIRequest/webSettings/webSettingsApi";
 
 const Footer = ({ socialLink }) => {
   let [footerPara, setFooterPara] = React.useState([]);
@@ -47,10 +46,9 @@ const Footer = ({ socialLink }) => {
 
   useEffect(() => {
     (async () => {
-      let result = await getShippingAndOtherCost();
-      if (result?.data?.length > 0) {
-        store.dispatch(setShippingCost(result?.data[0]?.shippingCost));
-        store.dispatch(setOtherCost(result?.data[0]?.otherCost));
+      let result = await getAllWebSettings();
+      if (result.length > 0) {
+        store.dispatch(setApplicationAllSettings(result));
       }
     })();
   }, []);
