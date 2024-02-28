@@ -6,7 +6,7 @@ const RelatedProducts = async ({ subcategory }) => {
   const data = await getRelatedProductsRequest(subcategory);
 
   return (
-    <div className="container mx-auto py-14">
+    <div className="container mx-auto pt-0 pb-2">
       <div className="py-5 px-3 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-white dark:bg-gray-700">
         <div>
           <h1 className="pb-5 text-4xl font-semibold text-center capitalize text-primary">

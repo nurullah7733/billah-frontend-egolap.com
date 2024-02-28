@@ -34,14 +34,20 @@ const ProductDetails = async ({ params }) => {
 
   return (
     <div className="container px-4 mx-auto py-14 md:py-8">
-      <div className="flex gap-5 py-4   lg:flex-col">
-        <ImgSliderAndZoom images={product?.img} token={token} />
+      <div className="flex gap-5    lg:flex-col  lg:pb-0 2xl:pb-44 pb-[180px] ">
+        <ImgSliderAndZoom
+          product={product}
+          images={product?.img}
+          token={token}
+        />
         <ProductInfo product={product} />
       </div>
-      <ProductDescription
-        product={product}
-        productPrivacyPolicy={productPrivacyPolicy}
-      />
+      <div className="">
+        <ProductDescription
+          product={product}
+          productPrivacyPolicy={productPrivacyPolicy}
+        />
+      </div>
       <RelatedProducts subcategory={product?.subCategory[0]?.name} />
     </div>
   );

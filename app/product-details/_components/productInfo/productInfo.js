@@ -15,7 +15,7 @@ const ProductInfo = ({ product }) => {
   }
   return (
     <div>
-      <div className="md:pt-0 lg:pt-24">
+      <div className="md:pt-0 lg:mt-[350px]">
         {/* title */}
         <h1 className="text-3xl font-semibold md:text-xl ">{product?.name}</h1>
         {/* rattings */}
@@ -39,11 +39,14 @@ const ProductInfo = ({ product }) => {
         </div>
 
         {/* description */}
-        <div className="mt-3">
-          <p className="text-base md:text-[15px]">
-            {product?.shortDescription}
-          </p>
-        </div>
+        {product?.shortDescription?.length > 0 && (
+          <div className="mt-3">
+            <p className="text-base md:text-[15px]">
+              {product?.shortDescription}
+            </p>
+          </div>
+        )}
+
         {/* sub description */}
         <div className="mt-3">
           {product?.color?.length > 0 ? (

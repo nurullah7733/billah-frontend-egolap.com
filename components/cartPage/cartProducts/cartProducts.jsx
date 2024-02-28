@@ -110,7 +110,7 @@ const CartProducts = ({ items, products }) => {
                       </div>
 
                       <div className="w-1/3 sm:pl-6 md:pl-[70px] flex items-center  ">
-                        <p>৳</p>
+                        <p className="pl-3">৳</p>
                         <span className="text-sm font-semibold text-center ">
                           {item?.finalPrice}
                         </span>

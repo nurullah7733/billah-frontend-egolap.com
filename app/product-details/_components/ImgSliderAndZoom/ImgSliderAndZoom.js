@@ -2,19 +2,35 @@
 import { useState, useRef, useEffect } from "react";
 import Images from "next/image";
 import ReactImageMagnify from "react-image-magnify";
+import {
+  Magnifier,
+  GlassMagnifier,
+  SideBySideMagnifier,
+  PictureInPictureMagnifier,
+  MOUSE_ACTIVATION,
+  TOUCH_ACTIVATION,
+} from "react-image-magnifiers";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import { getItemWithExpiry } from "../../../../utils/localStorageWithExpire/localStorageWithExpire";
 import { userAddToCartOrUpdateRequest } from "../../../../APIRequest/user/userApi";
 import { useSelector } from "react-redux";
 
-const ImgSliderAndZoom = ({ images, token }) => {
+const ImgSliderAndZoom = ({ product, images, token }) => {
   let addToCartProducts = useSelector(
     (state) => state.addToCartProducts.products
   );
   const [img, setImg] = useState(images[0].secure_url);
 
   const refs = useRef([]);
+
+  const srcSet = () => {
+    return images
+      .map((image) => {
+        return `${imageBaseUrl}${image.name} ${image.vw}`;
+      })
+      .join(", ");
+  };
 
   const hoverHandler = (image, i) => {
     setImg(image);
@@ -48,7 +64,6 @@ const ImgSliderAndZoom = ({ images, token }) => {
   return (
     <div>
       {/* slider for mobile */}
-
       <div className="max-w-[768px] mx-auto md:block hidden">
         <Carousel
           showArrows={true}
@@ -81,7 +96,7 @@ const ImgSliderAndZoom = ({ images, token }) => {
             >
               <Images
                 src={image?.secure_url}
-                alt=""
+                alt={product?.name}
                 width={300}
                 height={400}
                 className="!rounded-lg"
@@ -89,8 +104,8 @@ const ImgSliderAndZoom = ({ images, token }) => {
             </div>
           ))}
         </div>
-        <div className="left_2">
-          <ReactImageMagnify
+        <div className="left_2 ">
+          {/* <ReactImageMagnify
             {...{
               smallImage: {
                 alt: "Wristwatch by Ted Baker London",
@@ -98,11 +113,19 @@ const ImgSliderAndZoom = ({ images, token }) => {
                 src: img,
               },
               largeImage: {
-                src: img,
-                width: 1200,
-                height: 1400,
+                src: "/y9qao3n63ihrgcncm4ri.jpg",
+                width: "1500",
+                height: "1500",
               },
+              isHintEnabled: true,
             }}
+          /> */}
+          <Images
+            src={img}
+            alt=""
+            width={600}
+            height={600}
+            className="!rounded-sm"
           />
         </div>
       </div>

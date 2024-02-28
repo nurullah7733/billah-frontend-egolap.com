@@ -257,16 +257,10 @@ select:focus {
   border-radius: 10px;
 }
 
-.left_2 img {
-  width: 500px;
-  height: 100%;
-  /* object-fit: contain; */
-}
 .left_2 {
-  width: 400px;
-  height: 400px;
-  /* object-fit: contain; */
+  margin-bottom: 30px !important;
 }
+
 .product_zoom_active {
   /* border: 2px solid #e77600; */
   box-shadow: rgba(255, 0, 127, 0.16) 0px 1px 4px,

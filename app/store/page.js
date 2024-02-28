@@ -35,7 +35,7 @@ const Store = async ({ searchParams }) => {
   let { products, total } = await getAllProductsRequest(allQueryParams, pageNo);
 
   return (
-    <div className="px-3 py-3 mx-auto ">
+    <div className="px-3 py-3 mx-auto container">
       <div className="w-full py-1.5 mb-2 bg-white border dark:border-none border-gray-200 rounded-lg shadow px-3 flex justify-between dark:bg-gray-700">
         <DrawerComponents />
         <div className="flex items-center gap-x-2">
@@ -60,7 +60,7 @@ const Store = async ({ searchParams }) => {
                 height={300}
               />
               <h1 className="px-5 md:text-base text-2xl  bg-primary max-w-lg rounded-md text-white dark:bg-gray-800">
-                Sorry, we coundn't find any result
+                Sorry, we couldn't find any result
               </h1>
             </center>
           </div>

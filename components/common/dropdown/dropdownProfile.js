@@ -78,6 +78,7 @@ const ProfileDropdown = ({ dropdownMenus, token }) => {
               <div key={index}>
                 <Link
                   href={option.link}
+                  onClick={() => setIsOpen(false)}
                   className="block w-full px-3 text-left hover:bg-gray-100 dark:hover:bg-gray-500"
                 >
                   {option.menuName}
