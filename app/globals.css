@@ -101,14 +101,15 @@ select:focus {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   padding: 12px 16px;
   position: absolute;
-  top: 79px;
-  left: -29px;
+  /* top: 79px;
+  left: -29px; */
   z-index: 99999;
 }
 
 .category-dropdown:hover .category-dropdown-content {
   display: block;
 }
+
 .position-inherit {
   position: inherit !important;
 }

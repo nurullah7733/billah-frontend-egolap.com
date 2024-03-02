@@ -2,14 +2,6 @@
 import { useState, useRef, useEffect } from "react";
 import Images from "next/image";
 import ReactImageMagnify from "react-image-magnify";
-import {
-  Magnifier,
-  GlassMagnifier,
-  SideBySideMagnifier,
-  PictureInPictureMagnifier,
-  MOUSE_ACTIVATION,
-  TOUCH_ACTIVATION,
-} from "react-image-magnifiers";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import { getItemWithExpiry } from "../../../../utils/localStorageWithExpire/localStorageWithExpire";
