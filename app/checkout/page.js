@@ -85,16 +85,30 @@ const Checkout = () => {
       ErrorToast("Please agree the term & conditions");
     } else {
       setLoading(true);
+      let simplifiedProducts = products.map(
+        ({
+          _id,
+          finalPrice,
+          customerChoiceProductQuantity,
+          customerChoiceProductSize,
+        }) => ({
+          productId: _id,
+          finalPrice,
+          total: finalPrice * customerChoiceProductQuantity,
+          customerChoiceProductQuantity,
+          customerChoiceProductSize,
+        })
+      );
       if (formValue.paymentMethod === "cashOnDelivery") {
         let userAllInfo = {
-          allProducts: products,
+          allProducts: simplifiedProducts,
           "paymentIntent.paymentMethod": formValue.paymentMethod,
           amount: formValue.totalProductsPrice,
           voucherDiscount: couponDiscount,
           otherCost: otherCost,
-          subTotal: totalProductsPrice - shippingCost,
+          subTotal: totalProductsPrice,
           shippingCost: shippingCost,
-          grandTotal: totalProductsPrice,
+          grandTotal: totalProductsPrice + shippingCost + otherCost,
           shippingAddress: {
             name: formValue.name,
             email: formValue.email,
@@ -113,14 +127,14 @@ const Checkout = () => {
         setLoading(true);
         let userAllInfoAndPaymentData = {
           userId: userId,
-          allProducts: products,
+          allProducts: simplifiedProducts,
           "paymentIntent.paymentMethod": formValue.paymentMethod,
           amount: formValue.totalProductsPrice,
           voucherDiscount: couponDiscount,
           otherCost: otherCost,
-          subTotal: totalProductsPrice - shippingCost,
+          subTotal: totalProductsPrice,
           shippingCost: shippingCost,
-          grandTotal: totalProductsPrice,
+          grandTotal: totalProductsPrice + shippingCost + otherCost,
           shippingAddress: {
             name: formValue.name,
             email: formValue.email,

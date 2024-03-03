@@ -1,5 +1,3 @@
-import { setAddToCartProduct } from "../../redux/features/addToCart/addToCartSlice";
-import store from "../../redux/store";
 import baseUrl from "../../utils/config/baseUrl";
 import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
 import Cookies from "js-cookie";
@@ -40,8 +38,6 @@ export const createOrder = async (data) => {
 
         // Order created success then empty user cart from localstorage, useSelector
         setUserAddToCartInLocalStorage([]);
-        // setUserTotalProductsPriceInLocalStorage(0);
-        // store.dispatch(setAddToCartProduct([]));
       }
       window.location.href = "/";
       SuccessToast(

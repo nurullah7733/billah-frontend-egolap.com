@@ -70,10 +70,14 @@ const AddToCartSlice = createSlice({
         if (!isNaN(productPrice) && !isNaN(productQuantity)) {
           let totalPrice = total + productPrice * productQuantity;
           let afterDiscount =
-            totalPrice - (totalPrice * state.couponDiscount) / 100;
+            totalPrice - (state.couponDiscount / 100) * totalPrice;
+          console.log(afterDiscount, "afterDiscount");
+
           let addShippingAndOtherCost =
             afterDiscount + state.shippingCost + state.otherCost;
-          return (state.totalProductsPrice = addShippingAndOtherCost);
+          return (state.totalProductsPrice = Math.ceil(
+            addShippingAndOtherCost
+          ));
         }
 
         return totalPrice;
