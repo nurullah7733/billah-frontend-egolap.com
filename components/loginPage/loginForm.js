@@ -45,7 +45,9 @@ const LoginForm = () => {
       let { result, data } = await loginRequest(loginData);
       setLoading(false);
       if (result) {
-        Cookies.set("token2", data?.token);
+        if (process.env.NODE_ENV === "development") {
+          Cookies.set("token2", data?.token, { expires: 30 });
+        }
         // user add to cart in useState from user database.
         store.dispatch(
           setAddToCartProductFromUserDatabaseAfterLogin(data?.data?.cart)
