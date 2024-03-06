@@ -7,6 +7,7 @@ import { FaUserEdit } from "react-icons/fa";
 import { GiReturnArrow } from "react-icons/gi";
 import { MdCancelScheduleSend } from "react-icons/md";
 import { BsFillCartCheckFill } from "react-icons/bs";
+import { TbTruckDelivery } from "react-icons/tb";
 import Link from "next/link";
 import useWindowSize from "../../utils/windowResize/useWindowResize";
 import { getUserData } from "../../utils/sessionHelper/sessionHelper";
@@ -39,7 +40,11 @@ const Layout = ({ children }) => {
             <ClientOnly>
               <div>
                 <img
-                  src={getItemWithExpiry("userData2")?.photo}
+                  src={
+                    getItemWithExpiry("userData2")?.photo?.length > 0
+                      ? getItemWithExpiry("userData2")?.photo[0]?.secure_url
+                      : null
+                  }
                   className={`cursor-pointer duration-500  rounded-[50%] w-14 h-14 ${
                     !open && "hidden"
                   }`}
@@ -51,7 +56,11 @@ const Layout = ({ children }) => {
               alt="user"
               width={56}
               height={56}
-              src={getItemWithExpiry("userData2")?.photo}
+              src={
+                getItemWithExpiry("userData2")?.photo?.length > 0
+                  ? getItemWithExpiry("userData2")?.photo[0]?.secure_url
+                  : null
+              }
               className={`cursor-pointer duration-500  rounded-[50%] w-14 h-14 `}
             />
           )}
@@ -101,7 +110,7 @@ const Layout = ({ children }) => {
             className={`flex rounded-md p-2 cursor-pointer  hover:bg-primary-100 dark:hover:bg-gray-800 text-white text-md items-center gap-x-4`}
           >
             <Link href="/user-dashboard/orders/running-orders">
-              <BsFillCartCheckFill size={20} />
+              <TbTruckDelivery size={20} />
             </Link>
             <NavLink
               href="/user-dashboard/orders/running-orders"

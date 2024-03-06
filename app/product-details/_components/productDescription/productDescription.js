@@ -1,7 +1,7 @@
 import ClickToAnotherTabHandle from "./_component/clickToAnotherTabHandle";
 import EachTabContentHeader from "./_component/eachtabHeader";
 
-const ProductDescription = ({ product, productPrivacyPolicy }) => {
+const ProductDescription = ({ token, product, productPrivacyPolicy }) => {
   return (
     <>
       <div className="flex flex-wrap py-14">
@@ -16,6 +16,7 @@ const ProductDescription = ({ product, productPrivacyPolicy }) => {
             <div className="flex-auto px-4 py-5">
               <div className="tab-content tab-space">
                 <EachTabContentHeader
+                  token={token}
                   product={product}
                   productPrivacyPolicy={productPrivacyPolicy}
                 />

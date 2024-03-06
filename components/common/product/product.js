@@ -20,7 +20,7 @@ const Product = ({ product }) => {
       <div className="p-2">
         <Link href={`/product-details/${product?._id}`}>
           <h1 className="mb-2 h-8 text-sm font-bold tracking-tight cursor-pointer dark:text-white">
-            {product?.name.length > 30
+            {product?.name.length > 40
               ? product?.name.substring(0, 40) + "..."
               : product?.name}
           </h1>
@@ -31,7 +31,7 @@ const Product = ({ product }) => {
           <p className="text-gray-700 dark:text-gray-400">each</p>
         )}
 
-        <RatingReadOnly ratting={product?.totalRatting} />
+        <RatingReadOnly ratting={product?.totalRating} />
         <p className="mb-1 text-base font-normal text-gray-700 dark:text-gray-400 ">
           ৳{product?.finalPrice}
           <span className="mx-1 text-gray-400 line-through dark:text-gray-500 text-[14px]">

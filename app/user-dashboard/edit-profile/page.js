@@ -24,6 +24,7 @@ const EditProfile = () => {
   let [name, setName] = useState("");
   let [mobile, setMobile] = useState("");
   let [email, setEmail] = useState("");
+  let [inputImg, setInputImg] = useState("");
 
   const handleImg = async (e) => {
     if (!e.target.files[0].type.includes("image/")) {
@@ -32,10 +33,12 @@ const EditProfile = () => {
       ErrorToast("Image size up to 600kb ");
     } else {
       let base64files = await getBase64(e.target.files[0]);
+      setInputImg(e.target.files[0]);
       setImg(base64files);
     }
   };
   const handleSubmit = async (e) => {
+    console.log(inputImg, "inputImg");
     e.preventDefault();
     if (!IsEmpty(name)) {
       ErrorToast("Name is required");
@@ -49,24 +52,26 @@ const EditProfile = () => {
       let firstName = fullName[0];
       let lastName = fullName[fullName.length - 1];
 
-      let data = {
-        firstName: firstName,
-        lastName: lastName,
-        mobile: mobile,
-        photo: img,
-      };
+      var formdata = new FormData();
+      formdata.append("images", inputImg);
+      formdata.append("firstName", firstName);
+      formdata.append("lastName", lastName);
+      formdata.append("mobile", mobile);
+
       let result = await userUpdateRequest(
-        data,
+        formdata,
         getItemWithExpiry("userData2")?.id
       );
       setLoading(false);
+      console.log(result, "data");
+      alert(JSON.stringify(result));
       if (result) {
         let pushDataToLocalStorage = {
-          firstName,
-          lastName,
-          email,
-          mobile,
-          photo: img,
+          firstName: result?.firstName,
+          lastName: result?.lastName,
+          email: result?.email,
+          mobile: result?.mobile,
+          photo: result?.photo,
           id: getItemWithExpiry("userData2")?.id,
         };
         setItemWithExpiry("userData2", pushDataToLocalStorage, 2592000);
@@ -76,7 +81,7 @@ const EditProfile = () => {
   };
 
   useEffect(() => {
-    setImg(getItemWithExpiry("userData2")?.photo);
+    setImg(getItemWithExpiry("userData2")?.photo[0]?.secure_url);
     setName(
       getItemWithExpiry("userData2")?.firstName +
         " " +

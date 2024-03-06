@@ -61,7 +61,7 @@ const AddToCartSlice = createSlice({
     },
 
     setTotalProductsPrice(state) {
-      state.products.reduce((total, product) => {
+      const totalProductsPrice = state.products.reduce((total, product) => {
         let productPrice = parseFloat(product.finalPrice);
         let productQuantity = parseInt(
           product.customerChoiceProductQuantity,
@@ -71,18 +71,16 @@ const AddToCartSlice = createSlice({
           let totalPrice = total + productPrice * productQuantity;
           let afterDiscount =
             totalPrice - (state.couponDiscount / 100) * totalPrice;
-          console.log(afterDiscount, "afterDiscount");
 
           let addShippingAndOtherCost =
             afterDiscount + state.shippingCost + state.otherCost;
-          return (state.totalProductsPrice = Math.ceil(
-            addShippingAndOtherCost
-          ));
+          return addShippingAndOtherCost;
         }
 
-        return totalPrice;
+        return total;
       }, 0);
       state.products.length === 0 && (state.totalProductsPrice = 0);
+      state.totalProductsPrice = Math.ceil(totalProductsPrice);
       setUserTotalProductsPriceInLocalStorage(state.totalProductsPrice);
     },
 

@@ -14,7 +14,7 @@ import { cookies } from "next/headers";
 
 export default async function Home() {
   let cookie = cookies();
-  let token = cookie.get("token2")?.value;
+  let token = cookie.get("token2")?.value || cookie.get("token")?.value;
 
   const getAllWebSettingsData = await getAllWebSettings();
 

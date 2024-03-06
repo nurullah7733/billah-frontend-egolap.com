@@ -1,12 +1,12 @@
 import StarInfo from "./starInfo";
 import WriteReview from "./_components/writeReview/writeReview";
 
-const TabContentTwo = ({ product }) => {
+const TabContentTwo = ({ token, product }) => {
   return (
     <div>
       <div>
         <div className="">
-          <WriteReview product={product} />
+          <WriteReview token={token} product={product} />
           <hr className="py-5 mt-5" />
         </div>
         {product?.ratings?.length > 0 ? (
@@ -15,7 +15,11 @@ const TabContentTwo = ({ product }) => {
               <div className="mb-7" key={index}>
                 <div className="flex items-center gap-x-2">
                   <img
-                    src={rating?.photo}
+                    src={
+                      rating?.photo?.length > 0
+                        ? rating?.photo[0]?.secure_url
+                        : null
+                    }
                     alt=""
                     width="35"
                     height="35"

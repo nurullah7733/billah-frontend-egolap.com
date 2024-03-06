@@ -50,7 +50,11 @@ const ProfileDropdown = ({ dropdownMenus, token }) => {
 
         <div className="w-10">
           <img
-            src={getItemWithExpiry("userData2")?.photo}
+            src={
+              getItemWithExpiry("userData2")?.photo?.length > 0
+                ? getItemWithExpiry("userData2")?.photo[0]?.secure_url
+                : null
+            }
             alt={getItemWithExpiry("userData2")?.firstName}
             className="w-12 h-10 rounded-full cursor-pointer"
           />
@@ -91,7 +95,9 @@ const ProfileDropdown = ({ dropdownMenus, token }) => {
             <div className="px-4 py-2">
               <a
                 className="block w-full px-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-500"
-                onClick={handleClick}
+                onClick={() => {
+                  handleClick(), setIsOpen(false);
+                }}
               >
                 Log out
               </a>

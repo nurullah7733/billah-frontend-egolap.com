@@ -78,23 +78,23 @@ export const registrationRequest = async (data) => {
 };
 
 export const userUpdateRequest = async (data, id) => {
+  console.log(data, "api");
   let url = `${baseUrl}/user-udpate-by-user/${id}`;
   const config = {
     method: "POST",
     credentials: "include",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json",
       Cookie: `token2=${Cookies.get("token2")}`,
     },
-    body: JSON.stringify(data),
+    body: data,
   };
   try {
     const res = await fetch(url, config);
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
-      // SuccessToast("User update success!"); here not use toast for coupon code use this api
-      return true;
+      console.log(data, "data");
+      return data?.data;
     } else if (data.status === "fail" && data?.data?.keyPattern?.mobile === 1) {
       ErrorToast("Mobile number already exits.");
     } else {

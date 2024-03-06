@@ -2,7 +2,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { returnOrdersRequest } from "../../../../APIRequest/orders/ordersApi";
-import OrderStatusBar from "../_components/orderStatusBar";
+import Link from "next/link";
+import moment from "moment";
 
 export default function ReturnOrders() {
   const [data, setData] = useState([]);
@@ -23,80 +24,149 @@ export default function ReturnOrders() {
       <div className="px-5 py-3.5 w-full">
         {data?.rows?.map((indivitualOrder, index) => (
           <div key={index}>
+            <h3 className="text-2xl font-bold">
+              Total item ({indivitualOrder?.allProducts?.length})
+            </h3>
             <p>
               Your Order ID:{" "}
               <span className="text-green-500">{indivitualOrder?.orderId}</span>
             </p>
+            {indivitualOrder?.tran_id && (
+              <p>
+                Your Transaction ID:{" "}
+                <span className="text-green-500">
+                  {indivitualOrder?.tran_id}
+                </span>
+              </p>
+            )}
+
             <p>
               Order status:{" "}
               <span className="text-green-500">
                 {indivitualOrder?.orderStatus}
+              </span>{" "}
+            </p>
+            <p>
+              Order Times:{" "}
+              <span className="text-green-500">
+                {moment(indivitualOrder?.createdAt).format(
+                  "MMMM Do YYYY, h:mm:ss a"
+                )}
               </span>
             </p>
             <div className="max-w-sm py-1">
               <p>
                 <span className="inline-block w-48">Sub total:</span>
-                {indivitualOrder?.totalPrice}
+                {indivitualOrder?.subTotal}
               </p>
               <p>
                 <span className="inline-block w-48">Shipping charge:</span>
                 {indivitualOrder?.shippingCost}
               </p>
+              {indivitualOrder?.otherCost > 0 && (
+                <p>
+                  <span className="inline-block w-48">Other charge:</span>
+                  {indivitualOrder?.otherCost}
+                </p>
+              )}
+              {indivitualOrder?.voucherDiscount > 0 && (
+                <p>
+                  <span className="inline-block w-48">Discount: </span>
+                  {indivitualOrder?.voucherDiscount}%
+                </p>
+              )}
               <hr className="mt-1" />
               <p>
                 <span className="inline-block w-48">Total:</span>
-                {Number(indivitualOrder?.totalPrice) +
-                  Number(indivitualOrder?.shippingCost)}
-              </p>
-              <p>
-                <span className="inline-block w-48">Discount: </span>
-                {indivitualOrder?.voucherDiscount}
-              </p>
-              <hr className="mt-1" />
-              <p>
-                <span className="inline-block w-48">Total: </span>
                 {indivitualOrder?.grandTotal}
               </p>
             </div>
-            <p className="pb-3.5">
+            <h5 className="pb-3.5 font-semibold">
               Shipping Address:{" "}
-              <span className="text-green-500">
-                {indivitualOrder?.shippingAddress?.state},{" "}
-                {indivitualOrder?.shippingAddress?.thana},{" "}
-                {indivitualOrder?.shippingAddress?.district},{" "}
-                {indivitualOrder?.shippingAddress?.country}
-              </span>
-            </p>
+              <p className="text-green-500">
+                Name: {indivitualOrder?.shippingAddress?.name}
+              </p>
+              <p className="text-green-500">
+                email: {indivitualOrder?.shippingAddress?.email}
+              </p>
+              {indivitualOrder?.shippingAddress?.alternativeMobile && (
+                <p className="text-green-500">
+                  alternativeMobile:{" "}
+                  {indivitualOrder?.shippingAddress?.alternativeMobile}
+                </p>
+              )}
+              <p className="text-green-500">
+                division: {indivitualOrder?.shippingAddress?.division}
+              </p>
+              <p className="text-green-500">
+                district: {indivitualOrder?.shippingAddress?.district}
+              </p>
+              <p className="text-green-500">
+                upazilla: {indivitualOrder?.shippingAddress?.upazilla}
+              </p>
+              <p className="text-green-500">
+                address: {indivitualOrder?.shippingAddress?.address}
+              </p>
+            </h5>
 
-            <div className="grid grid-cols-6 gap-4 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 mb-3.5">
-              {indivitualOrder.productsDetails.map((product, index) => (
-                <div
-                  key={index}
-                  className="bg-white border border-gray-200 !rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700"
-                >
-                  <Image
-                    alt={product?.name}
-                    src={product?.img[0]?.secure_url}
-                    width={300}
-                    height={300}
-                  />
-                  <div className="p-1">
-                    <p>{product?.name}</p>
-                    <p className="text-gray-700 dark:text-gray-400">
-                      {product?.weight}
-                    </p>
-                    <p className="mb-1 text-base font-normal text-gray-700 dark:text-gray-400 ">
-                      ৳{product?.finalPrice}
-                      <span className="mx-2 text-gray-400 line-through dark:text-gray-500 text-[14px]">
-                        ৳{product?.price}
-                      </span>
-                      <span className=" text-white sm:block   px-2 text-[14px] bg-yellow-500">
-                        save: ৳{product?.saveAmount}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              ))}
+            <div className="grid grid-cols-6 gap-4 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 mb-3.5  ">
+              {indivitualOrder?.allProducts
+                ?.filter((allProduct, index) =>
+                  indivitualOrder?.productsDetails?.some(
+                    (productDetail) =>
+                      allProduct?.productId === productDetail?._id
+                  )
+                )
+                .map((filterProduct, index) => {
+                  const matchingProductDetail =
+                    indivitualOrder?.productsDetails?.find(
+                      (productDetail) =>
+                        filterProduct?.productId === productDetail?._id
+                    );
+
+                  return (
+                    <Link
+                      href={`/product-details/${matchingProductDetail?._id}`}
+                    >
+                      <div
+                        key={index}
+                        className="bg-white border border-gray-200 !rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700  "
+                      >
+                        <Image
+                          alt={matchingProductDetail?.name}
+                          src={matchingProductDetail?.img[0]?.secure_url}
+                          width={300}
+                          height={300}
+                        />
+                        <div className="p-1">
+                          <p className="sm:h-24 h-14">
+                            {matchingProductDetail?.name?.length > 30
+                              ? `${matchingProductDetail?.name.slice(0, 30)}...`
+                              : matchingProductDetail?.name}
+                          </p>
+
+                          <p className="mb-1 text-base font-normal text-gray-700 dark:text-gray-400 ">
+                            ৳{matchingProductDetail?.finalPrice}
+                            <span className="mx-2 text-gray-400 line-through dark:text-gray-500 text-[14px]">
+                              ৳{matchingProductDetail?.price}
+                            </span>
+                          </p>
+                          <div className="h-16">
+                            <p>
+                              quantity:{" "}
+                              {filterProduct?.customerChoiceProductQuantity}
+                            </p>
+                            {filterProduct?.customerChoiceProductSize && (
+                              <p>
+                                Size: {filterProduct?.customerChoiceProductSize}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
             </div>
             <hr className="mb-3.5" />
           </div>
@@ -107,7 +177,7 @@ export default function ReturnOrders() {
   return (
     <div className="container">
       <h1 className="w-full md:text-xl dark:bg-gray-700 px-5 py-3.5 text-3xl border-l text-white bg-primary">
-        Delivery orders
+        Return orders
       </h1>
       <div className="bg-white dark:bg-gray-800">{finalData}</div>
     </div>

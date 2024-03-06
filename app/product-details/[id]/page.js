@@ -27,7 +27,7 @@ export async function generateMetadata({ params }) {
 
 const ProductDetails = async ({ params }) => {
   let cookie = cookies();
-  let token = cookie.get("token2")?.value;
+  let token = cookie.get("token2")?.value || cookie.get("token")?.value;
 
   let product = await getSingleProductsRequest(params.id);
   const productPrivacyPolicy = await getProductsPrivacyPolicyRequest();
@@ -44,6 +44,7 @@ const ProductDetails = async ({ params }) => {
       </div>
       <div className="">
         <ProductDescription
+          token={token}
           product={product}
           productPrivacyPolicy={productPrivacyPolicy}
         />

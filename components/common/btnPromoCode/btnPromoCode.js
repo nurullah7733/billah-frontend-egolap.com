@@ -6,7 +6,10 @@ import {
   getItemWithExpiry,
   setItemWithExpiry,
 } from "../../../utils/localStorageWithExpire/localStorageWithExpire";
-import { userUpdateRequest } from "../../../APIRequest/user/userApi";
+import {
+  userUpdateOnlyCouponCodeUsesChangeRequest,
+  userUpdateRequest,
+} from "../../../APIRequest/user/userApi";
 import store from "../../../redux/store";
 import {
   setCouponDiscount,
@@ -27,15 +30,16 @@ const BtnPromoCode = () => {
         if (getItemWithExpiry("userData2")?.couponCodeUses === couponCode) {
           return ErrorToast(`You have already use "${couponCode}" coupon code`);
         } else {
-          let data = { couponCodeUses: couponCode };
-          await userUpdateRequest(data, getItemWithExpiry("userData2")?.id);
+          let formData = new FormData();
+          formData.append("couponCodeUses", couponCode);
+          await userUpdateRequest(formData, getItemWithExpiry("userData2")?.id);
 
           let pushDataToLocalStorage = {
             firstName: getItemWithExpiry("userData2")?.firstName,
             lastName: getItemWithExpiry("userData2")?.lastName,
             email: getItemWithExpiry("userData2")?.email,
             mobile: getItemWithExpiry("userData2")?.mobile,
-            photo: getItemWithExpiry("userData2")?.img,
+            photo: getItemWithExpiry("userData2")?.photo,
             couponCodeUses: couponCode,
             id: getItemWithExpiry("userData2")?.id,
           };

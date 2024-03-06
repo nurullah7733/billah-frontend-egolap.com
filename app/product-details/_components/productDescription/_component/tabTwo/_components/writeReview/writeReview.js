@@ -5,12 +5,24 @@ import "react-responsive-modal/styles.css";
 import StarRatingComponent from "react-star-rating-component";
 import Image from "next/image";
 import { ratingProduct } from "../../../../../../../../APIRequest/products/productsApi";
+import { MustLoginModal } from "../../../../../../../../utils/sweetAlert";
+import { useRouter } from "next/navigation";
 
-const WriteReview = ({ product }) => {
+const WriteReview = ({ token, product }) => {
+  let router = useRouter();
   const [open, setOpen] = useState(false);
   const [reviewValidation, setReviewValidation] = useState(false);
   const [loading, setLoading] = useState(false);
-  const onOpenModal = () => setOpen(true);
+  const onOpenModal = async () => {
+    if (token === null || token === undefined) {
+      let result = await MustLoginModal();
+      if (result.isConfirmed === true) {
+        router.push("/login");
+      }
+    } else {
+      setOpen(true);
+    }
+  };
   const onCloseModal = () => setOpen(false);
 
   const [review, setReview] = useState({
@@ -18,9 +30,16 @@ const WriteReview = ({ product }) => {
     star: 2,
   });
 
-  const handleStarClick = (starNumber) => {
-    setReview({ ...review, star: starNumber });
-    setOpen(true);
+  const handleStarClick = async (starNumber) => {
+    if (token === null || token === undefined) {
+      let result = await MustLoginModal();
+      if (result.isConfirmed === true) {
+        router.push("/login");
+      }
+    } else {
+      setReview({ ...review, star: starNumber });
+      setOpen(true);
+    }
   };
 
   const handleSubmit = async () => {
