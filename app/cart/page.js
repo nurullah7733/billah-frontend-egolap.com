@@ -11,6 +11,7 @@ const Cart = () => {
   let token = Cookies.get("token2");
   const {
     products,
+    allProductsSubTotal,
     totalProductsPrice,
     shippingCost,
     otherCost,
@@ -43,6 +44,7 @@ const Cart = () => {
             {/* order summary */}
             <Summary
               shippingCost={shippingCost}
+              allProductsSubTotal={allProductsSubTotal}
               otherCost={otherCost}
               couponDiscount={couponDiscount}
               products={products}

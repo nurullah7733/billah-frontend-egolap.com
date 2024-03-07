@@ -17,6 +17,7 @@ import { BsWechat } from "react-icons/bs";
 import {
   getTotalProductsPrice,
   getUserAddToCartInLocalStorage,
+  getUserTotalProductsPriceWithoutDiscountInLocalStorage,
 } from "../../utils/sessionHelper/sessionHelper";
 import store from "../../redux/store";
 import { setAddToCartProductFromLocalStorage } from "../../redux/features/addToCart/addToCartSlice";
@@ -33,10 +34,13 @@ const Footer = ({ socialLink }) => {
     if (typeof window !== "undefined") {
       let addToCartItemsTolocalStorage = getUserAddToCartInLocalStorage();
       let totalAmoutAddToCartItemsTolocalStorage = getTotalProductsPrice();
+      let allProductsPriceWithoutDiscount =
+        getUserTotalProductsPriceWithoutDiscountInLocalStorage();
       if (addToCartItemsTolocalStorage?.length > 0) {
         store.dispatch(
           setAddToCartProductFromLocalStorage({
             products: addToCartItemsTolocalStorage,
+            allProductsSubTotal: allProductsPriceWithoutDiscount,
             totalProductsPrice: totalAmoutAddToCartItemsTolocalStorage,
           })
         );

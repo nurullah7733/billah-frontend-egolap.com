@@ -23,6 +23,23 @@ class SessionHelper {
     }
   }
 
+  setUserTotalProductsPriceWithoutDiscountInLocalStorage(value) {
+    typeof window !== "undefined"
+      ? window.localStorage.setItem(
+          "totalProductsPriceWithoutDiscount",
+          JSON.stringify(value)
+        )
+      : false;
+  }
+
+  getUserTotalProductsPriceWithoutDiscountInLocalStorage() {
+    if (typeof window !== "undefined") {
+      return JSON.parse(
+        window.localStorage.getItem("totalProductsPriceWithoutDiscount")
+      );
+    }
+  }
+
   setUserData(value) {
     typeof window !== "undefined"
       ? window.localStorage.setItem("userData", JSON.stringify(value))
@@ -88,4 +105,6 @@ export const {
   setUserAddToCartInLocalStorage,
   getTotalProductsPrice,
   setUserTotalProductsPriceInLocalStorage,
+  getUserTotalProductsPriceWithoutDiscountInLocalStorage,
+  setUserTotalProductsPriceWithoutDiscountInLocalStorage,
 } = new SessionHelper();

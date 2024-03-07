@@ -7,7 +7,7 @@ import SideItemsFilter from "../sideItemsFilter/sideItemsFilter.js";
 import { useSelector } from "react-redux";
 
 const TopItemAndPrice = () => {
-  const { products, totalProductsPrice } = useSelector(
+  const { products, totalProductsPrice, allProductsSubTotal } = useSelector(
     (state) => state.addToCartProducts
   );
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +31,7 @@ const TopItemAndPrice = () => {
       <div className="text-[12px] text-white mx-1 flex  justify-center">
         <div className="flex items-center">
           <p className="text-[17px]">৳ </p>
-          <CountUp end={totalProductsPrice} duration={1} />
+          <CountUp end={allProductsSubTotal} duration={1} />
         </div>
       </div>
 
