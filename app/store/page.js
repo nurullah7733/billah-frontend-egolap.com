@@ -28,7 +28,7 @@ export async function generateMetadata({ params }) {
 
 const Store = async ({ searchParams }) => {
   let cookie = cookies();
-  let token = cookie.get("token2")?.value;
+  let token = cookie.get("token2")?.value || cookie.get("token")?.value;
 
   let allQueryParams = createParams(searchParams);
   let pageNo = searchParams?.pageNo ?? 1;
