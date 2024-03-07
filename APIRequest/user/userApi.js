@@ -118,7 +118,7 @@ export const logOutRequest = async () => {
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
       sessionDestroy();
-      // Cookies.remove("token");
+      Cookies.remove("token");
       Cookies.remove("token2");
       SuccessToast("logout success!");
       return data;
