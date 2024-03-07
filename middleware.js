@@ -21,7 +21,7 @@ export async function middleware(req, res) {
     req.nextUrl.pathname.startsWith("/user-dashboard/orders/return-orders") ||
     req.nextUrl.pathname.startsWith("/user-dashboard/orders/cancel-orders")
   ) {
-    let token = req.cookies.has("token2");
+    let token = req.cookies.has("token2") || req.cookies.has("token");
     if (token) {
       return NextResponse.next();
     } else {

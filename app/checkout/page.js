@@ -41,6 +41,7 @@ const Checkout = () => {
 
   const {
     products,
+    allProductsSubTotal,
     totalProductsPrice,
     shippingCost,
     otherCost,
@@ -108,6 +109,7 @@ const Checkout = () => {
           otherCost: otherCost,
           subTotal: totalProductsPrice,
           shippingCost: shippingCost,
+          productsSubTotal: allProductsSubTotal,
           grandTotal: totalProductsPrice + shippingCost + otherCost,
           shippingAddress: {
             name: formValue.name,
@@ -134,6 +136,7 @@ const Checkout = () => {
           otherCost: otherCost,
           subTotal: totalProductsPrice,
           shippingCost: shippingCost,
+          productsSubTotal: allProductsSubTotal,
           grandTotal: totalProductsPrice + shippingCost + otherCost,
           shippingAddress: {
             name: formValue.name,
@@ -556,6 +559,7 @@ const Checkout = () => {
                           confirmOrderBtn="hidden"
                           checkoutBtn={false}
                           products={products}
+                          allProductsSubTotal={allProductsSubTotal}
                           totalProductsPrice={totalProductsPrice}
                           shippingCost={shippingCost}
                           otherCost={otherCost}
@@ -674,6 +678,7 @@ const Checkout = () => {
             <div className="w-1/2 -mt-3 md:hidden">
               <Summary
                 products={products}
+                allProductsSubTotal={allProductsSubTotal}
                 totalProductsPrice={totalProductsPrice}
                 shippingCost={shippingCost}
                 otherCost={otherCost}

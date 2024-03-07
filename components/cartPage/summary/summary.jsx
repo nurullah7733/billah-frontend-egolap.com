@@ -27,6 +27,7 @@ const Summary = ({
   confirmOrder = false,
   products,
   totalProductsPrice,
+  allProductsSubTotal,
   shippingCost,
   otherCost,
   couponDiscount,
@@ -107,6 +108,7 @@ const Summary = ({
           otherCost: otherCost,
           subTotal: totalProductsPrice,
           shippingCost: shippingCost,
+          productsSubTotal: allProductsSubTotal,
           grandTotal: totalProductsPrice + shippingCost + otherCost,
           shippingAddress: {
             name: formValue.name,
@@ -133,6 +135,7 @@ const Summary = ({
           otherCost: otherCost,
           subTotal: totalProductsPrice,
           shippingCost: shippingCost,
+          productsSubTotal: allProductsSubTotal,
           grandTotal: totalProductsPrice + shippingCost + otherCost,
           shippingAddress: {
             name: formValue.name,
@@ -167,7 +170,13 @@ const Summary = ({
       {products?.length > 0 ? (
         <div className="px-3 py-8 bg-gray-200 dark:bg-gray-800 rounded-2xl">
           <div className="flex justify-between text-sm font-semibold uppercase">
-            <span className="text-sm md:text-[12px] ">subtotal</span>
+            <span className="text-sm md:text-[12px] ">Subtotal</span>
+            <span className="md:text-[12px] ">
+              ৳{numberWithCommas(allProductsSubTotal)}
+            </span>
+          </div>
+          <div className="flex justify-between py-6 text-sm font-semibold uppercase">
+            <span className="text-sm md:text-[12px] ">Total</span>
             <span className="md:text-[12px] ">
               ৳{numberWithCommas(totalProductsPrice)}
             </span>
@@ -200,7 +209,7 @@ const Summary = ({
           </div>
 
           <div className="flex justify-between py-6 text-sm font-semibold uppercase">
-            <span className="text-sm md:text-[12px] ">Total</span>
+            <span className="text-sm md:text-[12px] ">Grand Total</span>
             <span className="md:text-[12px] ">
               ৳
               {numberWithCommas(

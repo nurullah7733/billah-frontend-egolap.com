@@ -2,6 +2,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 import {
   setUserAddToCartInLocalStorage,
   setUserTotalProductsPriceInLocalStorage,
+  setUserTotalProductsPriceWithoutDiscountInLocalStorage,
 } from "../../../utils/sessionHelper/sessionHelper";
 
 const initialState = {
@@ -9,6 +10,7 @@ const initialState = {
   couponDiscount: 0,
   shippingCost: 0,
   otherCost: 0,
+  allProductsSubTotal: 0,
   totalProductsPrice: 0,
 };
 
@@ -61,31 +63,60 @@ const AddToCartSlice = createSlice({
     },
 
     setTotalProductsPrice(state) {
+      const totalProductsPriceWithoutDiscount = state.products.reduce(
+        (total, product) => {
+          let productPrice = parseFloat(product.finalPrice);
+          let productQuantity = parseInt(
+            product.customerChoiceProductQuantity,
+            10
+          );
+
+          if (!isNaN(productPrice) && !isNaN(productQuantity)) {
+            return total + productPrice * productQuantity;
+          }
+
+          return total; // Accumulate total without changes
+        },
+        0
+      );
+
+      state.allProductsSubTotal = Math.ceil(totalProductsPriceWithoutDiscount);
+
       const totalProductsPrice = state.products.reduce((total, product) => {
         let productPrice = parseFloat(product.finalPrice);
         let productQuantity = parseInt(
           product.customerChoiceProductQuantity,
           10
         );
-        if (!isNaN(productPrice) && !isNaN(productQuantity)) {
-          let totalPrice = total + productPrice * productQuantity;
-          let afterDiscount =
-            totalPrice - (state.couponDiscount / 100) * totalPrice;
 
-          let addShippingAndOtherCost =
-            afterDiscount + state.shippingCost + state.otherCost;
-          return addShippingAndOtherCost;
+        if (!isNaN(productPrice) && !isNaN(productQuantity)) {
+          return total + productPrice * productQuantity;
         }
 
         return total;
       }, 0);
+
+      // Apply the discount to the total without other costs
+      const afterDiscount =
+        totalProductsPrice - (state.couponDiscount / 100) * totalProductsPrice;
+
+      // Add other costs to the discounted total
+      const addShippingAndOtherCost =
+        afterDiscount + state.shippingCost + state.otherCost;
+
+      // Ensure the discount logic is working correctly
       state.products.length === 0 && (state.totalProductsPrice = 0);
-      state.totalProductsPrice = Math.ceil(totalProductsPrice);
+      state.totalProductsPrice = Math.ceil(addShippingAndOtherCost);
+
       setUserTotalProductsPriceInLocalStorage(state.totalProductsPrice);
+      setUserTotalProductsPriceWithoutDiscountInLocalStorage(
+        state.allProductsSubTotal
+      );
     },
 
     setAddToCartProductFromLocalStorage(state, actions) {
       state.products = actions.payload.products;
+      state.allProductsSubTotal = actions.payload.allProductsSubTotal;
       state.totalProductsPrice = actions.payload.totalProductsPrice;
     },
     setAddToCartProductFromUserDatabaseAfterLogin(state, actions) {

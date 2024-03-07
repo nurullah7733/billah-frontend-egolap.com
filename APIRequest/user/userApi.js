@@ -6,11 +6,6 @@ import {
 } from "../../utils/notificationAlert/notificationAlert";
 import { sessionDestroy } from "../../utils/sessionHelper/sessionHelper";
 import { setItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
-import {
-  setAddToCartProductFromUserDatabaseAfterLogin,
-  setTotalProductsPrice,
-} from "../../redux/features/addToCart/addToCartSlice";
-import store from "../../redux/store";
 
 export const loginRequest = async (data) => {
   let url = `${baseUrl}/login`;

@@ -57,8 +57,19 @@ export default function DeliveryOrders() {
             <div className="max-w-sm py-1">
               <p>
                 <span className="inline-block w-48">Sub total:</span>
+                {indivitualOrder?.productsSubTotal}
+              </p>
+              {indivitualOrder?.voucherDiscount > 0 && (
+                <p>
+                  <span className="inline-block w-48">Discount: </span>
+                  {indivitualOrder?.voucherDiscount}%
+                </p>
+              )}
+              <p>
+                <span className="inline-block w-48">Total:</span>
                 {indivitualOrder?.subTotal}
               </p>
+
               <p>
                 <span className="inline-block w-48">Shipping charge:</span>
                 {indivitualOrder?.shippingCost}
@@ -69,15 +80,10 @@ export default function DeliveryOrders() {
                   {indivitualOrder?.otherCost}
                 </p>
               )}
-              {indivitualOrder?.voucherDiscount > 0 && (
-                <p>
-                  <span className="inline-block w-48">Discount: </span>
-                  {indivitualOrder?.voucherDiscount}%
-                </p>
-              )}
+
               <hr className="mt-1" />
               <p>
-                <span className="inline-block w-48">Total:</span>
+                <span className="inline-block w-48">Grand Total:</span>
                 {indivitualOrder?.grandTotal}
               </p>
             </div>

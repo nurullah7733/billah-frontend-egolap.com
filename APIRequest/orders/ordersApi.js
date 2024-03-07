@@ -5,13 +5,11 @@ import {
   ErrorToast,
   SuccessToast,
 } from "../../utils/notificationAlert/notificationAlert";
-import {
-  setUserAddToCartInLocalStorage,
-  setUserTotalProductsPriceInLocalStorage,
-} from "../../utils/sessionHelper/sessionHelper";
+import { setUserAddToCartInLocalStorage } from "../../utils/sessionHelper/sessionHelper";
 import { userUpdateRequest } from "../user/userApi";
 
 export const createOrder = async (data) => {
+  console.log(data, "create order");
   let url = `${baseUrl}/create-order`;
   const config = {
     method: "POST",
