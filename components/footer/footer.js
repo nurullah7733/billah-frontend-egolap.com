@@ -124,7 +124,7 @@ const Footer = ({ socialLink }) => {
 
               <div className="text-justify text-white">
                 {footerPara.length > 0 &&
-                  parse(footerPara?.slice(-1)[0]?.aboutUs)}
+                  parse(footerPara?.slice(-1)?.[0]?.aboutUs)}
               </div>
               {/* social icons */}
               <div className="flex gap-2 pt-3">

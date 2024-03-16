@@ -52,7 +52,7 @@ const ProfileDropdown = ({ dropdownMenus, token }) => {
           <img
             src={
               getItemWithExpiry("userData2")?.photo?.length > 0
-                ? getItemWithExpiry("userData2")?.photo[0]?.secure_url
+                ? getItemWithExpiry("userData2")?.photo?.[0]?.secure_url
                 : null
             }
             alt={getItemWithExpiry("userData2")?.firstName}

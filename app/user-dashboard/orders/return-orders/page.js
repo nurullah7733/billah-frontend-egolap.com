@@ -140,7 +140,7 @@ export default function ReturnOrders() {
                       >
                         <Image
                           alt={matchingProductDetail?.name}
-                          src={matchingProductDetail?.img[0]?.secure_url}
+                          src={matchingProductDetail?.img?.[0]?.secure_url}
                           width={300}
                           height={300}
                         />

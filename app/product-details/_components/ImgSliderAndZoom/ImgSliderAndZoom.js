@@ -12,13 +12,13 @@ const ImgSliderAndZoom = ({ product, images, token }) => {
   let addToCartProducts = useSelector(
     (state) => state.addToCartProducts.products
   );
-  const [img, setImg] = useState(images[0].secure_url);
+  const [img, setImg] = useState(images?.[0]?.secure_url);
 
   const refs = useRef([]);
 
   const srcSet = () => {
     return images
-      .map((image) => {
+      ?.map((image) => {
         return `${imageBaseUrl}${image.name} ${image.vw}`;
       })
       .join(", ");
@@ -65,7 +65,7 @@ const ImgSliderAndZoom = ({ product, images, token }) => {
           // onClickItem={onClickItem}
           // onClickThumb={onClickThumb}
         >
-          {images.map((img, index) => (
+          {images?.map((img, index) => (
             <div className="mx-auto " key={index}>
               <div>
                 <img src={img?.secure_url} className="!rounded-lg" />
@@ -77,7 +77,7 @@ const ImgSliderAndZoom = ({ product, images, token }) => {
       {/* sliderAndZoom for desktop */}
       <div className="block left md:hidden">
         <div className="left_1">
-          {images.map((image, i) => (
+          {images?.map((image, i) => (
             <div
               className={
                 i == 0 ? `img_wrap product_zoom_active ` : `img_wrap  `

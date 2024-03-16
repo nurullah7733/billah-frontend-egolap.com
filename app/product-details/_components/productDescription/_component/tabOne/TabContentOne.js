@@ -8,7 +8,7 @@ const TabConentOne = ({ product }) => {
             Brand:
           </p>
           <p className="text-[14px] text-black dark:text-white">
-            {product?.brand[0]?.name}
+            {product?.brand?.[0]?.name}
           </p>
         </div>
 
@@ -39,7 +39,9 @@ const TabConentOne = ({ product }) => {
         </div>
 
         {/* sub decription */}
-        <div className="mt-5"> {parse(product?.description)}</div>
+        <div className="mt-5">
+          {product?.description?.length && parse(product?.description)}
+        </div>
       </div>
     </>
   );

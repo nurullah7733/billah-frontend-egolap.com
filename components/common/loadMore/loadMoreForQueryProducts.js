@@ -21,6 +21,7 @@ function LoadMoreQueryProducts({ storePageTotal }) {
   const [pageNo, setPageNo] = useState(2);
 
   const allQueryParams = searchParams.toString();
+
   useEffect(() => {
     if (inView && storePageTotal !== total) {
       setIsLoading(true);

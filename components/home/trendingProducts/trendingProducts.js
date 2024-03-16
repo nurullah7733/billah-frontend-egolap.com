@@ -15,7 +15,7 @@ const TrendingProducts = async () => {
           {/* <div className="pb-4">
             <Link href="#">
               <Image
-                src={banner[0]?.secure_url}
+                src={banner?.[0]?.secure_url}
                 width={1536}
                 height={200}
                 alt="3"

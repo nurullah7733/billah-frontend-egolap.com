@@ -30,7 +30,7 @@ const Page = async () => {
     <div>
       <HelpPageTopImage
         altName={"contact us image"}
-        imagePath={data[0]?.contactUsImg?.slice(-1)[0]?.secure_url}
+        imagePath={data?.[0]?.contactUsImg?.slice(-1)?.[0]?.secure_url}
         headerInImage={"contact us"}
       />
       <HelpPageMenubar />

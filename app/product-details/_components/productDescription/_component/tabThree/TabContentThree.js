@@ -4,7 +4,8 @@ const TabContentThree = ({ productPrivacyPolicy }) => {
   return (
     <div>
       <div className="mb-5">
-        {parse(productPrivacyPolicy?.productsPrivacyPolicy)}
+        {productPrivacyPolicy?.length > 0 &&
+          parse(productPrivacyPolicy?.productsPrivacyPolicy)}
       </div>
     </div>
   );

@@ -14,7 +14,8 @@ function LoadMore({ storePageTotal }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { ref, inView } = useInView();
-  const perPage = Number(searchParams.get("perPage"));
+  let perPage = Number(searchParams.get("perPage"));
+  perPage = storePageTotal > 30 ? (perPage = 30) : (perPage = storePageTotal);
 
   const [data, setData] = useState([]);
   const [runningProductsTotal, setRunningProductsTotal] = useState(perPage);
@@ -22,6 +23,7 @@ function LoadMore({ storePageTotal }) {
   const [pageNo, setPageNo] = useState(2);
 
   const allQueryParams = searchParams.toString();
+
   useEffect(() => {
     if (inView && storePageTotal !== runningProductsTotal) {
       setIsLoading(true);

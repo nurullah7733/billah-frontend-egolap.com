@@ -42,7 +42,7 @@ const Layout = ({ children }) => {
                 <img
                   src={
                     getItemWithExpiry("userData2")?.photo?.length > 0
-                      ? getItemWithExpiry("userData2")?.photo[0]?.secure_url
+                      ? getItemWithExpiry("userData2")?.photo?.[0]?.secure_url
                       : null
                   }
                   className={`cursor-pointer duration-500  rounded-[50%] w-14 h-14 ${
@@ -58,7 +58,7 @@ const Layout = ({ children }) => {
               height={56}
               src={
                 getItemWithExpiry("userData2")?.photo?.length > 0
-                  ? getItemWithExpiry("userData2")?.photo[0]?.secure_url
+                  ? getItemWithExpiry("userData2")?.photo?.[0]?.secure_url
                   : null
               }
               className={`cursor-pointer duration-500  rounded-[50%] w-14 h-14 `}

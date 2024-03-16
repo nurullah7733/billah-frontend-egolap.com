@@ -44,7 +44,7 @@ const BtnPromoCode = () => {
             id: getItemWithExpiry("userData2")?.id,
           };
           setItemWithExpiry("userData2", pushDataToLocalStorage, 2592000);
-          store.dispatch(setCouponDiscount(result[0]?.discound));
+          store.dispatch(setCouponDiscount(result?.[0]?.discound));
           store.dispatch(setTotalProductsPrice());
         }
       }

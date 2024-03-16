@@ -207,11 +207,11 @@ const Checkout = () => {
       if (e.target.value === "Thakurgaon Sadar") {
         store.dispatch(
           setShippingCost(
-            applicationAllSettings[0]?.shippingCostThakurgaonSadar
+            applicationAllSettings?.[0]?.shippingCostThakurgaonSadar
           )
         );
         store.dispatch(
-          setOtherCost(applicationAllSettings[0]?.otherCostThakurgaonSadar)
+          setOtherCost(applicationAllSettings?.[0]?.otherCostThakurgaonSadar)
         );
       } else if (
         e.target.value === "Haripur" ||
@@ -220,10 +220,10 @@ const Checkout = () => {
         e.target.value === "Pirganj"
       ) {
         store.dispatch(
-          setShippingCost(applicationAllSettings[0]?.shippingCostThakurgaon)
+          setShippingCost(applicationAllSettings?.[0]?.shippingCostThakurgaon)
         );
         store.dispatch(
-          setOtherCost(applicationAllSettings[0]?.otherCostThakurgaon)
+          setOtherCost(applicationAllSettings?.[0]?.otherCostThakurgaon)
         );
       } else if (
         e.target.value === "Dohar" ||
@@ -233,14 +233,16 @@ const Checkout = () => {
         e.target.value === "Keraniganj"
       ) {
         store.dispatch(
-          setShippingCost(applicationAllSettings[0]?.shippingCostDhaka)
+          setShippingCost(applicationAllSettings?.[0]?.shippingCostDhaka)
         );
-        store.dispatch(setOtherCost(applicationAllSettings[0]?.otherCostDhaka));
+        store.dispatch(
+          setOtherCost(applicationAllSettings?.[0]?.otherCostDhaka)
+        );
       } else {
         store.dispatch(
-          setShippingCost(applicationAllSettings[0]?.shippingCost)
+          setShippingCost(applicationAllSettings?.[0]?.shippingCost)
         );
-        store.dispatch(setOtherCost(applicationAllSettings[0]?.otherCost));
+        store.dispatch(setOtherCost(applicationAllSettings?.[0]?.otherCost));
       }
     }
   };

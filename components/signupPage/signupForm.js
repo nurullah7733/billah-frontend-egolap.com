@@ -29,7 +29,7 @@ const SignupForm = () => {
     validationSchema: signupSchema,
     onSubmit: async ({ fullName, email, mobile, password }) => {
       var fullNames = fullName.split(" "),
-        firstName = fullNames[0],
+        firstName = fullNames?.[0],
         lastName = fullNames[fullNames.length - 1];
       let data = { firstName, lastName, email, mobile, password };
       let result = await registrationRequest(data);

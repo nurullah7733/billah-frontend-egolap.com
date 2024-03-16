@@ -36,7 +36,7 @@ const Page = async () => {
     <div>
       <HelpPageTopImage
         altName={"Team image"}
-        imagePath={data[0]?.teamImgBanner?.slice(-1)[0]?.secure_url}
+        imagePath={data?.[0]?.teamImgBanner?.slice(-1)?.[0]?.secure_url}
         headerInImage={"Team"}
       />
       <HelpPageMenubar />
@@ -48,7 +48,7 @@ const Page = async () => {
             </Suspense>
           </div>
           <div class="grid gap-8 mb-6 lg:mb-16  grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-            {data[0]?.teamImgs?.map((item, index) => {
+            {data?.[0]?.teamImgs?.map((item, index) => {
               return (
                 <div class=" items-center  bg-gray-50 rounded-lg shadow   dark:bg-gray-900 dark:border-gray-700">
                   <Image

@@ -13,13 +13,13 @@ const Product = ({ product }) => {
           priority
           width={300}
           height={300}
-          src={product?.img[0]?.secure_url}
+          src={product?.img?.[0]?.secure_url}
           alt={product?.name}
         />
       </Link>
       <div className="p-2">
         <Link href={`/product-details/${product?._id}`}>
-          <h1 className="mb-2 h-8 text-sm font-bold tracking-tight cursor-pointer dark:text-white">
+          <h1 className="mb-6 h-8 text-sm font-bold tracking-tight cursor-pointer dark:text-white">
             {product?.name.length > 40
               ? product?.name.substring(0, 40) + "..."
               : product?.name}

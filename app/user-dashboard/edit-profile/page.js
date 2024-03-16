@@ -27,13 +27,13 @@ const EditProfile = () => {
   let [inputImg, setInputImg] = useState("");
 
   const handleImg = async (e) => {
-    if (!e.target.files[0].type.includes("image/")) {
+    if (!e.target.files?.[0].type.includes("image/")) {
       ErrorToast("Only images file supported");
-    } else if (e.target.files[0].size > 600000) {
+    } else if (e.target.files?.[0].size > 600000) {
       ErrorToast("Image size up to 600kb ");
     } else {
-      let base64files = await getBase64(e.target.files[0]);
-      setInputImg(e.target.files[0]);
+      let base64files = await getBase64(e.target.files?.[0]);
+      setInputImg(e.target.files?.[0]);
       setImg(base64files);
     }
   };
@@ -49,7 +49,7 @@ const EditProfile = () => {
     } else {
       setLoading(true);
       var fullName = name.split(" ");
-      let firstName = fullName[0];
+      let firstName = fullName?.[0];
       let lastName = fullName[fullName.length - 1];
 
       var formdata = new FormData();
@@ -81,7 +81,7 @@ const EditProfile = () => {
   };
 
   useEffect(() => {
-    setImg(getItemWithExpiry("userData2")?.photo[0]?.secure_url);
+    setImg(getItemWithExpiry("userData2")?.photo?.[0]?.secure_url);
     setName(
       getItemWithExpiry("userData2")?.firstName +
         " " +

@@ -17,7 +17,7 @@ const TabContentTwo = ({ token, product }) => {
                   <img
                     src={
                       rating?.photo?.length > 0
-                        ? rating?.photo[0]?.secure_url
+                        ? rating?.photo?.[0]?.secure_url
                         : null
                     }
                     alt=""

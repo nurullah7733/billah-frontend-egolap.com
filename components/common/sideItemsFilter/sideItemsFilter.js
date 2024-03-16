@@ -137,7 +137,7 @@ const SideItemsFilter = ({ products, totalProductsPrice, setIsOpen }) => {
                     className="object-contain	"
                     width={"40px"}
                     height={"40px"}
-                    src={item?.img[0]?.secure_url}
+                    src={item?.img?.[0]?.secure_url}
                     alt="bag"
                   />
                 )}

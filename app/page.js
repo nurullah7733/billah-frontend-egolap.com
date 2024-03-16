@@ -23,23 +23,23 @@ export default async function Home() {
       <main>
         {/* Main Slider */}
         <MainSlider
-          slider={getAllWebSettingsData[0]?.mainSlider}
+          slider={getAllWebSettingsData?.[0]?.mainSlider}
           token={token}
         />
         {/* Best sales */}
-        <BestSales banner={getAllWebSettingsData[0]?.bestSales} />
+        <BestSales banner={getAllWebSettingsData?.[0]?.bestSales} />
         {/* kacha bazar */}
-        <KachaBazar banner={getAllWebSettingsData[0]?.provisionalBazar} />
+        <KachaBazar banner={getAllWebSettingsData?.[0]?.provisionalBazar} />
         {/* TopProducts */}
         <TopProducts />
         {/* PopularProducts */}
         <PopularProducts />
         {/* Marquee */}
         <MarqueeComponent
-          dealerBrandLogo={getAllWebSettingsData[0]?.dealerBrandLogo}
+          dealerBrandLogo={getAllWebSettingsData?.[0]?.dealerBrandLogo}
         />
         {/* Best of Electronics*/}
-        <Electronics banner={getAllWebSettingsData[0]?.bestOfElectronics} />
+        <Electronics banner={getAllWebSettingsData?.[0]?.bestOfElectronics} />
         {/* Special products*/}
         <SpecialProducts />
         {/* Trending Products  */}

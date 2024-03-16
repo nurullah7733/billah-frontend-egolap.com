@@ -11,8 +11,8 @@ const Paragraph = async ({ faqPromise }) => {
             <div className="p-2">
               <AccordionForFaq
                 isOpen={false}
-                title={item?.questions.question}
-                content={item?.questions.answer}
+                title={item?.questions?.question}
+                content={item?.questions?.answer}
               />
             </div>
           </div>

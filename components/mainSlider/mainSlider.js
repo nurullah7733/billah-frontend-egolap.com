@@ -8,6 +8,9 @@ import { useSelector } from "react-redux";
 import { userAddToCartOrUpdateRequest } from "../../APIRequest/user/userApi";
 
 const MainSlider = ({ slider, token }) => {
+  let sliderReverse = slider?.map(
+    (element, index, array) => array[array.length - index - 1]
+  );
   let addToCartProducts = useSelector(
     (state) => state.addToCartProducts.products
   );
@@ -44,7 +47,7 @@ const MainSlider = ({ slider, token }) => {
     >
       <div className="mx-auto max-w-[1680px] overflow-hidden">
         <Slider {...settings}>
-          {slider?.map((item, index) => (
+          {sliderReverse?.map((item, index) => (
             <div key={index}>
               <Link href={item?.link ? item?.link : "#"}>
                 <Image

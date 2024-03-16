@@ -68,7 +68,7 @@ export const runningOrdersRequest = async (pageNo, perPage, searchKeyword) => {
     let data = await res.json();
 
     if (res.status === 200) {
-      return data?.data[0];
+      return data?.data?.[0];
     } else if (res.status === 401) {
       return { status: res.status, data: data };
     } else {
@@ -98,7 +98,7 @@ export const deliveryOrdersRequest = async (pageNo, perPage, searchKeyword) => {
     let data = await res.json();
 
     if (res.status === 200) {
-      return data?.data[0];
+      return data?.data?.[0];
     } else if (res.status === 401) {
       return { status: res.status, data: data };
     } else {
@@ -128,7 +128,7 @@ export const returnOrdersRequest = async (pageNo, perPage, searchKeyword) => {
     let data = await res.json();
 
     if (res.status === 200) {
-      return data?.data[0];
+      return data?.data?.[0];
     } else if (res.status === 401) {
       return { status: res.status, data: data };
     } else {
@@ -158,7 +158,7 @@ export const cancelOrdersRequest = async (pageNo, perPage, searchKeyword) => {
     let data = await res.json();
 
     if (res.status === 200) {
-      return data?.data[0];
+      return data?.data?.[0];
     } else if (res.status === 401) {
       return { status: res.status, data: data };
     } else {

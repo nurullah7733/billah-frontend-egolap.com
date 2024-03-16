@@ -60,7 +60,7 @@ const CategoriesSlider = ({ categories }) => {
                 {category?.subCategory?.length > 0 ? (
                   <>
                     <img
-                      src={category?.img[0]?.secure_url}
+                      src={category?.img?.[0]?.secure_url}
                       alt={category?.name}
                       width="50"
                       height="50"
@@ -91,7 +91,7 @@ const CategoriesSlider = ({ categories }) => {
                   >
                     <div className=" flex flex-col items-center justify-center">
                       <img
-                        src={category?.img[0]?.secure_url}
+                        src={category?.img?.[0]?.secure_url}
                         alt={category?.name}
                         width="50"
                         height="50"

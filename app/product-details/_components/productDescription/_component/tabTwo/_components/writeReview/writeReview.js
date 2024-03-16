@@ -95,7 +95,7 @@ const WriteReview = ({ token, product }) => {
                 width={80}
                 height={80}
                 alt={product?.name}
-                src={product?.img[0]?.secure_url}
+                src={product?.img?.[0]?.secure_url}
               />
             )}
             <h2 className="text-black w-[70%] px-1">{product?.name}</h2>

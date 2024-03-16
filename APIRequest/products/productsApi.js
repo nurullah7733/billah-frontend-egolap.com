@@ -14,8 +14,8 @@ export const getAllProductsRequest = async (allQueryParams, pageNo) => {
   const data = await res.json();
 
   return {
-    products: data?.data[0]?.rows,
-    total: data?.data[0]?.total[0]?.count,
+    products: data?.data?.[0]?.rows,
+    total: data?.data?.[0]?.total?.[0]?.count,
   };
 };
 
@@ -34,8 +34,9 @@ export const getSingleProductsRequest = async (id) => {
   try {
     const res = await fetch(url, config);
     const data = await res.json();
+    console.log(data, "data", id);
     if (res.status === 200 && data.status === "success") {
-      return data?.data[0];
+      return data?.data?.[0];
     } else if (data.status === "fail") {
       return false;
     } else if (res.status === 401 && data.status == "unauthorized") {
@@ -65,7 +66,7 @@ export const getProductsPrivacyPolicyRequest = async () => {
     const res = await fetch(url, config);
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
-      return data?.data[0];
+      return data?.data?.[0];
     } else {
       return false;
     }
@@ -91,7 +92,7 @@ export const getRelatedProductsRequest = async (subCategory) => {
     const res = await fetch(url, config);
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
-      return data?.data[0];
+      return data?.data?.[0];
     } else if (data.status === "fail") {
       return false;
     } else if (res.status === 401 && data.status == "unauthorized") {
@@ -113,7 +114,7 @@ export const getBestSalesProducts = async () => {
     throw new Error("There was an error fetching Best sales products");
   }
   const data = await res.json();
-  return data?.data[0]?.rows;
+  return data?.data?.[0]?.rows;
 };
 // get best sales electronics products
 export const getBestSalesElectronicsProducts = async () => {
@@ -126,7 +127,7 @@ export const getBestSalesElectronicsProducts = async () => {
     );
   }
   const data = await res.json();
-  return data?.data[0]?.rows;
+  return data?.data?.[0]?.rows;
 };
 
 // get best sales Provisional products
@@ -140,7 +141,7 @@ export const getBestSalesProvisionalProducts = async () => {
     );
   }
   const data = await res.json();
-  return data?.data[0]?.rows;
+  return data?.data?.[0]?.rows;
 };
 
 // get Popular products
@@ -152,7 +153,7 @@ export const getPopularProducts = async () => {
     throw new Error("There was an error fetching popular products");
   }
   const data = await res.json();
-  return data?.data[0]?.rows;
+  return data?.data?.[0]?.rows;
 };
 // get special products
 export const getSpecialProducts = async () => {
@@ -163,7 +164,7 @@ export const getSpecialProducts = async () => {
     throw new Error("There was an error fetching spacial products");
   }
   const data = await res.json();
-  return data?.data[0]?.rows;
+  return data?.data?.[0]?.rows;
 };
 // get Top products
 export const getTopProducts = async () => {
@@ -174,7 +175,7 @@ export const getTopProducts = async () => {
     throw new Error("There was an error fetching top products");
   }
   const data = await res.json();
-  return data?.data[0]?.rows;
+  return data?.data?.[0]?.rows;
 };
 // get Trending products
 export const getTrendingProducts = async () => {
@@ -185,7 +186,7 @@ export const getTrendingProducts = async () => {
     throw new Error("There was an error fetching trending products");
   }
   const data = await res.json();
-  return data?.data[0]?.rows;
+  return data?.data?.[0]?.rows;
 };
 
 // new products
@@ -197,7 +198,7 @@ export const getNewProducts = async () => {
     throw new Error("There was an error fetching new products");
   }
   const data = await res.json();
-  return data?.data[0]?.rows;
+  return data?.data?.[0]?.rows;
 };
 
 export const ratingProduct = async (productId, data) => {

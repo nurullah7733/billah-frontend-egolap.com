@@ -8,6 +8,7 @@ import {
   getSingleProductsRequest,
 } from "../../../APIRequest/products/productsApi";
 import baseUrl from "../../../utils/config/baseUrl";
+import NotResultFound from "@components/common/notResultFound/notResultFound";
 
 export async function generateMetadata({ params }) {
   let id = params.id;
@@ -16,11 +17,11 @@ export async function generateMetadata({ params }) {
   );
 
   return {
-    title: products?.data[0]?.name,
+    title: products?.data?.[0]?.name,
     description:
-      products?.data[0]?.sortDescription || products?.data[0]?.description,
+      products?.data?.[0]?.sortDescription || products?.data?.[0]?.description,
     openGraph: {
-      images: [products?.data[0]?.img[0]?.secure_url],
+      images: [products?.data?.[0]?.img?.[0]?.secure_url],
     },
   };
 }
@@ -31,26 +32,32 @@ const ProductDetails = async ({ params }) => {
 
   let product = await getSingleProductsRequest(params.id);
   const productPrivacyPolicy = await getProductsPrivacyPolicyRequest();
-
+  console.log(product, "product");
   return (
-    <div className="container px-4 mx-auto py-14 md:py-8">
-      <div className="flex gap-5    lg:flex-col  lg:pb-0 2xl:pb-44 pb-[180px] ">
-        <ImgSliderAndZoom
-          product={product}
-          images={product?.img}
-          token={token}
-        />
-        <ProductInfo product={product} />
-      </div>
-      <div className="">
-        <ProductDescription
-          token={token}
-          product={product}
-          productPrivacyPolicy={productPrivacyPolicy}
-        />
-      </div>
-      <RelatedProducts subcategory={product?.subCategory[0]?.name} />
-    </div>
+    <>
+      {Object.keys(product)?.length > 0 ? (
+        <div className="container px-4 mx-auto py-14 md:py-8">
+          <div className="flex gap-5    lg:flex-col  lg:pb-0 2xl:pb-44 pb-[180px] ">
+            <ImgSliderAndZoom
+              product={product}
+              images={product?.img}
+              token={token}
+            />
+            <ProductInfo product={product} />
+          </div>
+          <div className="">
+            <ProductDescription
+              token={token}
+              product={product}
+              productPrivacyPolicy={productPrivacyPolicy}
+            />
+          </div>
+          <RelatedProducts subcategory={product?.subCategory?.[0]?.name} />
+        </div>
+      ) : (
+        <NotResultFound />
+      )}
+    </>
   );
 };
 

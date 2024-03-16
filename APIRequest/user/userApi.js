@@ -120,6 +120,7 @@ export const logOutRequest = async () => {
       sessionDestroy();
       Cookies.remove("token");
       Cookies.remove("token2");
+
       SuccessToast("logout success!");
       return data;
     } else {

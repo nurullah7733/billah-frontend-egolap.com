@@ -46,7 +46,7 @@ const CartProducts = ({ items, products }) => {
                   <div className="col-span-1">
                     {item?.img?.length > 0 && (
                       <Image
-                        src={item?.img[0]?.secure_url}
+                        src={item?.img?.[0]?.secure_url}
                         alt={item?.name}
                         width={100}
                         height={100}

@@ -15,7 +15,7 @@ const ProductInfo = ({ product }) => {
   }
   return (
     <div>
-      <div className="md:pt-0 lg:mt-[350px]">
+      <div className="md:pt-0 md:mt-0 lg:mt-[350px]">
         {/* title */}
         <h1 className="text-3xl font-semibold md:text-xl ">{product?.name}</h1>
         {/* rattings */}
@@ -95,7 +95,7 @@ const ProductInfo = ({ product }) => {
 
           <div className="flex mb-3">
             <p className="w-32 font-semibold text-[14px]">Category:</p>
-            <p>{product?.category[0]?.name}</p>
+            <p>{product?.category?.[0]?.name}</p>
           </div>
 
           {product?.country?.length > 0 ? (

@@ -8,6 +8,7 @@ import SortByPrice from "./_components/sortBy/sortBy";
 import Image from "next/image";
 import LoadMore from "@components/common/loadMore/loadMore";
 import { cookies } from "next/headers";
+import NotResultFound from "@components/common/notResultFound/notResultFound";
 import LoadMoreQueryProducts from "@components/common/loadMore/loadMoreForQueryProducts";
 
 export async function generateMetadata({ params }) {
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }) {
     description:
       "Dive into the Egolap.com Store and discover a treasure trove of diverse and quality products. From fresh fruits to cutting-edge electronics, trendy clothing, and luxurious cosmetics - find everything you need for a smart shopping experience.",
     openGraph: {
-      image: products?.data[0]?.rows[0]?.img[0]?.secure_url,
+      image: products?.data?.[0]?.rows?.[0]?.img?.[0]?.secure_url,
     },
   };
 }
@@ -51,19 +52,7 @@ const Store = async ({ searchParams }) => {
         </div>
         {/* products */}
         {total === 0 || total === undefined ? (
-          <div className="h-[100vh] w-full bg-primary-100 dark:bg-gray-700 rounded-md">
-            <center>
-              <Image
-                alt="sorry, we couldn't find any result"
-                src="/assets/icons/sorry.png"
-                width={300}
-                height={300}
-              />
-              <h1 className="px-5 md:text-base text-2xl  bg-primary max-w-lg rounded-md text-white dark:bg-gray-800">
-                Sorry, we couldn't find any result
-              </h1>
-            </center>
-          </div>
+          <NotResultFound />
         ) : (
           <div>
             <div className="grid grid-cols-5 gap-4 xs:gap-2 xl:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5">

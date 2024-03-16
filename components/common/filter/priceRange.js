@@ -36,7 +36,7 @@ const PriceRange = () => {
 
   const handleInput = (value) => {
     setMinMaxValue({
-      minValue: value[0],
+      minValue: value?.[0],
       maxValue: value[1],
     });
   };

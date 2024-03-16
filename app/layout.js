@@ -40,11 +40,11 @@ export default async function RootLayout({ children }) {
         <ReduxProvider>
           <NextThemeProvider attribute="class">
             <Header token={token} />
-            <CategoriesSlider categories={categories[0]?.rows} />
+            <CategoriesSlider categories={categories?.[0]?.rows} />
             {children}
             <AppProgressbarProvider />
             <TopItemAndPrice />
-            <Footer socialLink={getAllWebSettingsData[0]?.socialLink} />
+            <Footer socialLink={getAllWebSettingsData?.[0]?.socialLink} />
           </NextThemeProvider>
         </ReduxProvider>
       </body>
