@@ -129,21 +129,42 @@ const CategoriesSlider = ({ categories }) => {
                           left: categoryPosition.left + 50,
                         }}
                       >
-                        <div className="category-dropdown-content bg-white dark:bg-gray-900">
-                          {category?.subCategory?.map((sub, index) => (
-                            <div
-                              key={index}
-                              className="p-2 rounded hover:bg-base-300"
-                            >
-                              <Link
-                                href={`/store?pageNo=1&perPage=30&searchKeyword=0&category=${category?.name}&subcategory=${sub?.name}`}
+                        <div
+                          className={`category-dropdown-content ${
+                            category?.subCategory?.length > 10
+                              ? "min-w-[300px]"
+                              : "min-w-[200px]"
+                          } bg-white dark:bg-gray-900 `}
+                        >
+                          <div
+                            className={`grid ${
+                              category?.subCategory?.length > 10
+                                ? " grid-cols-2"
+                                : " grid-cols-1"
+                            }`}
+                          >
+                            {category?.subCategory?.map((sub, index) => (
+                              <div
+                                key={index}
+                                className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer"
                               >
-                                <p onClick={() => setDropdownIndex(null)}>
-                                  {sub?.name}
-                                </p>
-                              </Link>
-                            </div>
-                          ))}
+                                <Link
+                                  href={`/store?pageNo=1&perPage=30&searchKeyword=0&category=${category?.name}&subcategory=${sub?.name}  `}
+                                >
+                                  <p
+                                    onClick={() => setDropdownIndex(null)}
+                                    className="text-sm"
+                                  >
+                                    {category?.subCategory?.length > 10
+                                      ? sub?.name?.length > 15
+                                        ? `${sub?.name?.slice(0, 15)}...`
+                                        : sub?.name
+                                      : sub?.name}
+                                  </p>
+                                </Link>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     )}

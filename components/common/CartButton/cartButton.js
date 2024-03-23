@@ -12,9 +12,6 @@ import { useSelector } from "react-redux";
 import { productSizeModal } from "../../../utils/sweetAlert";
 
 const AddToCardBtn = ({ product }) => {
-  // if (product?.size?.length > 0) {
-  // }
-
   // Add to Cart product
   const handleClickAddToCart = async () => {
     // User Choose Product Size
@@ -44,13 +41,24 @@ const AddToCardBtn = ({ product }) => {
     }
   };
   return (
-    <button
-      onClick={handleClickAddToCart}
-      className="flex items-center justify-center w-full h-10 py-2 text-white rounded-lg md:h-8 gap-x-1 bg-primary dark:bg-gray-700 "
-    >
-      <MdOutlineAddShoppingCart size={20} />
-      <p className="md:text-[14px]">Add to bag</p>
-    </button>
+    <>
+      {product?.quantity < 1 ? (
+        <button
+          disabled
+          className="flex items-center justify-center w-full h-10 py-2 text-white rounded-lg md:h-8 gap-x-1 bg-primary dark:bg-gray-700 disabled:bg-primary-100/75 dark:disabled:bg-gray-700/60 dark:disabled:text-gray-800 disabled:cursor-not-allowed"
+        >
+          <p className="md:text-[14px]">Out of stock</p>
+        </button>
+      ) : (
+        <button
+          onClick={handleClickAddToCart}
+          className="flex items-center justify-center w-full h-10 py-2 text-white rounded-lg md:h-8 gap-x-1 bg-primary dark:bg-gray-700 "
+        >
+          <MdOutlineAddShoppingCart size={20} />
+          <p className="md:text-[14px]">Add to bag</p>
+        </button>
+      )}
+    </>
   );
 };
 

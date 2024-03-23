@@ -225,9 +225,6 @@ const Footer = ({ socialLink }) => {
                   </a>
                 </Link>
               </p>
-              <p className="text-white transition-all hover:tracking-wider">
-                Support: +8801700000000
-              </p>
             </div>
             <div className="max-w-[25%] lg:max-w-none">
               <h2 className="pb-1 text-3xl text-white">About E-golap</h2>

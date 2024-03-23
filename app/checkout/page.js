@@ -664,7 +664,7 @@ const Checkout = () => {
                     <button
                       disabled={loading}
                       onClick={handleOrderConfirmBtn}
-                      className=" bg-primary font-semibold   hidden md:block hover:bg-primary-100 py-3 md:py-2 text-sm md:text-[12px] text-white uppercase w-full dark:bg-gray-800 disabled:bg-primary-100/75 dark:disabled:bg-gray-800/10 dark:disabled:text-gray-800 "
+                      className=" bg-primary font-semibold   hidden md:block hover:bg-primary-100 py-3 md:py-2 text-sm md:text-[12px] text-white uppercase w-full dark:bg-gray-800 disabled:bg-primary-100/75 dark:disabled:bg-gray-700/60 dark:disabled:text-gray-800 disabled:cursor-not-allowed "
                     >
                       <p className="flex justify-center items-center gap-2">
                         {loading && (
