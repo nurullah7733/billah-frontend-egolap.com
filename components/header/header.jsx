@@ -133,9 +133,10 @@ const Header = ({ token }) => {
                         type="text"
                         className="w-full h-10 py-2 pl-4 pr-10 leading-tight text-black border border-gray-300 rounded-md shadow-sm focus:outline-none dark:text-white"
                         placeholder="Search"
+                        onChange={handleChange}
                       />
                       <div className="absolute inset-y-0 right-0 flex items-center px-7">
-                        <div>
+                        <div onClick={handleSearch}>
                           <AiOutlineSearch className="text-lg text-primary dark:text-white" />
                         </div>
                       </div>

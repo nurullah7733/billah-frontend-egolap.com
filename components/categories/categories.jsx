@@ -41,7 +41,7 @@ const CategoriesSlider = ({ categories }) => {
     <div className="container mx-auto pt-[70px] md:pt-[150px]">
       <div>
         <div
-          className="flex max-h-[120px] items-center justify-between overflow-x-auto overflow-y-hidden whitespace-nowrap max-w-full header_categories mb-2"
+          className="flex max-h-[140px] items-center justify-between overflow-x-auto overflow-y-hidden  max-w-full header_categories mb-2"
           id="category-container"
           onScroll={handleScroll}
         >
@@ -55,7 +55,7 @@ const CategoriesSlider = ({ categories }) => {
                   handleClick(category), openDropdown(index + 1);
                 }}
                 onMouseLeave={() => setDropdownIndex(null)}
-                className="!flex flex-col items-center justify-between category_item gap-y-1  min-w-[140px] select-none cursor-pointer"
+                className="!flex flex-col items-center justify-between category_item gap-y-1  min-w-[120px] select-none cursor-pointer"
               >
                 {category?.subCategory?.length > 0 ? (
                   <>
@@ -66,30 +66,32 @@ const CategoriesSlider = ({ categories }) => {
                       height="50"
                       className="rounded-sm"
                     />
-                    <h3 className="relative justify-center text-left flex items-center font-semibold ">
-                      {category?.name}
-                      {category?.subCategory?.length > 0 && (
-                        <>
-                          {dropdownIndex === index + 1 ? (
-                            <RiArrowDropUpLine
-                              size={24}
-                              className="ml-[-4px]"
-                            />
-                          ) : (
-                            <RiArrowDropDownLine
-                              size={24}
-                              className="ml-[-4px]"
-                            />
-                          )}
-                        </>
-                      )}
+                    <h3 className="relative justify-center    flex items-center  text-center font-semibold   ">
+                      <span className=" ">{category?.name}</span>
+                      <span>
+                        {category?.subCategory?.length > 0 && (
+                          <>
+                            {dropdownIndex === index + 1 ? (
+                              <RiArrowDropUpLine
+                                size={24}
+                                className="ml-[-3px]"
+                              />
+                            ) : (
+                              <RiArrowDropDownLine
+                                size={24}
+                                className="ml-[-3px]"
+                              />
+                            )}
+                          </>
+                        )}
+                      </span>
                     </h3>
                   </>
                 ) : (
                   <Link
                     href={`/store?pageNo=1&perPage=30&searchKeyword=0&category=${category?.name}`}
                   >
-                    <div className=" flex flex-col items-center justify-center">
+                    <div className=" flex flex-col items-center justify-center gap-y-1">
                       <img
                         src={category?.img?.[0]?.secure_url}
                         alt={category?.name}
@@ -97,7 +99,7 @@ const CategoriesSlider = ({ categories }) => {
                         height="50"
                         className="rounded-sm"
                       />
-                      <h3 className="relative justify-center text-left flex items-center font-semibold ">
+                      <h3 className="relative justify-center   text-center flex items-center font-semibold ">
                         {category?.name}
                         {category?.subCategory?.length > 0 && (
                           <>
@@ -125,7 +127,7 @@ const CategoriesSlider = ({ categories }) => {
                       <div
                         className={`category-dropdown  absolute `}
                         style={{
-                          top: width < 768 ? 230 : 145,
+                          top: width < 768 ? 260 : width < 1280 ? 190 : 145,
                           left: categoryPosition.left + 50,
                         }}
                       >
