@@ -42,15 +42,15 @@ const Header = ({ token }) => {
     } else {
       current.set("searchKeyword", searchValue);
     }
+    // const search = current.toString();
+    // const query = search ? `?${search}` : "";
 
-    const search = current.toString();
-    const query = search ? `?${search}` : "";
-
-    if (pathname === "/store") {
-      router.push(`${pathname}${query}`);
-    } else {
-      router.push(`/store?pageNo=1&perPage=30&searchKeyword=${searchValue}`);
-    }
+    // if (pathname === "/store") {
+    //   router.push(`${pathname}${query}`);
+    // } else {
+    //   router.push(`/store?pageNo=1&perPage=30&searchKeyword=${searchValue}`);
+    // }
+    router.push(`/store?pageNo=1&perPage=30&searchKeyword=${searchValue}`);
   };
 
   const dropdownMenus = [

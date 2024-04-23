@@ -6,7 +6,7 @@ let imagePathAlternate =
 const HelpPageTopImage = ({ imagePath, altName, headerInImage }) => {
   return (
     <div>
-      <div className="relative  ">
+      <div className="relative flex justify-center ">
         <Image
           alt={altName}
           priority
@@ -17,7 +17,8 @@ const HelpPageTopImage = ({ imagePath, altName, headerInImage }) => {
           height={310}
         />
       </div>
-      <div className="absolute sm:text-base text-[30px] font-bold  ml-auto mr-auto right-0 left-0 text-center sm:top-[50%] top-[50%] text-white uppercase ">
+      {/* its hidden */}
+      <div className="absolute sm:text-base text-[30px] font-bold  ml-auto mr-auto right-0 left-0 text-center  top-[20%]  text-white uppercase  hidden 3xl:top-[27%] 2xl:top-[24%] lg:top-[24%] md:top-[30%]">
         {headerInImage}
       </div>
     </div>

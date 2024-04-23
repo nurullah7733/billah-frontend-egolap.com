@@ -15,6 +15,8 @@ import TopItemAndPrice from "../components/common/topItemAndPrice/topItemAndPric
 import { getAllWebSettings } from "../APIRequest/webSettings/webSettingsApi";
 import { getCategoriesRequest } from "../APIRequest/categories/categoriesApi";
 
+import dynamic from "next/dynamic";
+
 export const metadata = {
   title:
     "Egolap.com - Your One-Stop Bangladeshi Ecommerce Destination for Provisional Bazar, Electronics, Cosmetics, and More!",
@@ -29,6 +31,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
+  const CrispWithNoSSR = dynamic(() => import("./CrispScript.client"));
   let cookie = cookies();
   let token = cookie.get("token2")?.value || cookie.get("token")?.value;
   const getAllWebSettingsData = await getAllWebSettings();
@@ -36,11 +39,13 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <CrispWithNoSSR />
       <body>
         <ReduxProvider>
           <NextThemeProvider attribute="class">
             <Header token={token} />
             <CategoriesSlider categories={categories?.[0]?.rows} />
+
             {children}
             <AppProgressbarProvider />
             <TopItemAndPrice />

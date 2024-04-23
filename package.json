@@ -12,6 +12,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "autoprefixer": "10.4.14",
     "cogo-toast": "^4.2.3",
+    "crisp-sdk-web": "^1.0.25",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
     "formik": "^2.4.3",

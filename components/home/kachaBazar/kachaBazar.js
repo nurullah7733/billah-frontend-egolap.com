@@ -24,7 +24,7 @@ const KachaBazar = async ({ banner }) => {
       <div className="container mx-auto">
         <div className="px-2 py-6 border border-gray-200 shadow dark:border-gray-600 dark:bg-gray-700">
           <h1 className="pb-5 text-4xl font-semibold text-center capitalize text-primary">
-            Provisional Bazar
+            Kacha Bazar
           </h1>
           {/* banner */}
           <div className="pb-4">
