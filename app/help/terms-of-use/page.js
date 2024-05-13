@@ -30,7 +30,7 @@ const Page = async () => {
     <div>
       <HelpPageTopImage
         altName={"Terms-of-use image"}
-        imagePath={data?.[0]?.teamImgBanner?.slice(-1)?.[0]?.secure_url}
+        imagePath={data?.[0]?.termOfUse?.slice(-1)?.[0]?.secure_url}
         headerInImage={"Terms-of-use"}
       />
       <HelpPageMenubar />

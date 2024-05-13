@@ -32,7 +32,7 @@ const ProductDetails = async ({ params }) => {
 
   let product = await getSingleProductsRequest(params.id);
   const productPrivacyPolicy = await getProductsPrivacyPolicyRequest();
-  console.log(product, "product");
+ 
   return (
     <>
       {Object.keys(product)?.length > 0 ? (

@@ -34,7 +34,7 @@ export const getSingleProductsRequest = async (id) => {
   try {
     const res = await fetch(url, config);
     const data = await res.json();
-    console.log(data, "data", id);
+ 
     if (res.status === 200 && data.status === "success") {
       return data?.data?.[0];
     } else if (data.status === "fail") {
