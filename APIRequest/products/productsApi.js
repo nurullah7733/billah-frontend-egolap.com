@@ -34,7 +34,7 @@ export const getSingleProductsRequest = async (id) => {
   try {
     const res = await fetch(url, config);
     const data = await res.json();
- 
+
     if (res.status === 200 && data.status === "success") {
       return data?.data?.[0];
     } else if (data.status === "fail") {
@@ -132,7 +132,7 @@ export const getBestSalesElectronicsProducts = async () => {
 
 // get best sales Provisional products
 export const getBestSalesProvisionalProducts = async () => {
-  let url = `${baseUrl}/best-sales/1/12/0?category=provisional-bazar`;
+  let url = `${baseUrl}/best-sales/1/12/0?category=kacha bazar`;
 
   const res = await fetch(url, { next: { revalidate: 600 } });
   if (!res.ok) {
