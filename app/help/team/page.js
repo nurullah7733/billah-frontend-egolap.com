@@ -13,6 +13,8 @@ import {
 import parse from "html-react-parser";
 import { Suspense } from "react";
 import Paragraph from "./paragraph/paragraph";
+import { getAllTeamOwnersRequest } from "../../../APIRequest/teamOwners/teamOwnersApi";
+import { getTeamBannerRequest } from "../../../APIRequest/banners/bannersApi";
 
 export const metadata = {
   title:
@@ -28,15 +30,15 @@ export const metadata = {
 };
 
 const Page = async () => {
-  let getAllWebSettingsPromise = getAllWebSettings();
-  let teamParagraphPromise = teamParagraphRequest();
-  let data = await getAllWebSettingsPromise;
+  let teamParagraphPromise = getAllTeamOwnersRequest();
+  let teamOnwers = await getAllTeamOwnersRequest();
+  let data = await getTeamBannerRequest();
 
   return (
     <div>
       <HelpPageTopImage
         altName={"Team image"}
-        imagePath={data?.[0]?.teamImgBanner?.slice(-1)?.[0]?.secure_url}
+        imagePath={data?.[0]?.img?.slice(-1)?.[0]?.secure_url}
         headerInImage={"Team"}
       />
       <HelpPageMenubar />
@@ -48,14 +50,14 @@ const Page = async () => {
             </Suspense>
           </div>
           <div class="grid gap-8 mb-6 lg:mb-16  grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-            {data?.[0]?.teamImgs?.map((item, index) => {
+            {teamOnwers?.map((item, index) => {
               return (
                 <div class=" items-center  bg-gray-50 rounded-lg shadow   dark:bg-gray-900 dark:border-gray-700">
                   <Image
                     width={300}
                     height={300}
                     class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
-                    src={item?.secure_url}
+                    src={item?.img?.slice(-1)?.[0]?.secure_url}
                     alt={item?.name}
                   />
 

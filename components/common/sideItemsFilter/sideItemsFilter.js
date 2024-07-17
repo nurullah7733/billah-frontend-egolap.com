@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   BsArrowDownCircle,
@@ -12,7 +11,6 @@ import {
   MdOutlineKeyboardArrowUp,
   MdOutlineKeyboardArrowDown,
 } from "react-icons/md";
-import numberWithCommas from "../../../utils/numberWithComma/numberWithComma";
 import store from "../../../redux/store";
 import {
   DecreaseProductQuantity,
@@ -59,7 +57,7 @@ const SideItemsFilter = ({ products, totalProductsPrice, setIsOpen }) => {
             lastName: getItemWithExpiry("userData2")?.lastName,
             email: getItemWithExpiry("userData2")?.email,
             mobile: getItemWithExpiry("userData2")?.mobile,
-            photo: getItemWithExpiry("userData2")?.img,
+            photo: getItemWithExpiry("userData2")?.photo,
             couponCodeUses: couponCode,
             id: getItemWithExpiry("userData2")?.id,
           };
@@ -88,92 +86,94 @@ const SideItemsFilter = ({ products, totalProductsPrice, setIsOpen }) => {
   };
 
   return (
-    <div>
-      {/* header */}
-      <div className="sticky flex items-center justify-center w-full text-white bg-gray-700 dark:bg-gray-800 gap-x-3">
-        <BsFillBagCheckFill />
-        <p>
-          {products?.length} {products?.length > 1 ? "Items" : "Item"}
-        </p>
-      </div>
+    <div className="flex justify-between  h-[100vh] flex-col bg-white dark:bg-gray-700">
+      <div>
+        {/* header */}
+        <div className="sticky flex items-center justify-center w-full text-white bg-gray-700 dark:bg-gray-800 gap-x-3">
+          <BsFillBagCheckFill />
+          <p>
+            {products?.length} {products?.length > 1 ? "Items" : "Item"}
+          </p>
+        </div>
 
-      {/* content */}
-      <div className="bg-white dark:bg-gray-700 pb-14">
-        {products?.map((item, index) => (
-          <div key={index}>
-            <div className="flex items-center gap-2 justify-between px-1 gap-y-1">
-              <div className="flex flex-col items-center justify-start">
-                <button
-                  className="disabled:opacity-20"
-                  disabled={
-                    item?.quantity == item?.customerChoiceProductQuantity
-                  }
-                  onClick={() => {
-                    store.dispatch(
-                      IncreaseProductQuantity({ id: item?._id, count: 1 })
-                    );
-                    store.dispatch(setTotalProductsPrice());
-                  }}
-                >
-                  <MdOutlineKeyboardArrowUp />
-                </button>
-                <p>{item?.customerChoiceProductQuantity}</p>
-                <button
-                  className="disabled:opacity-20"
-                  disabled={item?.customerChoiceProductQuantity <= 1}
-                  onClick={() => {
-                    store.dispatch(
-                      DecreaseProductQuantity({ id: item?._id, count: 1 })
-                    );
-                    store.dispatch(setTotalProductsPrice());
-                  }}
-                >
-                  <MdOutlineKeyboardArrowDown />
-                </button>
+        {/* content */}
+        <div className="bg-white dark:bg-gray-700 pb-14">
+          {products?.map((item, index) => (
+            <div key={index}>
+              <div className="flex items-center gap-2 justify-between px-1 gap-y-1">
+                <div className="flex flex-col items-center justify-start">
+                  <button
+                    className="disabled:opacity-20"
+                    disabled={
+                      item?.quantity == item?.customerChoiceProductQuantity
+                    }
+                    onClick={() => {
+                      store.dispatch(
+                        IncreaseProductQuantity({ id: item?._id, count: 1 })
+                      );
+                      store.dispatch(setTotalProductsPrice());
+                    }}
+                  >
+                    <MdOutlineKeyboardArrowUp />
+                  </button>
+                  <p>{item?.customerChoiceProductQuantity}</p>
+                  <button
+                    className="disabled:opacity-20"
+                    disabled={item?.customerChoiceProductQuantity <= 1}
+                    onClick={() => {
+                      store.dispatch(
+                        DecreaseProductQuantity({ id: item?._id, count: 1 })
+                      );
+                      store.dispatch(setTotalProductsPrice());
+                    }}
+                  >
+                    <MdOutlineKeyboardArrowDown />
+                  </button>
+                </div>
+                <div>
+                  {item?.img?.length > 0 && (
+                    <img
+                      className="object-contain	"
+                      width={"40px"}
+                      height={"40px"}
+                      src={item?.img?.[0]?.secure_url}
+                      alt="bag"
+                    />
+                  )}
+                </div>
+                <div>
+                  <p className="text-[13px] text-black dark:text-white">
+                    {item?.name?.length > 36
+                      ? item?.name.substr(0, 35) + "..."
+                      : item?.name}
+                  </p>
+                  <p className="text-[11px] text-black dark:text-white">
+                    pcs: 1kg
+                  </p>
+                </div>
+                <div className="flex flex-col ">
+                  <p className="text-[13px] dark:text-white text-white">
+                    ৳{item?.finalPrice * item?.customerChoiceProductQuantity}
+                  </p>
+                </div>
+                <div>
+                  <button
+                    onClick={() => {
+                      store.dispatch(deleteAddToCartProduct(item?._id));
+                      store.dispatch(setTotalProductsPrice());
+                    }}
+                  >
+                    <AiOutlineClose size={13} />
+                  </button>
+                </div>
               </div>
-              <div>
-                {item?.img?.length > 0 && (
-                  <img
-                    className="object-contain	"
-                    width={"40px"}
-                    height={"40px"}
-                    src={item?.img?.[0]?.secure_url}
-                    alt="bag"
-                  />
-                )}
-              </div>
-              <div>
-                <p className="text-[13px] text-black dark:text-white">
-                  {item?.name?.length > 36
-                    ? item?.name.substr(0, 35) + "..."
-                    : item?.name}
-                </p>
-                <p className="text-[11px] text-black dark:text-white">
-                  pcs: 1kg
-                </p>
-              </div>
-              <div className="flex flex-col ">
-                <p className="text-[13px] dark:text-white text-white">
-                  ৳{item?.finalPrice * item?.customerChoiceProductQuantity}
-                </p>
-              </div>
-              <div>
-                <button
-                  onClick={() => {
-                    store.dispatch(deleteAddToCartProduct(item?._id));
-                    store.dispatch(setTotalProductsPrice());
-                  }}
-                >
-                  <AiOutlineClose size={13} />
-                </button>
-              </div>
+              <hr className=" h-[1.5px] my-0.5  border-t-0 bg-gray-100 " />
             </div>
-            <hr className=" h-[1.5px] my-0.5  border-t-0 bg-gray-100 " />
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-      {/* footer */}
 
+      {/* footer */}
       <div className="sticky bottom-0 bg-slate-50 dark:bg-gray-800">
         <div className="bg-gray-200 dark:bg-gray-400">
           <h5
@@ -218,7 +218,7 @@ const SideItemsFilter = ({ products, totalProductsPrice, setIsOpen }) => {
             </div>
           )}
         </div>
-        <div className="flex px-2 pt-2 pb-2    border-t-2 border-gray-300 dark:border-gray-400">
+        <div className="flex     border-t-2 border-b-2 border-gray-300 dark:border-gray-400">
           <button
             onClick={handleOrderPlaceOrder}
             className="text-white w-full py-1.5 bg-primary dark:bg-gray-700 text-[15px]"

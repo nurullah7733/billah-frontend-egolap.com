@@ -10,10 +10,9 @@ const signupSchema = Yup.object().shape({
   email: Yup.string().required("Email is required").email(),
   mobile: Yup.string().required("Mobile is required").min(11).max(11),
   password: Yup.string().required("Password is required").min(6),
-  confirmPassword: Yup.string().oneOf(
-    [Yup.ref("password"), null],
-    "Passwords must match!"
-  ),
+  confirmPassword: Yup.string()
+    .required("Confirm Password is required")
+    .oneOf([Yup.ref("password"), null], "Passwords must match!"),
 });
 
 const SignupForm = () => {
@@ -27,11 +26,24 @@ const SignupForm = () => {
       confirmPassword: "",
     },
     validationSchema: signupSchema,
-    onSubmit: async ({ fullName, email, mobile, password }) => {
+    onSubmit: async ({
+      fullName,
+      email,
+      mobile,
+      password,
+      confirmPassword,
+    }) => {
       var fullNames = fullName.split(" "),
         firstName = fullNames?.[0],
         lastName = fullNames[fullNames.length - 1];
-      let data = { firstName, lastName, email, mobile, password };
+      let data = {
+        firstName,
+        lastName,
+        email,
+        mobile,
+        password,
+        confirmPassword,
+      };
       let result = await registrationRequest(data);
       if (result) {
         router.push("/login");
@@ -88,7 +100,7 @@ const SignupForm = () => {
               onChange={handleChange}
               onBlur={handleBlur("mobile")}
             />
-            {errors.email && touched.email && (
+            {errors.mobile && touched.mobile && (
               <span className="text-sm text-red-600">{errors.mobile}</span>
             )}
           </div>

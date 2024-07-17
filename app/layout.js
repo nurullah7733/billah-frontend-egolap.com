@@ -12,8 +12,8 @@ import Header from "@components/header/header";
 import Footer from "../components/footer/footer";
 import CategoriesSlider from "../components/categories/categories";
 import TopItemAndPrice from "../components/common/topItemAndPrice/topItemAndPrice";
-import { getAllWebSettings } from "../APIRequest/webSettings/webSettingsApi";
 import { getCategoriesRequest } from "../APIRequest/categories/categoriesApi";
+import { getSocialLinksRequest } from "../APIRequest/socialLinks/socialLinksApi";
 
 import dynamic from "next/dynamic";
 
@@ -34,8 +34,9 @@ export default async function RootLayout({ children }) {
   const CrispWithNoSSR = dynamic(() => import("./CrispScript.client"));
   let cookie = cookies();
   let token = cookie.get("token2")?.value || cookie.get("token")?.value;
-  const getAllWebSettingsData = await getAllWebSettings();
+
   let categories = await getCategoriesRequest();
+  let socialLinks = await getSocialLinksRequest();
 
   return (
     <html lang="en">
@@ -49,7 +50,7 @@ export default async function RootLayout({ children }) {
             {children}
             <AppProgressbarProvider />
             <TopItemAndPrice />
-            <Footer socialLink={getAllWebSettingsData?.[0]?.socialLink} />
+            <Footer socialLinks={socialLinks} />
           </NextThemeProvider>
         </ReduxProvider>
       </body>

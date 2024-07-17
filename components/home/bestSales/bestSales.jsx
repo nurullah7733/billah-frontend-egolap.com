@@ -2,9 +2,11 @@ import Product from "../../common/product/product";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { getBestSalesBannerRequest } from "../../../APIRequest/banners/bannersApi";
 import { getBestSalesProducts } from "../../../APIRequest/products/productsApi";
 
-const BestSales = async ({ banner }) => {
+const BestSales = async () => {
+  const banner = await getBestSalesBannerRequest();
   const data = await getBestSalesProducts();
   return (
     <div className="block px-3 py-5 mt-3 ">
@@ -18,7 +20,7 @@ const BestSales = async ({ banner }) => {
           <div className="pb-4">
             <Link href="#">
               <Image
-                src={banner?.[0]?.secure_url}
+                src={banner?.[0]?.img?.slice(-1)?.[0].secure_url}
                 width={1536}
                 height={200}
                 alt="1"

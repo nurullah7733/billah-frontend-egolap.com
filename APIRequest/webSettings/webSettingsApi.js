@@ -1,19 +1,5 @@
 import baseUrl from "../../utils/config/baseUrl";
 
-// get all web settings
-export const getAllWebSettings = async () => {
-  let url = `${baseUrl}/get-all-web-settings`;
-
-  const res = await fetch(url, { next: { revalidate: 600 } });
-  if (!res.ok) {
-    throw new Error(
-      "There was an error fetching top, best, electronics products banners"
-    );
-  }
-  const data = await res.json();
-  return data?.data;
-};
-
 // get contact us paragraph
 export const contactUsParagraphRequest = async () => {
   let url = `${baseUrl}/list-contact-us`;
@@ -95,7 +81,7 @@ export const termOfUseParagraphRequest = async () => {
   const data = await res.json();
   return data?.data;
 };
-// get term of use Paragraph
+// get team
 export const teamParagraphRequest = async () => {
   let url = `${baseUrl}/list-team`;
 

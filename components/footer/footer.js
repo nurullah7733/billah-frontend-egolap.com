@@ -21,13 +21,9 @@ import {
 } from "../../utils/sessionHelper/sessionHelper";
 import store from "../../redux/store";
 import { setAddToCartProductFromLocalStorage } from "../../redux/features/addToCart/addToCartSlice";
-import { setApplicationAllSettings } from "../../redux/features/applicationAllSettings/applicationAllSettingsSlice";
-import {
-  aboutUsFooterParagraphRequest,
-  getAllWebSettings,
-} from "../../APIRequest/webSettings/webSettingsApi";
+import { aboutUsFooterParagraphRequest } from "../../APIRequest/webSettings/webSettingsApi";
 
-const Footer = ({ socialLink }) => {
+const Footer = ({ socialLinks }) => {
   let [footerPara, setFooterPara] = React.useState([]);
 
   useEffect(() => {
@@ -46,15 +42,6 @@ const Footer = ({ socialLink }) => {
         );
       }
     }
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      let result = await getAllWebSettings();
-      if (result.length > 0) {
-        store.dispatch(setApplicationAllSettings(result));
-      }
-    })();
   }, []);
 
   useEffect(() => {
@@ -127,79 +114,75 @@ const Footer = ({ socialLink }) => {
                   parse(footerPara?.slice(-1)?.[0]?.aboutUs)}
               </div>
               {/* social icons */}
+
               <div className="flex gap-2 pt-3">
-                <p>
-                  {socialLink?.facebook.length > 3 ? (
-                    <a href={socialLink?.facebook} target="_blank">
-                      <FaFacebook size={23} color="fff" />
-                    </a>
-                  ) : (
-                    ""
-                  )}
-                </p>
-                <p>
-                  {socialLink?.youtube.length > 3 ? (
-                    <a href={socialLink?.youtube} target="_blank">
-                      <FaYoutube size={23} color="fff" />
-                    </a>
-                  ) : (
-                    ""
-                  )}
-                </p>
-                <p>
-                  {socialLink?.twitter.length > 3 ? (
-                    <a href={socialLink?.twitter} target="_blank">
-                      <FaTwitter size={23} color="fff" />
-                    </a>
-                  ) : (
-                    ""
-                  )}
-                </p>
-                <p>
-                  {socialLink?.instagram.length > 3 ? (
-                    <a href={socialLink?.instagram} target="_blank">
-                      <FaInstagram size={23} color="fff" />
-                    </a>
-                  ) : (
-                    ""
-                  )}
-                </p>
-                <p>
-                  {socialLink?.whatsapp.length > 3 ? (
-                    <a href={socialLink?.whatsapp} target="_blank">
-                      <FaWhatsapp size={23} color="fff" />
-                    </a>
-                  ) : (
-                    ""
-                  )}
-                </p>
-                <p>
-                  {socialLink?.wechat.length > 3 ? (
-                    <a href={socialLink?.wechat} target="_blank">
-                      <BsWechat size={23} color="fff" />
-                    </a>
-                  ) : (
-                    ""
-                  )}
-                </p>
-                <p>
-                  {socialLink?.tiktok.length > 3 ? (
-                    <a href={socialLink?.tiktok} target="_blank">
-                      <FaTiktok size={23} color="fff" />
-                    </a>
-                  ) : (
-                    ""
-                  )}
-                </p>
-                <p>
-                  {socialLink?.linkedin.length > 3 ? (
-                    <a href={socialLink?.linkedin} target="_blank">
-                      <FaLinkedin size={23} color="fff" />
-                    </a>
-                  ) : (
-                    ""
-                  )}
-                </p>
+                {socialLinks?.map((item, index) => {
+                  if (item.name.toLowerCase() === "facebook") {
+                    return (
+                      <p>
+                        <a href={item?.socialLink} target="_blank">
+                          <FaFacebook size={23} color="fff" />
+                        </a>
+                      </p>
+                    );
+                  } else if (item.name.toLowerCase() === "youtube") {
+                    return (
+                      <p>
+                        <a href={item?.socialLink} target="_blank">
+                          <FaYoutube size={23} color="fff" />
+                        </a>
+                      </p>
+                    );
+                  } else if (item.name.toLowerCase() === "twitter") {
+                    return (
+                      <p>
+                        <a href={item?.socialLink} target="_blank">
+                          <FaTwitter size={23} color="fff" />
+                        </a>
+                      </p>
+                    );
+                  } else if (item.name.toLowerCase() === "instagram") {
+                    return (
+                      <p>
+                        <a href={item?.socialLink} target="_blank">
+                          <FaInstagram size={23} color="fff" />
+                        </a>
+                      </p>
+                    );
+                  } else if (item.name.toLowerCase() === "whatsapp") {
+                    return (
+                      <p>
+                        <a href={item?.socialLink} target="_blank">
+                          <FaWhatsapp size={23} color="fff" />
+                        </a>
+                      </p>
+                    );
+                  } else if (item.name.toLowerCase() === "linkedin") {
+                    return (
+                      <p>
+                        <a href={item?.socialLink} target="_blank">
+                          <FaLinkedin size={23} color="fff" />
+                        </a>
+                      </p>
+                    );
+                  } else if (item.name.toLowerCase() === "wechat") {
+                    return (
+                      <p>
+                        <a href={item?.socialLink} target="_blank">
+                          <BsWechat size={23} color="fff" />
+                        </a>
+                      </p>
+                    );
+                  } else if (item.name.toLowerCase() === "tiktok") {
+                    return (
+                      <p>
+                        <a href={item?.socialLink} target="_blank">
+                          <FaTiktok size={23} color="fff" />
+                        </a>
+                      </p>
+                    );
+                  }
+                })}
               </div>
             </div>
             <div className="max-w-[25%] lg:max-w-none">
@@ -225,6 +208,18 @@ const Footer = ({ socialLink }) => {
                   </a>
                 </Link>
               </p>
+              <div className="pt-3">
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.egolap.egolap"
+                  target="_blank"
+                >
+                  <img
+                    src="/assets/icons/google-play-badge-logo.png"
+                    width={150}
+                    height={50}
+                  />
+                </a>
+              </div>
             </div>
             <div className="max-w-[25%] lg:max-w-none">
               <h2 className="pb-1 text-3xl text-white">About E-golap</h2>

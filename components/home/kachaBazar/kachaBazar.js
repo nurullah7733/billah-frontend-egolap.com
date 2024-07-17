@@ -3,20 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { getBestSalesProvisionalProducts } from "../../../APIRequest/products/productsApi";
+import { getKachaBazarBannerRequest } from "../../../APIRequest/banners/bannersApi";
 
-let hi = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11, 12];
-let item = {
-  productName: "Provisional Bazar best sales of the year",
-  price: 1547,
-  unitPrice: 1030,
-  available: 4,
-  percentegeOfPrice: "-23%",
-  weight: "3pcs",
-  ratting: 4,
-  showAddToCardBtn: 0,
-};
-
-const KachaBazar = async ({ banner }) => {
+const KachaBazar = async () => {
+  const banner = await getKachaBazarBannerRequest();
   const data = await getBestSalesProvisionalProducts();
 
   return (
@@ -30,7 +20,7 @@ const KachaBazar = async ({ banner }) => {
           <div className="pb-4">
             <Link href="#">
               <Image
-                src={banner?.[0]?.secure_url}
+                src={banner?.[0]?.img?.slice(-1)?.[0].secure_url}
                 width={1536}
                 height={200}
                 alt="3"

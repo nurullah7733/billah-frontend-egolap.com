@@ -8,6 +8,7 @@ import {
 import Paragraph from "./paragraph/paragraph";
 import { Suspense } from "react";
 import ContactForm from "./contactForm/contactForm";
+import { getContactUsBannerRequest } from "../../../APIRequest/banners/bannersApi";
 
 export const metadata = {
   title: "Contact Egolap.com - We're Here to Assist You!",
@@ -22,15 +23,14 @@ export const metadata = {
 };
 
 const Page = async () => {
-  let getAllWebSettingsPromise = getAllWebSettings();
   let contactUsParagraphPromise = contactUsParagraphRequest();
-  let data = await getAllWebSettingsPromise;
+  let data = await getContactUsBannerRequest();
 
   return (
     <div>
       <HelpPageTopImage
         altName={"contact us image"}
-        imagePath={data?.[0]?.contactUsImg?.slice(-1)?.[0]?.secure_url}
+        imagePath={data?.[0]?.img?.slice(-1)?.[0]?.secure_url}
         headerInImage={"contact us"}
       />
       <HelpPageMenubar />

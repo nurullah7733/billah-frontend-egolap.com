@@ -17,9 +17,11 @@ import {
 } from "../../utils/formValidation/formValidation";
 import { createOrder } from "../../APIRequest/orders/ordersApi";
 import {
-  getDistrictsAndUpazilasRequest,
+  getDistrictsRequest,
   getDivisionsRequest,
-} from "../../APIRequest/bd/bdApi";
+  getUpazillasRequest,
+} from "../../APIRequest/bdApi/getBdApi";
+import { getShippingCostRequest } from "../../APIRequest/shippingCost/shippingCostApi";
 import {
   setOtherCost,
   setShippingCost,
@@ -30,13 +32,10 @@ const Checkout = () => {
   const [divisions, setDivisions] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [upazillas, setUpazillas] = useState([]);
+  const [shippingCostFromApi, setShippingCostFromApi] = useState([]);
 
   const formValue = useSelector(
     (state) => state.userShippingAddressForm.formValue
-  );
-
-  const applicationAllSettings = useSelector(
-    (state) => state.applicationAllSettings.applicationAllSettings
   );
 
   const {
@@ -158,13 +157,23 @@ const Checkout = () => {
   };
 
   const divisionChangeHandler = (e) => {
+    const selectedDivisionId =
+      e.target.options[e.target.selectedIndex].getAttribute("dataId");
+
     store.dispatch(
       setShippingAddressFormValue({
         Name: "division",
         Value: e.target.value,
       })
     );
-    // when user division change then rest the district and upazillas but district auto reset
+    // when user division change then reset the district
+    store.dispatch(
+      setShippingAddressFormValue({
+        Name: "district",
+        Value: "",
+      })
+    );
+    // when user division change then reset the upazilla
     store.dispatch(
       setShippingAddressFormValue({
         Name: "upazilla",
@@ -173,25 +182,35 @@ const Checkout = () => {
     );
     if (formValue.division !== "Select Division") {
       (async () => {
-        let data = await getDistrictsAndUpazilasRequest(e.target.value);
-        setDistricts(data.data);
-        setUpazillas([]);
+        let data = await getDistrictsRequest(selectedDivisionId);
+        setDistricts(data);
       })();
     }
   };
 
   const districtsChangeHandler = (e) => {
+    const selectedDistrictId =
+      e.target.options[e.target.selectedIndex].getAttribute("dataId");
     store.dispatch(
       setShippingAddressFormValue({
         Name: "district",
         Value: e.target.value,
       })
     );
+
+    // when user district change then reset the upazilla
+    store.dispatch(
+      setShippingAddressFormValue({
+        Name: "upazilla",
+        Value: "",
+      })
+    );
+
     if (formValue.district !== "Select District") {
-      let upazilla = districts?.find(
-        (value) => value?.district === e.target.value
-      );
-      setUpazillas(upazilla?.upazilla);
+      (async () => {
+        let data = await getUpazillasRequest(selectedDistrictId);
+        setUpazillas(data);
+      })();
     }
   };
 
@@ -206,12 +225,10 @@ const Checkout = () => {
     if (e.target.value !== "Select Upazilla") {
       if (e.target.value === "Thakurgaon Sadar") {
         store.dispatch(
-          setShippingCost(
-            applicationAllSettings?.[0]?.shippingCostThakurgaonSadar
-          )
+          setShippingCost(shippingCostFromApi?.shippingCostThakurgaonSadar)
         );
         store.dispatch(
-          setOtherCost(applicationAllSettings?.[0]?.otherCostThakurgaonSadar)
+          setOtherCost(shippingCostFromApi?.otherCostThakurgaonSadar)
         );
       } else if (
         e.target.value === "Haripur" ||
@@ -220,11 +237,9 @@ const Checkout = () => {
         e.target.value === "Pirganj"
       ) {
         store.dispatch(
-          setShippingCost(applicationAllSettings?.[0]?.shippingCostThakurgaon)
+          setShippingCost(shippingCostFromApi?.shippingCostThakurgaon)
         );
-        store.dispatch(
-          setOtherCost(applicationAllSettings?.[0]?.otherCostThakurgaon)
-        );
+        store.dispatch(setOtherCost(shippingCostFromApi?.otherCostThakurgaon));
       } else if (
         e.target.value === "Dohar" ||
         e.target.value === "Savar" ||
@@ -232,25 +247,26 @@ const Checkout = () => {
         e.target.value === "Dhamrai" ||
         e.target.value === "Keraniganj"
       ) {
-        store.dispatch(
-          setShippingCost(applicationAllSettings?.[0]?.shippingCostDhaka)
-        );
-        store.dispatch(
-          setOtherCost(applicationAllSettings?.[0]?.otherCostDhaka)
-        );
+        store.dispatch(setShippingCost(shippingCostFromApi?.shippingCostDhaka));
+        store.dispatch(setOtherCost(shippingCostFromApi?.otherCostDhaka));
       } else {
-        store.dispatch(
-          setShippingCost(applicationAllSettings?.[0]?.shippingCost)
-        );
-        store.dispatch(setOtherCost(applicationAllSettings?.[0]?.otherCost));
+        store.dispatch(setShippingCost(shippingCostFromApi?.shippingCost));
+        store.dispatch(setOtherCost(shippingCostFromApi?.otherCost));
       }
     }
   };
 
   useEffect(() => {
     (async () => {
-      let division = await getDivisionsRequest();
-      setDivisions(division.data);
+      let divisions = await getDivisionsRequest();
+      setDivisions(divisions);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      let shippingCost = await getShippingCostRequest();
+      setShippingCostFromApi(shippingCost);
     })();
   }, []);
 
@@ -427,8 +443,12 @@ const Checkout = () => {
                         >
                           <option value="">Select Division</option>
                           {divisions?.map((division, index) => (
-                            <option key={index} value={division?.division}>
-                              {division?.division}
+                            <option
+                              key={index}
+                              value={division?.name}
+                              dataId={division?.id}
+                            >
+                              {division?.name}
                             </option>
                           ))}
                         </select>
@@ -456,8 +476,12 @@ const Checkout = () => {
                         >
                           <option value="">Select District</option>
                           {districts?.map((district, index) => (
-                            <option key={index} value={district?.district}>
-                              {district?.district}
+                            <option
+                              key={index}
+                              value={district?.name}
+                              dataId={district?.id}
+                            >
+                              {district?.name}
                             </option>
                           ))}
                         </select>
@@ -482,8 +506,8 @@ const Checkout = () => {
                         >
                           <option value="">Select Upazilla</option>
                           {upazillas?.map((upazilla, index) => (
-                            <option key={index} value={upazilla}>
-                              {upazilla}
+                            <option key={index} value={upazilla?.name}>
+                              {upazilla?.name}
                             </option>
                           ))}
                         </select>
@@ -520,16 +544,17 @@ const Checkout = () => {
                   {/* Payable Total */}
                   <div className="hidden p-4 -mx-4 bg-gray-200 dark:bg-gray-500 mt-9 md:block">
                     <h2 className="mb-1 text-2xl font-semibold md:text-xl">
-                      Payable Total:{" "}
-                      {numberWithCommas(
-                        totalProductsPrice +
-                          Number(shippingCost) +
-                          Number(otherCost)
-                      )}{" "}
-                      Tk.
+                      Payable Total: ৳
+                      {formValue.upazilla.length > 0
+                        ? numberWithCommas(
+                            totalProductsPrice +
+                              Number(shippingCost) +
+                              Number(otherCost)
+                          )
+                        : numberWithCommas(totalProductsPrice)}
                     </h2>
                     <div
-                      className="flex items-center underline dark:decoration-gray-200 text-primary"
+                      className="flex cursor-pointer items-center underline dark:decoration-gray-200 text-primary"
                       onClick={toggleDrawer}
                     >
                       <CgList

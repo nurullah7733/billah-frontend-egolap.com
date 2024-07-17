@@ -7,6 +7,7 @@ import {
 } from "../../../APIRequest/webSettings/webSettingsApi";
 import Paragraph from "./paragraph/paragraph";
 import { Suspense } from "react";
+import { getFaqBannerRequest } from "../../../APIRequest/banners/bannersApi";
 
 export const metadata = {
   title: "Egolap.com FAQs - Answers to Your Common Questions",
@@ -21,16 +22,14 @@ export const metadata = {
 };
 
 const Page = async () => {
-  let getAllWebSettingsPromise = getAllWebSettings();
   let faqPromise = faqRequest();
-
-  let data = await getAllWebSettingsPromise;
+  let data = await getFaqBannerRequest();
 
   return (
     <div>
       <HelpPageTopImage
         altName={"faq image"}
-        imagePath={data?.[0]?.faqImg?.slice(-1)?.[0]?.secure_url}
+        imagePath={data?.[0]?.img?.slice(-1)?.[0]?.secure_url}
         headerInImage={"Faq"}
       />
       <HelpPageMenubar />

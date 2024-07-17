@@ -8,6 +8,7 @@ import {
 } from "../../../APIRequest/webSettings/webSettingsApi";
 import Paragraph from "./paragraph/paragraph";
 import { Suspense } from "react";
+import { getTermOfUseBannerRequest } from "../../../APIRequest/banners/bannersApi";
 
 export const metadata = {
   title: "Egolap.com Terms of Use - Your Guide to Responsible Shopping",
@@ -22,15 +23,14 @@ export const metadata = {
 };
 
 const Page = async () => {
-  let getAllWebSettingsPromise = getAllWebSettings();
   let termOfUseParagraphPromise = termOfUseParagraphRequest();
-  let data = await getAllWebSettingsPromise;
+  let data = await getTermOfUseBannerRequest();
 
   return (
     <div>
       <HelpPageTopImage
         altName={"Terms-of-use image"}
-        imagePath={data?.[0]?.termOfUse?.slice(-1)?.[0]?.secure_url}
+        imagePath={data?.[0]?.img?.slice(-1)?.[0]?.secure_url}
         headerInImage={"Terms-of-use"}
       />
       <HelpPageMenubar />

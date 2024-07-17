@@ -8,6 +8,7 @@ import {
   privacyPolicyParagraphRequest,
 } from "../../../APIRequest/webSettings/webSettingsApi";
 import { Suspense } from "react";
+import { getPrivacyPolicyBannerRequest } from "../../../APIRequest/banners/bannersApi";
 
 export const metadata = {
   title: "Egolap.com Privacy Policy - Your Data, Your Privacy, Our Commitment",
@@ -22,15 +23,14 @@ export const metadata = {
 };
 
 const Page = async () => {
-  let getAllWebSettingsPromise = getAllWebSettings();
   let privacyPolicyParagraphPromise = privacyPolicyParagraphRequest();
-  let data = await getAllWebSettingsPromise;
+  let data = await getPrivacyPolicyBannerRequest();
 
   return (
     <div>
       <HelpPageTopImage
         altName={"privacy-policy image"}
-        imagePath={data?.[0]?.privacyPolicyImg?.slice(-1)?.[0]?.secure_url}
+        imagePath={data?.[0]?.img?.slice(-1)?.[0]?.secure_url}
         headerInImage={"privacy-policy"}
       />
       <HelpPageMenubar />

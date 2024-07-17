@@ -128,7 +128,13 @@ const CategoriesSlider = ({ categories }) => {
                         className={`category-dropdown  absolute `}
                         style={{
                           top: width < 768 ? 260 : width < 1280 ? 190 : 145,
-                          left: categoryPosition.left + 50,
+                          left:
+                            categoryPosition.left +
+                            (index === categories.length - 1
+                              ? width < 768
+                                ? -100
+                                : -25
+                              : 15),
                         }}
                       >
                         <div

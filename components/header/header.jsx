@@ -128,19 +128,21 @@ const Header = ({ token }) => {
                 {/* search */}
                 <div className="pt-2 pb-4">
                   <div>
-                    <div className="relative ">
-                      <input
-                        type="text"
-                        className="w-full h-10 py-2 pl-4 pr-10 leading-tight text-black border border-gray-300 rounded-md shadow-sm focus:outline-none dark:text-white"
-                        placeholder="Search"
-                        onChange={handleChange}
-                      />
-                      <div className="absolute inset-y-0 right-0 flex items-center px-7">
-                        <div onClick={handleSearch}>
-                          <AiOutlineSearch className="text-lg text-primary dark:text-white" />
+                    <form>
+                      <div className="relative ">
+                        <input
+                          type="text"
+                          className="w-full h-10 py-2 pl-4 pr-10 leading-tight text-black border border-gray-300 rounded-md shadow-sm focus:outline-none dark:text-white"
+                          placeholder="Search"
+                          onChange={handleChange}
+                        />
+                        <div className="absolute inset-y-0 right-0 flex items-center px-7">
+                          <div onClick={handleSearch} type="submit">
+                            <AiOutlineSearch className="text-lg text-primary dark:text-white" />
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </form>
                   </div>
                 </div>
               </div>

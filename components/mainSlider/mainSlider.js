@@ -6,11 +6,11 @@ import Slider from "react-slick";
 import { getItemWithExpiry } from "../../utils/localStorageWithExpire/localStorageWithExpire";
 import { useSelector } from "react-redux";
 import { userAddToCartOrUpdateRequest } from "../../APIRequest/user/userApi";
+import { getMainSlidersRequest } from "../../APIRequest/mainSliders/mainSlidersApi";
 
-const MainSlider = ({ slider, token }) => {
-  let sliderReverse = slider?.map(
-    (element, index, array) => array[array.length - index - 1]
-  );
+const MainSlider = ({ token }) => {
+  let [slider, setSlider] = React.useState([]);
+
   let addToCartProducts = useSelector(
     (state) => state.addToCartProducts.products
   );
@@ -36,6 +36,17 @@ const MainSlider = ({ slider, token }) => {
     };
   });
 
+  useEffect(() => {
+    (async () => {
+      let data = await getMainSlidersRequest();
+      if (data?.[0]?.total[0]?.count > 0) {
+        setSlider(data?.[0]?.rows);
+      } else {
+        setSlider([]);
+      }
+    })();
+  }, []);
+
   return (
     <div
       className="relative pt-16 mt-3 text-black dark:bg-gray-700 dark:text-white md:pt-32"
@@ -47,13 +58,13 @@ const MainSlider = ({ slider, token }) => {
     >
       <div className="mx-auto max-w-[1680px] overflow-hidden">
         <Slider {...settings}>
-          {sliderReverse?.map((item, index) => (
+          {slider?.map((item, index) => (
             <div key={index}>
               <Link href={item?.link ? item?.link : "#"}>
                 <Image
-                  src={item?.secure_url}
+                  src={item?.img?.slice(-1)?.[0]?.secure_url}
                   placeholder="blur"
-                  blurDataURL={item?.secure_url}
+                  blurDataURL={item?.img?.slice(-1)?.[0]?.secure_url}
                   alt="Daily egolap offers"
                   width={1680}
                   height={450}

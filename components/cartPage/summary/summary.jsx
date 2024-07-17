@@ -212,9 +212,13 @@ const Summary = ({
             <span className="text-sm md:text-[12px] ">Grand Total</span>
             <span className="md:text-[12px] ">
               ৳
-              {numberWithCommas(
-                totalProductsPrice + Number(shippingCost) + Number(otherCost)
-              )}
+              {formValue.upazilla.length > 0
+                ? numberWithCommas(
+                    totalProductsPrice +
+                      Number(shippingCost) +
+                      Number(otherCost)
+                  )
+                : numberWithCommas(totalProductsPrice)}
             </span>
           </div>
 
@@ -235,9 +239,13 @@ const Summary = ({
             <span className="text-sm md:text-[13px] ">payable Total</span>
             <span className="md:text-[13px] ">
               ৳
-              {numberWithCommas(
-                totalProductsPrice + Number(shippingCost) + Number(otherCost)
-              )}
+              {formValue.upazilla.length > 0
+                ? numberWithCommas(
+                    totalProductsPrice +
+                      Number(shippingCost) +
+                      Number(otherCost)
+                  )
+                : numberWithCommas(totalProductsPrice)}
             </span>
           </div>
 

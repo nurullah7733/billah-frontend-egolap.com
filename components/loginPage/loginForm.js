@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import {
   loginRequest,
   userAddToCartOrUpdateRequest,
@@ -23,6 +24,8 @@ const loginSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
   let [loading, setLoading] = useState(false);
   let [
     whenConcatAddToCartProductsAndUseSelectorCards,
@@ -92,18 +95,29 @@ const LoginForm = () => {
             )}
           </div>
 
-          <div className="mb-4">
-            <input
-              type="password"
-              className="block w-full p-2 border rounded outline-none"
-              name="password"
-              placeholder="Password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur("password")}
-            />
-            {errors.password && touched.password && (
-              <span className="text-sm text-red-600">{errors.password}</span>
+          <div className="mb-4 ">
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="block w-full p-2 border rounded outline-none"
+                name="password"
+                placeholder="Password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              >
+                {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+              </button>
+            </div>
+            {formik.errors.password && formik.touched.password && (
+              <span className="text-sm text-red-600">
+                {formik.errors.password}
+              </span>
             )}
           </div>
 
