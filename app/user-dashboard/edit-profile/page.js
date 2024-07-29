@@ -38,7 +38,6 @@ const EditProfile = () => {
     }
   };
   const handleSubmit = async (e) => {
-    console.log(inputImg, "inputImg");
     e.preventDefault();
     if (!IsEmpty(name)) {
       ErrorToast("Name is required");
@@ -63,8 +62,7 @@ const EditProfile = () => {
         getItemWithExpiry("userData2")?.id
       );
       setLoading(false);
-      console.log(result, "data");
-      alert(JSON.stringify(result));
+
       if (result) {
         let pushDataToLocalStorage = {
           firstName: result?.firstName,

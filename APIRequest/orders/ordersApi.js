@@ -9,7 +9,6 @@ import { setUserAddToCartInLocalStorage } from "../../utils/sessionHelper/sessio
 import { userUpdateRequest } from "../user/userApi";
 
 export const createOrder = async (data) => {
-  console.log(data, "create order");
   let url = `${baseUrl}/create-order`;
   const config = {
     method: "POST",

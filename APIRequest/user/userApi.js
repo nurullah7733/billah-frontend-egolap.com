@@ -73,7 +73,6 @@ export const registrationRequest = async (data) => {
 };
 
 export const userUpdateRequest = async (data, id) => {
-  console.log(data, "api");
   let url = `${baseUrl}/user-udpate-by-user/${id}`;
   const config = {
     method: "POST",
@@ -88,7 +87,6 @@ export const userUpdateRequest = async (data, id) => {
     const res = await fetch(url, config);
     const data = await res.json();
     if (res.status === 200 && data.status === "success") {
-      console.log(data, "data");
       return data?.data;
     } else if (data.status === "fail" && data?.data?.keyPattern?.mobile === 1) {
       ErrorToast("Mobile number already exits.");
