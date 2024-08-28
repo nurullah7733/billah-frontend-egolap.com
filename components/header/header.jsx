@@ -1,14 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaShoppingCart } from "react-icons/fa";
 import DarkModeToggleButton from "../common/darkModeToggleButton/darkModeToggleButton";
 import ProfileDropdown from "@components/common/dropdown/dropdownProfile";
 import ClientOnly from "@components/clientOnly/clientOnly";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useSelector } from "react-redux";
+import debounce from "lodash.debounce";
 
 const Header = ({ token }) => {
   let addToCartProducts = useSelector(
@@ -17,40 +18,33 @@ const Header = ({ token }) => {
 
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   let [searchValue, setSearchValue] = useState("0");
   let [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
+
   let hangleIsOpenMobileMenu = () => {
     setIsOpenMobileMenu(!isOpenMobileMenu);
   };
 
-  let current = new URLSearchParams(Array.from(searchParams.entries()));
+  // Debounced search function
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((value) => {
+        const searchParams = new URLSearchParams();
+        searchParams.set("searchKeyword", value || "0");
+        router.push(`/store?pageNo=1&perPage=30&${searchParams.toString()}`);
+      }, 400),
+    [router, pathname]
+  );
+
   const handleChange = (e) => {
-    setSearchValue(e.target.value);
-    if (!e.target.value) {
-      current.set("searchKeyword", "0");
-      const search = current.toString();
-      const query = search ? `?${search}` : "";
-      router.push(`${pathname}${query}`);
-    }
+    const value = e.target.value;
+    setSearchValue(value);
+    debouncedSearch(value);
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (!searchValue) {
-      current.set("searchKeyword", "0");
-    } else {
-      current.set("searchKeyword", searchValue);
-    }
-    // const search = current.toString();
-    // const query = search ? `?${search}` : "";
-
-    // if (pathname === "/store") {
-    //   router.push(`${pathname}${query}`);
-    // } else {
-    //   router.push(`/store?pageNo=1&perPage=30&searchKeyword=${searchValue}`);
-    // }
-    router.push(`/store?pageNo=1&perPage=30&searchKeyword=${searchValue}`);
+    debouncedSearch(searchValue);
   };
 
   const dropdownMenus = [

@@ -72,6 +72,21 @@ const ProductInfo = ({ product }) => {
             ""
           )}
 
+          <div className="flex mb-1">
+            {product?.skinType?.length > 0 ? (
+              <>
+                <p className="w-[100px] text-[14px] font-semibold">
+                  Skin type:
+                </p>
+                <p className="text-[14px] text-black dark:text-white">
+                  {product?.skinType}
+                </p>
+              </>
+            ) : (
+              ""
+            )}
+          </div>
+
           {product?.size?.length > 0 ? (
             <div className="flex mb-3">
               <p className="w-32 font-semibold text-[14px]">Size:</p>
@@ -82,16 +97,40 @@ const ProductInfo = ({ product }) => {
               ))}
             </div>
           ) : (
-            <div className="flex mb-3">
-              <p className="w-32 font-semibold text-[14px]">Weight:</p>
-              <p>{product?.weight}</p>
-            </div>
+            <>
+              {product?.weight ? (
+                <div className="flex mb-3">
+                  <p className="w-32 font-semibold text-[14px]">Weight:</p>
+                  <p>{product?.weight}</p>
+                </div>
+              ) : (
+                ""
+              )}
+            </>
           )}
 
           <div className="flex mb-3">
             <p className="w-32 font-semibold text-[14px]">Sold:</p>
             <p>{product?.sold}</p>
           </div>
+
+          {product?.madeIn?.length > 0 ? (
+            <div className="flex mb-3">
+              <p className="w-32 font-semibold text-[14px]">Made in:</p>
+              <p>{product?.madeIn}</p>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {product?.brand?.length > 0 ? (
+            <div className="flex mb-3">
+              <p className="w-32 font-semibold text-[14px]">Brand:</p>
+              <p>{product?.brand?.[0]?.name}</p>
+            </div>
+          ) : (
+            ""
+          )}
 
           <div className="flex mb-3">
             <p className="w-32 font-semibold text-[14px]">Category:</p>
