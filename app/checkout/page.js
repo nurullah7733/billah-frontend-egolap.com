@@ -27,6 +27,70 @@ import {
   setShippingCost,
 } from "../../redux/features/addToCart/addToCartSlice";
 
+const insideDhakaUpozillas = [
+  "Adabor",
+  "Agargaon",
+  "Ati bazar",
+  "Badda",
+  "Banani",
+  "Bangshal",
+  "Bhashantek",
+  "Bimanbondor",
+  "Cantonment",
+  "Chawkbazar",
+  "Dakshinkhan",
+  "Darus-Salam",
+  "Demra",
+  "Dhanmondi",
+  "Gandaria",
+  "Gulshan",
+  "Hazaribag",
+  "Hatirjheel",
+  "Jatrabari",
+  "Kadomtoli",
+  "Kafrul",
+  "Kalabagan",
+  "Kamrangirchar",
+  "Khilgaon",
+  "Khilkhet",
+  "Kadamtoli",
+  "Kotwali",
+  "Kanchan bridge",
+  "Lalbagh",
+  "Maghbazar",
+  "Malibagh",
+  "Matuwail",
+  "Mirpur",
+  "Mirpur Model",
+  "Mohakhali",
+  "Mohammadpur",
+  "Motijheel",
+  "Mugda",
+  "New Market",
+  "New paltan azimpur",
+  "Pallabi",
+  "Paltan Model",
+  "Ramna Model",
+  "Rampura",
+  "Rupnagar",
+  "Sabujbag",
+  "Shah Ali",
+  "Shahbagh",
+  "Shahjahanpur",
+  "Sher e bangla",
+  "Shyamoli",
+  "Shyampur",
+  "Tejgaon",
+  "Tejgaon Shilpanchal",
+  "Turag",
+  "Uttara East",
+  "Uttara West",
+  "Uttarkhan",
+  "Vashantek",
+  "Vatara",
+  "Wari",
+];
+
 const Checkout = () => {
   const [loading, setLoading] = useState(false);
   const [divisions, setDivisions] = useState([]);
@@ -240,13 +304,8 @@ const Checkout = () => {
           setShippingCost(shippingCostFromApi?.shippingCostThakurgaon)
         );
         store.dispatch(setOtherCost(shippingCostFromApi?.otherCostThakurgaon));
-      } else if (
-        e.target.value === "Dohar" ||
-        e.target.value === "Savar" ||
-        e.target.value === "Nawabganj" ||
-        e.target.value === "Dhamrai" ||
-        e.target.value === "Keraniganj"
-      ) {
+        // inside Dhaka Upozillas
+      } else if (insideDhakaUpozillas.includes(e.target.value)) {
         store.dispatch(setShippingCost(shippingCostFromApi?.shippingCostDhaka));
         store.dispatch(setOtherCost(shippingCostFromApi?.otherCostDhaka));
       } else {
