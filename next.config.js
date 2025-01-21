@@ -3,8 +3,8 @@ const nextConfig = {
   // reactStrictMode: true,
   distDir: "build",
   env: {
-    // BASE_URL: "https://e-golap-server.up.railway.app",
-    BASE_URL: "https://backend.egolap.com",
+    BASE_URL: "https://billah-backend-egolap-com.vercel.app",
+    // BASE_URL: "https://backend.egolap.com",
     // BASE_URL: "http://localhost:4000",
   },
   eslint: {
